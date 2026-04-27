@@ -1,12 +1,13 @@
-const targetDate = new Date("2026-06-11T14:00:00Z");
+// 11 июня 2026, 16:00 МСК = 13:00 UTC
+const targetDate = new Date("2026-06-11T13:00:00Z");
 
 function updateCountdown() {
   const now = new Date();
   const distance = targetDate - now;
 
-  if (distance < 0) {
+  if (distance <= 0) {
     document.getElementById("timer").innerHTML = `
-      <div class="started">🚀 Невесомость уже началась!</div>
+      <div class="started">🚀 Невесомость началась</div>
     `;
     return;
   }
