@@ -254,19 +254,105 @@ h1 span {
   box-shadow: 0 0 20px rgba(255,255,255,0.08);
 }
 
-.hashtags span:nth-child(1) {
-  color: #8be3ff;
-  text-shadow: 0 0 14px rgba(139,227,255,0.8);
+.hashtags {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.hashtags span:nth-child(2) {
-  color: #ff8c5a;
-  text-shadow: 0 0 14px rgba(255,140,90,0.8);
+.team-btn {
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: white;
+  transition: 0.25s ease;
 }
 
-.hashtags span:nth-child(3) {
-  color: #91ff9e;
-  text-shadow: 0 0 14px rgba(145,255,158,0.8);
+.team-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.team-btn.volts {
+  color: #5cc7ff;
+  box-shadow: 0 0 24px rgba(0, 120, 255, 0.35);
+}
+
+.team-btn.flame {
+  color: #ff6d6d;
+  box-shadow: 0 0 24px rgba(255, 40, 60, 0.35);
+}
+
+.team-btn.leaf {
+  color: #72ff87;
+  box-shadow: 0 0 24px rgba(40, 255, 100, 0.35);
+}
+
+.team-popup {
+  position: fixed;
+  left: 50%;
+  bottom: 38px;
+  width: min(520px, calc(100% - 32px));
+  padding: 26px 28px;
+  border-radius: 26px;
+  background: rgba(8, 10, 30, 0.82);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 70px rgba(139, 227, 255, 0.25);
+  transform: translate(-50%, 140%);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.35s ease;
+  z-index: 20;
+  text-align: center;
+}
+
+.team-popup.active {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.team-popup h2 {
+  margin: 0 0 12px;
+  font-size: 28px;
+}
+
+.team-popup p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+
+.team-popup.volts {
+  box-shadow: 0 0 80px rgba(0, 120, 255, 0.45);
+}
+
+.team-popup.flame {
+  box-shadow: 0 0 80px rgba(255, 40, 60, 0.45);
+}
+
+.team-popup.leaf {
+  box-shadow: 0 0 80px rgba(40, 255, 100, 0.45);
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  opacity: 0.75;
 }
 
 .started {
