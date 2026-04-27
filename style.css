@@ -58,12 +58,8 @@ body {
 }
 
 @keyframes particlesMove {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(120px);
-  }
+  from { transform: translateY(0); }
+  to { transform: translateY(120px); }
 }
 
 .scene {
@@ -77,7 +73,7 @@ body {
   position: relative;
   width: min(980px, 100%);
   text-align: center;
-  padding: 44px 26px 38px;
+  padding: 34px 26px 38px;
   border-radius: 38px;
   background: rgba(7, 10, 30, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -90,28 +86,27 @@ body {
 }
 
 @keyframes floatHero {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .signs-orbit {
   position: relative;
-  width: 260px;
-  height: 160px;
-  margin: 0 auto 22px;
+  width: 360px;
+  height: 150px;
+  margin: 0 auto 24px;
 }
 
 .sign {
   position: absolute;
-  width: 86px;
-  height: 86px;
+  width: 92px;
+  height: 92px;
+  max-width: 92px;
+  max-height: 92px;
   object-fit: contain;
+  pointer-events: none;
   filter:
-    drop-shadow(0 0 16px rgba(255,255,255,0.55))
+    drop-shadow(0 0 16px rgba(255,255,255,0.5))
     drop-shadow(0 0 34px rgba(139,227,255,0.35));
   animation: floatSign 4s ease-in-out infinite;
 }
@@ -124,24 +119,20 @@ body {
 }
 
 .sign-flame {
-  left: 12px;
-  bottom: 0;
+  left: 30px;
+  top: 42px;
   animation-delay: 0.8s;
 }
 
 .sign-leaf {
-  right: 12px;
-  bottom: 0;
+  right: 30px;
+  top: 42px;
   animation-delay: 1.6s;
 }
 
 @keyframes floatSign {
-  0%, 100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -14px;
-  }
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -14px; }
 }
 
 h1 {
@@ -159,7 +150,7 @@ h1 span {
   background: linear-gradient(
     90deg,
     #006dff 0%,
-    #37d8ff 25%,
+    #37d8ff 22%,
     #ff2b2b 50%,
     #23ff65 78%,
     #006dff 100%
@@ -177,12 +168,8 @@ h1 span {
 }
 
 @keyframes titleGradient {
-  from {
-    background-position: 0% 50%;
-  }
-  to {
-    background-position: 250% 50%;
-  }
+  from { background-position: 0% 50%; }
+  to { background-position: 250% 50%; }
 }
 
 .timer {
@@ -223,12 +210,8 @@ h1 span {
 }
 
 @keyframes shine {
-  0%, 40% {
-    left: -90%;
-  }
-  70%, 100% {
-    left: 130%;
-  }
+  0%, 40% { left: -90%; }
+  70%, 100% { left: 130%; }
 }
 
 .time-card span {
@@ -298,33 +281,39 @@ h1 span {
 }
 
 @media (max-width: 760px) {
-  .signs-orbit {
-    width: 220px;
-    height: 140px;
+  body {
+    overflow-y: auto;
   }
-
-  .sign {
-    width: 72px;
-    height: 72px;
-  }
-}
 
   .scene {
     padding: 18px;
   }
 
   .hero {
-    padding: 34px 18px 38px;
+    padding: 30px 18px 34px;
     border-radius: 28px;
   }
 
-  .orbit {
-    width: 150px;
-    height: 150px;
+  .signs-orbit {
+    width: 260px;
+    height: 130px;
   }
 
-  .planet {
-    inset: 38px;
+  .sign {
+    width: 72px;
+    height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+  }
+
+  .sign-flame {
+    left: 22px;
+    top: 40px;
+  }
+
+  .sign-leaf {
+    right: 22px;
+    top: 40px;
   }
 
   .timer {
@@ -338,6 +327,28 @@ h1 span {
 }
 
 @media (max-width: 420px) {
+  .signs-orbit {
+    width: 230px;
+    height: 115px;
+  }
+
+  .sign {
+    width: 62px;
+    height: 62px;
+    max-width: 62px;
+    max-height: 62px;
+  }
+
+  .sign-flame {
+    left: 18px;
+    top: 36px;
+  }
+
+  .sign-leaf {
+    right: 18px;
+    top: 36px;
+  }
+
   .timer {
     gap: 10px;
   }
