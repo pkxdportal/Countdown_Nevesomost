@@ -7,32 +7,40 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="stars"></div>
+  <div class="background"></div>
+  <div class="noise"></div>
+  <div class="particles"></div>
 
-  <main class="container">
-    <div class="card">
-      <div class="badge">PK XD PORTAL EVENT</div>
+  <main class="scene">
+    <section class="hero">
+      <div class="orbit">
+        <div class="planet"></div>
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+      </div>
 
-      <h1>🚀 До начала<br><span>Невесомости</span></h1>
-      <p class="subtitle">Готовься к новому космическому событию</p>
+      <h1>
+        До начала
+        <span>Невесомости</span>
+      </h1>
 
-      <div id="timer">
-        <div class="time-box">
+      <div id="timer" class="timer">
+        <div class="time-card">
           <span id="days">00</span>
-          <label>Дней</label>
+          <p>дней</p>
         </div>
-        <div class="time-box">
+        <div class="time-card">
           <span id="hours">00</span>
-          <label>Часов</label>
+          <p>часов</p>
         </div>
-        <div class="time-box">
+        <div class="time-card">
           <span id="minutes">00</span>
-          <label>Минут</label>
+          <p>минут</p>
         </div>
-        <div class="time-box">
+        <div class="time-card">
           <span id="seconds">00</span>
-          <label>Секунд</label>
+          <p>секунд</p>
         </div>
       </div>
 
@@ -41,7 +49,7 @@
         <span>#teamflame</span>
         <span>#teamleaf</span>
       </div>
-    </div>
+    </section>
   </main>
 
   <script src="script.js"></script>
