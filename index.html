@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>До Невесомости</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
+
 <body>
   <div class="background"></div>
   <div class="noise"></div>
@@ -14,9 +17,9 @@
   <main class="scene">
     <section class="hero">
       <div class="signs-orbit">
-      <img src="volt.png" class="sign sign-volt" alt="teamvolts">
-      <img src="flame.png" class="sign sign-flame" alt="teamflame">
-      <img src="leaf.png" class="sign sign-leaf" alt="teamleaf">
+        <img src="volt.png" class="sign sign-volt" alt="Team Volts" loading="eager" />
+        <img src="flame.png" class="sign sign-flame" alt="Team Flame" loading="eager" />
+        <img src="leaf.png" class="sign sign-leaf" alt="Team Leaf" loading="eager" />
       </div>
 
       <h1>
@@ -29,14 +32,17 @@
           <span id="days">00</span>
           <p>дней</p>
         </div>
+
         <div class="time-card">
           <span id="hours">00</span>
           <p>часов</p>
         </div>
+
         <div class="time-card">
           <span id="minutes">00</span>
           <p>минут</p>
         </div>
+
         <div class="time-card">
           <span id="seconds">00</span>
           <p>секунд</p>
@@ -44,19 +50,27 @@
       </div>
 
       <div class="hashtags">
-        <button class="team-btn volts" data-team="volts">⚡ #teamvolts</button>
-        <button class="team-btn flame" data-team="flame">🔥 #teamflame</button>
-        <button class="team-btn leaf" data-team="leaf">🍃 #teamleaf</button>
-      </div>
+        <button type="button" class="team-btn volts" data-team="volts">
+          ⚡ #teamvolts
+        </button>
 
-      <div id="teamPopup" class="team-popup">
-        <button id="closePopup" class="close-popup">×</button>
-        <h2 id="popupTitle"></h2>
-        <p id="popupText"></p>
+        <button type="button" class="team-btn flame" data-team="flame">
+          🔥 #teamflame
+        </button>
+
+        <button type="button" class="team-btn leaf" data-team="leaf">
+          🍃 #teamleaf
+        </button>
       </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <div id="teamPopup" class="team-popup" aria-hidden="true">
+    <button type="button" id="closePopup" class="close-popup">×</button>
+    <h2 id="popupTitle"></h2>
+    <p id="popupText"></p>
+  </div>
+
+  <script src="script.js?v=3"></script>
 </body>
 </html>
