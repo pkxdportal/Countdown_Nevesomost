@@ -25,3 +25,37 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+const teamData = {
+  volts: {
+    title: "⚡ TEAM VOLTS",
+    text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
+  },
+  flame: {
+    title: "🔥 TEAM FLAME",
+    text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
+  },
+  leaf: {
+    title: "🍃 TEAM LEAF",
+    text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
+  }
+};
+
+const popup = document.getElementById("teamPopup");
+const popupTitle = document.getElementById("popupTitle");
+const popupText = document.getElementById("popupText");
+const closePopup = document.getElementById("closePopup");
+
+document.querySelectorAll(".team-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    const team = button.dataset.team;
+
+    popup.className = "team-popup active " + team;
+    popupTitle.textContent = teamData[team].title;
+    popupText.textContent = teamData[team].text;
+  });
+});
+
+closePopup.addEventListener("click", () => {
+  popup.className = "team-popup";
+});
