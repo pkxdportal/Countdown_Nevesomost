@@ -5,7 +5,9 @@ function updateCountdown() {
   const distance = targetDate - now;
 
   if (distance < 0) {
-    document.getElementById("timer").innerHTML = "🚀 Невесомость уже началась!";
+    document.getElementById("timer").innerHTML = `
+      <div class="started">🚀 Невесомость уже началась!</div>
+    `;
     return;
   }
 
@@ -20,4 +22,5 @@ function updateCountdown() {
   document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 }
 
+updateCountdown();
 setInterval(updateCountdown, 1000);
