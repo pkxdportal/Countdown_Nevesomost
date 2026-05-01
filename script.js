@@ -1,8 +1,3 @@
-// ========================================
-// COUNTDOWN
-// 11 июня 2026 — 16:00 МСК = 13:00 UTC
-// ========================================
-
 const targetDate = new Date("2026-06-11T13:00:00Z");
 
 const timer = document.getElementById("timer");
@@ -10,6 +5,8 @@ const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
+
+let lastSeconds = null;
 
 function updateCountdown() {
   const now = new Date();
@@ -36,37 +33,44 @@ function updateCountdown() {
   hoursEl.textContent = String(hours).padStart(2, "0");
   minutesEl.textContent = String(minutes).padStart(2, "0");
   secondsEl.textContent = String(seconds).padStart(2, "0");
+
+  if (lastSeconds !== seconds) {
+    secondsEl.classList.remove("tick");
+    void secondsEl.offsetWidth;
+    secondsEl.classList.add("tick");
+    lastSeconds = seconds;
+  }
 }
 
 updateCountdown();
-
 const countdownInterval = setInterval(updateCountdown, 1000);
-
-// ========================================
-// TEAM POPUP
-// ========================================
 
 const teamData = {
   volts: {
-    title: "⚡ TEAM VOLTS",
+    icon: "⚡",
+    title: "TEAM VOLTS",
     text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
   },
 
   flame: {
-    title: "🔥 TEAM FLAME",
+    icon: "🔥",
+    title: "TEAM FLAME",
     text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
   },
 
   leaf: {
-    title: "🍃 TEAM LEAF",
+    icon: "🍃",
+    title: "TEAM LEAF",
     text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
   }
 };
 
 const popup = document.getElementById("teamPopup");
+const popupIcon = document.getElementById("popupIcon");
 const popupTitle = document.getElementById("popupTitle");
 const popupText = document.getElementById("popupText");
 const closePopup = document.getElementById("closePopup");
+const teamGlow = document.getElementById("teamGlow");
 
 function openPopup(team) {
   const data = teamData[team];
@@ -76,25 +80,27 @@ function openPopup(team) {
   popup.className = "team-popup active " + team;
   popup.setAttribute("aria-hidden", "false");
 
+  popupIcon.textContent = data.icon;
   popupTitle.textContent = data.title;
   popupText.textContent = data.text;
+
+  document.body.className = "team-" + team;
 }
 
 function closeTeamPopup() {
   popup.className = "team-popup";
   popup.setAttribute("aria-hidden", "true");
+  document.body.className = "";
 }
 
 document.querySelectorAll(".team-btn").forEach((button) => {
   button.addEventListener("click", () => {
-    const team = button.dataset.team;
-    openPopup(team);
+    openPopup(button.dataset.team);
   });
 });
 
 closePopup.addEventListener("click", closeTeamPopup);
 
-// закрытие по клику вне popup
 document.addEventListener("click", (event) => {
   const clickedInsidePopup = popup.contains(event.target);
   const clickedButton = event.target.closest(".team-btn");
@@ -108,7 +114,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// закрытие ESC
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeTeamPopup();
