@@ -6,17 +6,24 @@
 
   <title>До Невесомости</title>
 
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 
 <body>
   <div class="background"></div>
+  <div class="team-glow" id="teamGlow"></div>
   <div class="noise"></div>
   <div class="particles"></div>
 
   <main class="scene">
     <section class="hero">
+      <div class="event-date">11 ИЮНЯ 2026 • 16:00 МСК</div>
+
       <div class="signs-orbit">
+        <div class="orbit-line orbit-blue"></div>
+        <div class="orbit-line orbit-red"></div>
+        <div class="orbit-line orbit-green"></div>
+
         <img src="volt.png" class="sign sign-volt" alt="Team Volts" loading="eager" />
         <img src="flame.png" class="sign sign-flame" alt="Team Flame" loading="eager" />
         <img src="leaf.png" class="sign sign-leaf" alt="Team Leaf" loading="eager" />
@@ -67,10 +74,11 @@
 
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
+    <div id="popupIcon" class="popup-icon"></div>
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
   </div>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
