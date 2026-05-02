@@ -499,7 +499,8 @@ h1 span {
   text-shadow: 0 0 14px rgba(139,227,255,0.75);
 }
 
-.portal-credit a {
+.portal-credit a,
+.portal-links a {
   display: inline-block;
   padding: 9px 15px;
   border-radius: 999px;
@@ -511,9 +512,17 @@ h1 span {
   transition: 0.25s ease;
 }
 
-.portal-credit a:hover {
+.portal-credit a:hover,
+.portal-links a:hover {
   transform: translateY(-2px) scale(1.03);
   filter: brightness(1.15);
+}
+
+.portal-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .music-player {
@@ -949,7 +958,7 @@ body.near-1 .hero {
     border-radius: 22px;
   }
 
-  .portal-credit a {
-    font-size: 12px;
-  }
+  .portal-credit a,
+  .portal-links a {
+  font-size: 12px;
 }
