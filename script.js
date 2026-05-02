@@ -119,3 +119,26 @@ document.addEventListener("keydown", (event) => {
     closeTeamPopup();
   }
 });
+
+// =======================
+// MUSIC PLAYER
+// =======================
+
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+let isPlaying = false;
+
+musicToggle.addEventListener("click", () => {
+  if (!isPlaying) {
+    music.play();
+    musicToggle.classList.add("active");
+    musicToggle.textContent = "🔇 Выключить музыку";
+    isPlaying = true;
+  } else {
+    music.pause();
+    musicToggle.classList.remove("active");
+    musicToggle.textContent = "🔊 Музыка Невесомости";
+    isPlaying = false;
+  }
+});
