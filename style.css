@@ -735,46 +735,78 @@ h1 span {
 
 body.near-100 .hero {
   box-shadow:
-    0 0 110px rgba(0,120,255,0.30),
-    0 0 140px rgba(238,107,243,0.22),
-    inset 0 0 60px rgba(255,255,255,0.05);
+    0 0 120px rgba(0,120,255,0.38),
+    0 0 150px rgba(238,107,243,0.26),
+    inset 0 0 65px rgba(255,255,255,0.06);
 }
 
 body.near-75 .background {
-  filter: brightness(0.66) saturate(1.55);
+  filter: brightness(0.72) saturate(1.7);
+}
+
+body.near-75 .particles {
+  opacity: 0.55;
 }
 
 body.near-50 .particles {
-  opacity: 0.58;
-  animation-duration: 16s;
+  opacity: 0.72;
+  animation-duration: 13s;
+}
+
+body.near-50 .hero {
+  box-shadow:
+    0 0 140px rgba(0,120,255,0.42),
+    0 0 170px rgba(238,107,243,0.28),
+    inset 0 0 70px rgba(255,255,255,0.06);
+}
+
+body.near-25 .particles {
+  opacity: 0.88;
+  animation-duration: 10s;
 }
 
 body.near-25 .hero {
   box-shadow:
-    0 0 150px rgba(0,120,255,0.42),
-    0 0 190px rgba(238,107,243,0.32),
-    inset 0 0 70px rgba(255,255,255,0.06);
+    0 0 180px rgba(0,120,255,0.55),
+    0 0 230px rgba(238,107,243,0.42),
+    0 0 260px rgba(33,255,115,0.20),
+    inset 0 0 85px rgba(255,255,255,0.08);
 }
 
 body.near-7 .hero {
-  animation: heroPulse 3s ease-in-out infinite;
+  animation: heroPulse 2.4s ease-in-out infinite;
 }
 
 body.near-1 .hero {
-  animation: heroPulseFast 1.8s ease-in-out infinite;
+  animation: heroPulseFast 1.3s ease-in-out infinite;
 }
 
 @keyframes heroPulse {
   0%,100% {
+    transform: scale(1);
     box-shadow:
-      0 0 90px rgba(0,120,255,0.30),
-      0 0 120px rgba(238,107,243,0.20);
+      0 0 150px rgba(0,120,255,0.42),
+      0 0 190px rgba(238,107,243,0.28);
   }
 
   50% {
+    transform: scale(1.012);
     box-shadow:
-      0 0 140px rgba(0,120,255,0.42),
-      0 0 170px rgba(238,107,243,0.32);
+      0 0 220px rgba(0,120,255,0.65),
+      0 0 260px rgba(238,107,243,0.50),
+      0 0 280px rgba(33,255,115,0.26);
+  }
+}
+
+@keyframes heroPulseFast {
+  0%,100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.025);
+    filter: brightness(1.18);
   }
 }
 
