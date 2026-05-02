@@ -14,7 +14,9 @@ const translations = {
     minutes: "minutes",
     seconds: "seconds",
     credit: "Website created by <b>PK XD PORTAL</b>",
-    channelBtn: "Open channel",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
     musicOn: "🔊 Music",
     musicOff: "🔇 Turn music off",
     started: "🚀 Zero Gravity has begun",
@@ -50,7 +52,9 @@ const translations = {
     minutes: "минут",
     seconds: "секунд",
     credit: "Сайт создан командой <b>PK XD PORTAL</b>",
-    channelBtn: "Перейти в канал",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
     musicOn: "🔊 Музыка",
     musicOff: "🔇 Выключить музыку",
     started: "🚀 Невесомость началась",
@@ -86,14 +90,15 @@ const translations = {
     minutes: "minutos",
     seconds: "segundos",
     credit: "Site criado pela <b>PK XD PORTAL</b>",
-    channelBtn: "Abrir canal",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
     musicOn: "🔊 Música",
     musicOff: "🔇 Desligar música",
     started: "🚀 Zero Gravity começou",
     fanCountdown: "Contagem regressiva feita por fãs para PK XD",
     disclaimer: "Esta é uma contagem regressiva feita por fãs. PK XD é um jogo da Afterverse. Este site não é oficial e não possui afiliação com a Afterverse.",
     feedbackText: "Para melhorias no site ou adição de novos idiomas, escreva aqui:",
-
 
     teams: {
       volts: {
@@ -123,7 +128,9 @@ const translations = {
     minutes: "dakika",
     seconds: "saniye",
     credit: "<b>PK XD PORTAL</b> tarafından oluşturuldu",
-    channelBtn: "Kanala Git",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
     musicOn: "🔊 Müzik",
     musicOff: "🔇 Müziği Kapat",
     started: "🚀 Zero Gravity başladı",
@@ -159,7 +166,9 @@ const translations = {
     minutes: "menit",
     seconds: "detik",
     credit: "Website dibuat oleh <b>PK XD PORTAL</b>",
-    channelBtn: "Buka channel",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
     musicOn: "🔊 Musik",
     musicOff: "🔇 Matikan musik",
     started: "🚀 Zero Gravity dimulai",
@@ -195,7 +204,9 @@ const translations = {
     minutes: "minutos",
     seconds: "segundos",
     credit: "Sitio creado por <b>PK XD PORTAL</b>",
-    channelBtn: "Abrir canal",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
     musicOn: "🔊 Música",
     musicOff: "🔇 Apagar música",
     started: "🚀 Zero Gravity comenzó",
@@ -231,7 +242,9 @@ const translations = {
     minutes: "मिनट",
     seconds: "सेकंड",
     credit: "<b>PK XD PORTAL</b> द्वारा बनाया गया",
-    channelBtn: "चैनल खोलें",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
     musicOn: "🔊 संगीत",
     musicOff: "🔇 संगीत बंद करें",
     started: "🚀 Zero Gravity शुरू हो गया",
@@ -273,6 +286,9 @@ const closePopup = document.getElementById("closePopup");
 
 const music = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
+
+const langToggle = document.getElementById("langToggle");
+const languageMenu = document.getElementById("languageMenu");
 
 function updateCountdown() {
   const now = new Date();
@@ -338,6 +354,7 @@ function setLanguage(lang) {
   });
 
   musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+  languageMenu.classList.remove("open");
 }
 
 function openPopup(team) {
@@ -376,22 +393,33 @@ document.querySelectorAll(".lang-btn").forEach((button) => {
 
 closePopup.addEventListener("click", closeTeamPopup);
 
+langToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  languageMenu.classList.toggle("open");
+});
+
 document.addEventListener("click", (event) => {
   const clickedInsidePopup = popup.contains(event.target);
-  const clickedButton = event.target.closest(".team-btn");
+  const clickedTeamButton = event.target.closest(".team-btn");
+  const clickedInsideLang = event.target.closest(".language-wrapper");
 
   if (
     popup.classList.contains("active") &&
     !clickedInsidePopup &&
-    !clickedButton
+    !clickedTeamButton
   ) {
     closeTeamPopup();
+  }
+
+  if (!clickedInsideLang) {
+    languageMenu.classList.remove("open");
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeTeamPopup();
+    languageMenu.classList.remove("open");
   }
 });
 
@@ -413,18 +441,3 @@ setLanguage("en");
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000);
-
-const langToggle = document.getElementById("langToggle");
-const languageMenu = document.getElementById("languageMenu");
-
-langToggle.addEventListener("click", () => {
-  languageMenu.classList.toggle("open");
-});
-
-document.addEventListener("click", (event) => {
-  const insideLang = event.target.closest(".language-wrapper");
-
-  if (!insideLang) {
-    languageMenu.classList.remove("open");
-  }
-});
