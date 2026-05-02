@@ -1,10 +1,43 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
 
-let currentLang = "ru";
+let currentLang = "en";
 let lastSeconds = null;
 let isPlaying = false;
 
 const translations = {
+  en: {
+    eventDate: "JUNE 11, 2026 • 08:00 AM EST",
+    titleTop: "Until",
+    titleMain: "Zero Gravity",
+    days: "days",
+    hours: "hours",
+    minutes: "minutes",
+    seconds: "seconds",
+    credit: "Website created by <b>PK XD PORTAL</b>",
+    channelBtn: "Open channel",
+    musicOn: "🔊 Weightlessness Music",
+    musicOff: "🔇 Turn music off",
+    started: "🚀 Zero Gravity has begun",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "PURE LIGHTNING ENERGY! I am full of joy and energy!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "THE INTENSITY OF FLAME! I am warm and fierce!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "THE POWER INSIDE EVERY LEAF! I am righteous and strong, like nature!"
+      }
+    }
+  },
+
   ru: {
     eventDate: "11 ИЮНЯ 2026 • 16:00 МСК",
     titleTop: "До начала",
@@ -38,35 +71,167 @@ const translations = {
     }
   },
 
-  en: {
-    eventDate: "JUNE 11, 2026 • 16:00 MSK",
-    titleTop: "Until",
+  pt: {
+    eventDate: "11 JUNHO 2026 • 10:00 BRT",
+    titleTop: "Até",
     titleMain: "Zero Gravity",
-    days: "days",
-    hours: "hours",
-    minutes: "minutes",
-    seconds: "seconds",
-    credit: "Website created by <b>PK XD PORTAL</b>",
-    channelBtn: "Open channel",
-    musicOn: "🔊 Zero Gravity Music",
-    musicOff: "🔇 Turn music off",
-    started: "🚀 Zero Gravity has begun",
+    days: "dias",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    credit: "Site criado pela <b>PK XD PORTAL</b>",
+    channelBtn: "Abrir canal",
+    musicOn: "🔊 Música",
+    musicOff: "🔇 Desligar música",
+    started: "🚀 Zero Gravity começou",
 
     teams: {
       volts: {
         icon: "⚡",
         title: "TEAM VOLTS",
-        text: "PURE LIGHTNING ENERGY! I am full of joy and energy!"
+        text: "ENERGIA PURA DE RAIO!"
       },
       flame: {
         icon: "🔥",
         title: "TEAM FLAME",
-        text: "THE INTENSITY OF FLAME! I am warm and fierce!"
+        text: "INTENSIDADE DO FOGO!"
       },
       leaf: {
         icon: "🍃",
         title: "TEAM LEAF",
-        text: "THE POWER INSIDE EVERY LEAF! I am righteous and strong, like nature!"
+        text: "FORÇA DA NATUREZA!"
+      }
+    }
+  },
+
+  tr: {
+    eventDate: "11 HAZİRAN 2026 • 16:00 TRT",
+    titleTop: "Kalan Süre",
+    titleMain: "Zero Gravity",
+    days: "gün",
+    hours: "saat",
+    minutes: "dakika",
+    seconds: "saniye",
+    credit: "<b>PK XD PORTAL</b> tarafından oluşturuldu",
+    channelBtn: "Kanala Git",
+    musicOn: "🔊 Müzik",
+    musicOff: "🔇 Müziği Kapat",
+    started: "🚀 Zero Gravity başladı",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "SAF YILDIRIM ENERJİSİ!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "ATEŞİN YOĞUNLUĞU!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "DOĞANIN GÜCÜ!"
+      }
+    }
+  },
+
+  id: {
+    eventDate: "11 JUNI 2026 • 20:00 WIB",
+    titleTop: "Menuju",
+    titleMain: "Zero Gravity",
+    days: "hari",
+    hours: "jam",
+    minutes: "menit",
+    seconds: "detik",
+    credit: "Website dibuat oleh <b>PK XD PORTAL</b>",
+    channelBtn: "Buka channel",
+    musicOn: "🔊 Musik",
+    musicOff: "🔇 Matikan musik",
+    started: "🚀 Zero Gravity dimulai",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ENERGI PETIR MURNI!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "INTENSITAS API!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "KEKUATAN ALAM!"
+      }
+    }
+  },
+
+  es: {
+    eventDate: "11 JUNIO 2026 • 07:00 CST",
+    titleTop: "Hasta",
+    titleMain: "Zero Gravity",
+    days: "días",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    credit: "Sitio creado por <b>PK XD PORTAL</b>",
+    channelBtn: "Abrir canal",
+    musicOn: "🔊 Música",
+    musicOff: "🔇 Apagar música",
+    started: "🚀 Zero Gravity comenzó",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "¡ENERGÍA PURA DEL RAYO!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "¡INTENSIDAD DEL FUEGO!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "¡FUERZA DE LA NATURALEZA!"
+      }
+    }
+  },
+
+  hi: {
+    eventDate: "11 जून 2026 • 18:30 IST",
+    titleTop: "शुरू होने तक",
+    titleMain: "Zero Gravity",
+    days: "दिन",
+    hours: "घंटे",
+    minutes: "मिनट",
+    seconds: "सेकंड",
+    credit: "<b>PK XD PORTAL</b> द्वारा बनाया गया",
+    channelBtn: "चैनल खोलें",
+    musicOn: "🔊 संगीत",
+    musicOff: "🔇 संगीत बंद करें",
+    started: "🚀 Zero Gravity शुरू हो गया",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "शुद्ध बिजली ऊर्जा!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "आग की तीव्रता!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "प्रकृति की शक्ति!"
       }
     }
   }
