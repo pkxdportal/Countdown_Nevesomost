@@ -391,3 +391,18 @@ setLanguage("en");
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000);
+
+const langToggle = document.getElementById("langToggle");
+const languageMenu = document.getElementById("languageMenu");
+
+langToggle.addEventListener("click", () => {
+  languageMenu.classList.toggle("open");
+});
+
+document.addEventListener("click", (event) => {
+  const insideLang = event.target.closest(".language-wrapper");
+
+  if (!insideLang) {
+    languageMenu.classList.remove("open");
+  }
+});
