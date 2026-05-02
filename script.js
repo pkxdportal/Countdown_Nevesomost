@@ -23,6 +23,9 @@ const translations = {
     fanCountdown: "Fan countdown for PK XD",
     disclaimer: "This is a fan-made countdown. PK XD is a game by Afterverse. This site is not official and is not affiliated with Afterverse.",
     feedbackText: "For website improvements or adding more languages, write here:",
+    downloadTitle: "Download / Update PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -61,6 +64,9 @@ const translations = {
   fanCountdown: "Fan-Countdown für PK XD",
   disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
   feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
+  downloadTitle: "PK XD herunterladen / aktualisieren",
+  googlePlayBtn: "Google Play",
+  appStoreBtn: "App Store",
 
   teams: {
     volts: {
@@ -99,6 +105,9 @@ fr: {
   fanCountdown: "Compte à rebours de fan pour PK XD",
   disclaimer: "Ceci est un compte à rebours créé par des fans. PK XD est un jeu d’Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
   feedbackText: "Pour améliorer le site ou ajouter d’autres langues, écris ici :",
+  downloadTitle: "Télécharger / Mettre à jour PK XD",
+  googlePlayBtn: "Google Play",
+  appStoreBtn: "App Store",
 
   teams: {
     volts: {
@@ -137,6 +146,9 @@ pl: {
   fanCountdown: "Fanowski licznik dla PK XD",
   disclaimer: "To fanowski licznik. PK XD to gra od Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
   feedbackText: "W sprawie ulepszeń strony lub dodania nowych języków napisz tutaj:",
+  downloadTitle: "Pobierz / Zaktualizuj PK XD",
+  googlePlayBtn: "Google Play",
+  appStoreBtn: "App Store",
 
   teams: {
     volts: {
@@ -175,6 +187,9 @@ pl: {
     fanCountdown: "Фанатский отсчёт для PK XD",
     disclaimer: "Это фанатский отсчёт. PK XD — игра от Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
     feedbackText: "По вопросам улучшения сайта или добавления других языков пишите сюда:",
+    downloadTitle: "Скачать / обновить PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -213,6 +228,9 @@ pl: {
     fanCountdown: "Contagem regressiva feita por fãs para PK XD",
     disclaimer: "Esta é uma contagem regressiva feita por fãs. PK XD é um jogo da Afterverse. Este site não é oficial e não possui afiliação com a Afterverse.",
     feedbackText: "Para melhorias no site ou adição de novos idiomas, escreva aqui:",
+    downloadTitle: "Baixar / Atualizar PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -251,6 +269,9 @@ pl: {
     fanCountdown: "PK XD için hayran geri sayımı",
     disclaimer: "Bu hayran yapımı bir geri sayımdır. PK XD, Afterverse tarafından geliştirilen bir oyundur. Bu site resmi değildir ve Afterverse ile bağlantılı değildir.",
     feedbackText: "Site geliştirmeleri veya yeni diller eklemek için buraya yazın:",
+    downloadTitle: "PK XD İndir / Güncelle",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -289,6 +310,9 @@ pl: {
     fanCountdown: "Hitung mundur penggemar untuk PK XD",
     disclaimer: "Ini adalah hitung mundur buatan penggemar. PK XD adalah game dari Afterverse. Situs ini bukan situs resmi dan tidak berafiliasi dengan Afterverse.",
     feedbackText: "Untuk peningkatan situs atau penambahan bahasa baru, tulis di sini:",
+    downloadTitle: "Unduh / Perbarui PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -327,6 +351,9 @@ pl: {
     fanCountdown: "Cuenta regresiva hecha por fans para PK XD",
     disclaimer: "Esta es una cuenta regresiva hecha por fans. PK XD es un juego de Afterverse. Este sitio no es oficial y no está afiliado con Afterverse.",
     feedbackText: "Para mejorar el sitio o agregar más idiomas, escribe aquí:",
+    downloadTitle: "Descargar / Actualizar PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -365,6 +392,9 @@ pl: {
     fanCountdown: "PK XD के लिए फैन काउंटडाउन",
     disclaimer: "यह एक फैन द्वारा बनाया गया काउंटडाउन है। PK XD Afterverse का एक गेम है। यह वेबसाइट आधिकारिक नहीं है और Afterverse से संबद्ध नहीं है।",
     feedbackText: "वेबसाइट सुधार या नई भाषाएँ जोड़ने के लिए यहाँ लिखें:",
+    downloadTitle: "PK XD डाउनलोड / अपडेट करें",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
 
     teams: {
       volts: {
@@ -461,7 +491,7 @@ function updateAtmosphere(daysLeft) {
 function setLanguage(lang) {
   currentLang = lang;
   const dict = translations[lang];
-
+  
   document.documentElement.lang = lang;
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
@@ -469,6 +499,7 @@ function setLanguage(lang) {
 
     if (dict[key]) {
       element.innerHTML = dict[key];
+  downloadMenu.classList.remove("open");
     }
   });
 
@@ -564,3 +595,20 @@ setLanguage("en");
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000);
+
+const downloadToggle = document.getElementById("downloadToggle");
+const downloadMenu = document.getElementById("downloadMenu");
+
+downloadToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  downloadMenu.classList.toggle("open");
+  languageMenu.classList.remove("open");
+});
+
+document.addEventListener("click", (event) => {
+  const insideDownload = event.target.closest(".download-wrapper");
+
+  if (!insideDownload) {
+    downloadMenu.classList.remove("open");
+  }
+});
