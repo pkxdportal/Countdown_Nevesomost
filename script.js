@@ -1,5 +1,6 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
-const debugDays = 0;
+const debugDays = null;
+const debugStarted = true;
 
 let currentLang = "en";
 let lastSeconds = null;
@@ -409,7 +410,7 @@ function updateCountdown() {
   const now = new Date();
   const distance = targetDate.getTime() - now.getTime();
 
-  if (distance <= 0) {
+  if (distance <= 0 || debugStarted) {
     clearInterval(countdownInterval);
 
     timer.innerHTML = `
