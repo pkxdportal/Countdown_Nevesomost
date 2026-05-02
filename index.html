@@ -6,7 +6,7 @@
 
   <title>До Невесомости</title>
 
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 
 <body>
@@ -15,9 +15,17 @@
   <div class="noise"></div>
   <div class="particles"></div>
 
+  <div class="language-switch">
+    <button type="button" class="lang-btn active" data-lang="ru">RU</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+  </div>
+
   <main class="scene">
     <section class="hero">
-      <div class="event-date">11 ИЮНЯ 2026 • 16:00 МСК</div>
+
+      <div class="event-date" data-i18n="eventDate">
+        11 ИЮНЯ 2026 • 16:00 МСК
+      </div>
 
       <div class="signs-orbit">
         <div class="orbit-line orbit-blue"></div>
@@ -30,29 +38,34 @@
       </div>
 
       <h1>
-        До начала
-        <span>Невесомости</span>
+        <span class="title-small" data-i18n="titleTop">
+          До начала
+        </span>
+
+        <span class="title-main" data-i18n="titleMain">
+          Невесомости
+        </span>
       </h1>
 
       <div id="timer" class="timer">
         <div class="time-card">
           <span id="days">00</span>
-          <p>дней</p>
+          <p data-i18n="days">дней</p>
         </div>
 
         <div class="time-card">
           <span id="hours">00</span>
-          <p>часов</p>
+          <p data-i18n="hours">часов</p>
         </div>
 
         <div class="time-card">
           <span id="minutes">00</span>
-          <p>минут</p>
+          <p data-i18n="minutes">минут</p>
         </div>
 
         <div class="time-card">
           <span id="seconds">00</span>
-          <p>секунд</p>
+          <p data-i18n="seconds">секунд</p>
         </div>
       </div>
 
@@ -71,31 +84,42 @@
       </div>
 
       <div class="portal-credit">
-        <span>Сайт создан командой <b>PK XD PORTAL</b></span>
+        <span data-i18n="credit">
+          Сайт создан командой <b>PK XD PORTAL</b>
+        </span>
 
-        <a href="https://t.me/pkxdportal" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://t.me/pkxdportal"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="channelBtn"
+        >
           Перейти в канал
         </a>
       </div>
-      <div class="music-player">
-  <button id="musicToggle" class="music-btn">
-    🔊 Музыка Невесомости
-  </button>
-</div>
 
-<audio id="bgMusic" loop>
-  <source src="nevesomost.mp3" type="audio/mpeg">
-</audio>
+      <div class="music-player">
+        <button type="button" id="musicToggle" class="music-btn" data-i18n="musicOn">
+          🔊 Музыка Невесомости
+        </button>
+      </div>
+
+      <audio id="bgMusic" loop>
+        <source src="nevesomost.mp3" type="audio/mpeg" />
+      </audio>
+
     </section>
   </main>
 
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
+
     <div id="popupIcon" class="popup-icon"></div>
+
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
   </div>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
