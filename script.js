@@ -441,10 +441,19 @@ function updateCountdown() {
 }
 
 function updateAtmosphere(daysLeft) {
-  document.body.classList.remove("near-100", "near-30", "near-7", "near-1");
+  document.body.classList.remove(
+    "near-100",
+    "near-75",
+    "near-50",
+    "near-25",
+    "near-7",
+    "near-1"
+  );
 
   if (daysLeft <= 100) document.body.classList.add("near-100");
-  if (daysLeft <= 30) document.body.classList.add("near-30");
+  if (daysLeft <= 75) document.body.classList.add("near-75");
+  if (daysLeft <= 50) document.body.classList.add("near-50");
+  if (daysLeft <= 25) document.body.classList.add("near-25");
   if (daysLeft <= 7) document.body.classList.add("near-7");
   if (daysLeft <= 1) document.body.classList.add("near-1");
 }
