@@ -1,6 +1,4 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
-const debugDays = null;
-const debugStarted = true;
 
 let currentLang = "en";
 let lastSeconds = null;
@@ -410,7 +408,7 @@ function updateCountdown() {
   const now = new Date();
   const distance = targetDate.getTime() - now.getTime();
 
-  if (distance <= 0 || debugStarted) {
+  if (distance <= 0) {
     clearInterval(countdownInterval);
 
     timer.innerHTML = `
@@ -422,8 +420,7 @@ function updateCountdown() {
     return;
   }
 
-  const realDays = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const days = debugDays ?? realDays;
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
