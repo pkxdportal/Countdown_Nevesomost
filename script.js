@@ -48,135 +48,6 @@ const translations = {
     }
   },
 
-  de: {
-  eventDate: "11. JUNI 2026 • 15:00 BERLIN",
-  titleTop: "Bis",
-  titleMain: "Zero Gravity",
-  days: "Tage",
-  hours: "Stunden",
-  minutes: "Minuten",
-  seconds: "Sekunden",
-  credit: "Website erstellt von <b>PK XD PORTAL</b>",
-  telegramBtn: "Telegram",
-  youtubeBtn: "YouTube",
-  feedbackChannel: "PK XD PORTAL YouTube",
-  musicOn: "🔊 Musik",
-  musicOff: "🔇 Musik ausschalten",
-  started: "🚀 Zero Gravity hat begonnen",
-  fanCountdown: "Fan-Countdown für PK XD",
-  disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
-  feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
-  downloadTitle: "PK XD herunterladen / aktualisieren",
-  googlePlayBtn: "Google Play",
-  appStoreBtn: "App Store",
-  languageLabel: "Sprache",
-  downloadLabel: "Download",
-
-  teams: {
-    volts: {
-      icon: "⚡",
-      title: "TEAM VOLTS",
-      text: "REINE BLITZENERGIE! Ich bin voller Freude und Energie!"
-    },
-    flame: {
-      icon: "🔥",
-      title: "TEAM FLAME",
-      text: "DIE INTENSITÄT DER FLAMME! Ich bin warm und wild!"
-    },
-    leaf: {
-      icon: "🍃",
-      title: "TEAM LEAF",
-      text: "DIE KRAFT IN JEDEM BLATT! Ich bin gerecht und stark wie die Natur!"
-    }
-  }
-},
-
-fr: {
-  eventDate: "11 JUIN 2026 • 15:00 PARIS",
-  titleTop: "Jusqu’à",
-  titleMain: "Zéro Gravité",
-  days: "jours",
-  hours: "heures",
-  minutes: "minutes",
-  seconds: "secondes",
-  credit: "Site créé par <b>PK XD PORTAL</b>",
-  telegramBtn: "Telegram",
-  youtubeBtn: "YouTube",
-  feedbackChannel: "YouTube PK XD PORTAL",
-  musicOn: "🔊 Musique",
-  musicOff: "🔇 Couper la musique",
-  started: "🚀 Zéro Gravité a commencé",
-  fanCountdown: "Compte à rebours de fan pour PK XD",
-  disclaimer: "Ceci est un compte à rebours créé par des fans. PK XD est un jeu d’Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
-  feedbackText: "Pour améliorer le site ou ajouter d’autres langues, écris ici :",
-  downloadTitle: "Télécharger / Mettre à jour PK XD",
-  googlePlayBtn: "Google Play",
-  appStoreBtn: "App Store",
-  languageLabel: "Langue",
-  downloadLabel: "Télécharger",
-
-  teams: {
-    volts: {
-      icon: "⚡",
-      title: "TEAM VOLTS",
-      text: "ÉNERGIE PURE DE LA FOUDRE ! Je suis plein de joie et d’énergie !"
-    },
-    flame: {
-      icon: "🔥",
-      title: "TEAM FLAME",
-      text: "L’INTENSITÉ DE LA FLAMME ! Je suis chaleureux et féroce !"
-    },
-    leaf: {
-      icon: "🍃",
-      title: "TEAM LEAF",
-      text: "LA FORCE DANS CHAQUE FEUILLE ! Je suis juste et fort comme la nature !"
-    }
-  }
-},
-
-pl: {
-  eventDate: "11 CZERWCA 2026 • 15:00 WARSZAWA",
-  titleTop: "Do",
-  titleMain: "Nieważkości",
-  days: "dni",
-  hours: "godziny",
-  minutes: "minuty",
-  seconds: "sekundy",
-  credit: "Strona stworzona przez <b>PK XD PORTAL</b>",
-  telegramBtn: "Telegram",
-  youtubeBtn: "YouTube",
-  feedbackChannel: "YouTube PK XD PORTAL",
-  musicOn: "🔊 Muzyka",
-  musicOff: "🔇 Wyłącz muzykę",
-  started: "🚀 Nieważkość się rozpoczęła",
-  fanCountdown: "Fanowski licznik dla PK XD",
-  disclaimer: "To fanowski licznik. PK XD to gra od Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
-  feedbackText: "W sprawie ulepszeń strony lub dodania nowych języków napisz tutaj:",
-  downloadTitle: "Pobierz / Zaktualizuj PK XD",
-  googlePlayBtn: "Google Play",
-  appStoreBtn: "App Store",
-  languageLabel: "Język",
-  downloadLabel: "Pobierz",
-
-  teams: {
-    volts: {
-      icon: "⚡",
-      title: "TEAM VOLTS",
-      text: "CZYSTA ENERGIA BŁYSKAWICY! Jestem pełen radości i energii!"
-    },
-    flame: {
-      icon: "🔥",
-      title: "TEAM FLAME",
-      text: "INTENSYWNOŚĆ PŁOMIENIA! Jestem ciepły i zaciekły!"
-    },
-    leaf: {
-      icon: "🍃",
-      title: "TEAM LEAF",
-      text: "SIŁA W KAŻDYM LIŚCIU! Jestem prawy i silny jak natura!"
-    }
-  }
-},
-
   ru: {
     eventDate: "11 ИЮНЯ 2026 • 16:00 МОСКВА",
     titleTop: "До начала",
@@ -216,6 +87,135 @@ pl: {
         icon: "🍃",
         title: "TEAM LEAF",
         text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
+      }
+    }
+  },
+
+  de: {
+    eventDate: "11. JUNI 2026 • 15:00 BERLIN",
+    titleTop: "Bis",
+    titleMain: "Zero Gravity",
+    days: "Tage",
+    hours: "Stunden",
+    minutes: "Minuten",
+    seconds: "Sekunden",
+    credit: "Website erstellt von <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
+    musicOn: "🔊 Musik",
+    musicOff: "🔇 Musik ausschalten",
+    started: "🚀 Zero Gravity hat begonnen",
+    fanCountdown: "Fan-Countdown für PK XD",
+    disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
+    feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
+    downloadTitle: "PK XD herunterladen / aktualisieren",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Sprache",
+    downloadLabel: "Download",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "REINE BLITZENERGIE! Ich bin voller Freude und Energie!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "DIE INTENSITÄT DER FLAMME! Ich bin warm und wild!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "DIE KRAFT IN JEDEM BLATT! Ich bin gerecht und stark wie die Natur!"
+      }
+    }
+  },
+
+  fr: {
+    eventDate: "11 JUIN 2026 • 15:00 PARIS",
+    titleTop: "Jusqu’à",
+    titleMain: "Zéro Gravité",
+    days: "jours",
+    hours: "heures",
+    minutes: "minutes",
+    seconds: "secondes",
+    credit: "Site créé par <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Musique",
+    musicOff: "🔇 Couper la musique",
+    started: "🚀 Zéro Gravité a commencé",
+    fanCountdown: "Compte à rebours de fan pour PK XD",
+    disclaimer: "Ceci est un compte à rebours créé par des fans. PK XD est un jeu d’Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
+    feedbackText: "Pour améliorer le site ou ajouter d’autres langues, écris ici :",
+    downloadTitle: "Télécharger / Mettre à jour PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Langue",
+    downloadLabel: "Télécharger",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ÉNERGIE PURE DE LA FOUDRE ! Je suis plein de joie et d’énergie !"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "L’INTENSITÉ DE LA FLAMME ! Je suis chaleureux et féroce !"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "LA FORCE DANS CHAQUE FEUILLE ! Je suis juste et fort comme la nature !"
+      }
+    }
+  },
+
+  pl: {
+    eventDate: "11 CZERWCA 2026 • 15:00 WARSZAWA",
+    titleTop: "Do",
+    titleMain: "Nieważkości",
+    days: "dni",
+    hours: "godziny",
+    minutes: "minuty",
+    seconds: "sekundy",
+    credit: "Strona stworzona przez <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Muzyka",
+    musicOff: "🔇 Wyłącz muzykę",
+    started: "🚀 Nieważkość się rozpoczęła",
+    fanCountdown: "Fanowski licznik dla PK XD",
+    disclaimer: "To fanowski licznik. PK XD to gra od Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
+    feedbackText: "W sprawie ulepszeń strony lub dodania nowych języków napisz tutaj:",
+    downloadTitle: "Pobierz / Zaktualizuj PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Język",
+    downloadLabel: "Pobierz",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "CZYSTA ENERGIA BŁYSKAWICY! Jestem pełen radości i energii!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "INTENSYWNOŚĆ PŁOMIENIA! Jestem ciepły i zaciekły!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "SIŁA W KAŻDYM LIŚCIU! Jestem prawy i silny jak natura!"
       }
     }
   },
@@ -454,6 +454,9 @@ const musicToggle = document.getElementById("musicToggle");
 const langToggle = document.getElementById("langToggle");
 const languageMenu = document.getElementById("languageMenu");
 
+const downloadToggle = document.getElementById("downloadToggle");
+const downloadMenu = document.getElementById("downloadMenu");
+
 function updateCountdown() {
   const now = new Date();
   const distance = targetDate.getTime() - now.getTime();
@@ -511,7 +514,7 @@ function updateAtmosphere(daysLeft) {
 function setLanguage(lang) {
   currentLang = lang;
   const dict = translations[lang];
-  
+
   document.documentElement.lang = lang;
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
@@ -519,16 +522,17 @@ function setLanguage(lang) {
 
     if (dict[key]) {
       element.innerHTML = dict[key];
-  downloadMenu.classList.remove("open");
     }
   });
 
-  document.querySelectorAll(".lang-btn").forEach((button) => {
+  document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
     button.classList.toggle("active", button.dataset.lang === lang);
   });
 
   musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+
   languageMenu.classList.remove("open");
+  downloadMenu.classList.remove("open");
 }
 
 function openPopup(team) {
@@ -559,7 +563,7 @@ document.querySelectorAll(".team-btn").forEach((button) => {
   });
 });
 
-document.querySelectorAll(".lang-btn").forEach((button) => {
+document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
   button.addEventListener("click", () => {
     setLanguage(button.dataset.lang);
   });
@@ -570,12 +574,20 @@ closePopup.addEventListener("click", closeTeamPopup);
 langToggle.addEventListener("click", (event) => {
   event.stopPropagation();
   languageMenu.classList.toggle("open");
+  downloadMenu.classList.remove("open");
+});
+
+downloadToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  downloadMenu.classList.toggle("open");
+  languageMenu.classList.remove("open");
 });
 
 document.addEventListener("click", (event) => {
   const clickedInsidePopup = popup.contains(event.target);
   const clickedTeamButton = event.target.closest(".team-btn");
   const clickedInsideLang = event.target.closest(".language-wrapper");
+  const clickedInsideDownload = event.target.closest(".download-wrapper");
 
   if (
     popup.classList.contains("active") &&
@@ -588,12 +600,17 @@ document.addEventListener("click", (event) => {
   if (!clickedInsideLang) {
     languageMenu.classList.remove("open");
   }
+
+  if (!clickedInsideDownload) {
+    downloadMenu.classList.remove("open");
+  }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeTeamPopup();
     languageMenu.classList.remove("open");
+    downloadMenu.classList.remove("open");
   }
 });
 
@@ -615,20 +632,3 @@ setLanguage("en");
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000);
-
-const downloadToggle = document.getElementById("downloadToggle");
-const downloadMenu = document.getElementById("downloadMenu");
-
-downloadToggle.addEventListener("click", (event) => {
-  event.stopPropagation();
-  downloadMenu.classList.toggle("open");
-  languageMenu.classList.remove("open");
-});
-
-document.addEventListener("click", (event) => {
-  const insideDownload = event.target.closest(".download-wrapper");
-
-  if (!insideDownload) {
-    downloadMenu.classList.remove("open");
-  }
-});
