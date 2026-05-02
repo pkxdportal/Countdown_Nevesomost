@@ -6,7 +6,7 @@ let isPlaying = false;
 
 const translations = {
   en: {
-    eventDate: "JUNE 11, 2026 • 08:00 AM EST",
+    eventDate: "JUNE 11, 2026 • 09:00 NEW YORK",
     titleTop: "Until",
     titleMain: "Zero Gravity",
     days: "days",
@@ -43,8 +43,122 @@ const translations = {
     }
   },
 
+  de: {
+  eventDate: "11. JUNI 2026 • 15:00 BERLIN",
+  titleTop: "Bis",
+  titleMain: "Schwerelosigkeit",
+  days: "Tage",
+  hours: "Stunden",
+  minutes: "Minuten",
+  seconds: "Sekunden",
+  credit: "Website erstellt von <b>PK XD PORTAL</b>",
+  telegramBtn: "Telegram",
+  youtubeBtn: "YouTube",
+  feedbackChannel: "PK XD PORTAL YouTube",
+  musicOn: "🔊 Musik",
+  musicOff: "🔇 Musik ausschalten",
+  started: "🚀 Die Schwerelosigkeit hat begonnen",
+  fanCountdown: "Fan-Countdown für PK XD",
+  disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
+  feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
+
+  teams: {
+    volts: {
+      icon: "⚡",
+      title: "TEAM VOLTS",
+      text: "REINE BLITZENERGIE! Ich bin voller Freude und Energie!"
+    },
+    flame: {
+      icon: "🔥",
+      title: "TEAM FLAME",
+      text: "DIE INTENSITÄT DER FLAMME! Ich bin warm und wild!"
+    },
+    leaf: {
+      icon: "🍃",
+      title: "TEAM LEAF",
+      text: "DIE KRAFT IN JEDEM BLATT! Ich bin gerecht und stark wie die Natur!"
+    }
+  }
+},
+
+fr: {
+  eventDate: "11 JUIN 2026 • 15:00 PARIS",
+  titleTop: "Jusqu’à",
+  titleMain: "Zéro Gravité",
+  days: "jours",
+  hours: "heures",
+  minutes: "minutes",
+  seconds: "secondes",
+  credit: "Site créé par <b>PK XD PORTAL</b>",
+  telegramBtn: "Telegram",
+  youtubeBtn: "YouTube",
+  feedbackChannel: "YouTube PK XD PORTAL",
+  musicOn: "🔊 Musique",
+  musicOff: "🔇 Couper la musique",
+  started: "🚀 Zéro Gravité a commencé",
+  fanCountdown: "Compte à rebours de fan pour PK XD",
+  disclaimer: "Ceci est un compte à rebours créé par des fans. PK XD est un jeu d’Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
+  feedbackText: "Pour améliorer le site ou ajouter d’autres langues, écris ici :",
+
+  teams: {
+    volts: {
+      icon: "⚡",
+      title: "TEAM VOLTS",
+      text: "ÉNERGIE PURE DE LA FOUDRE ! Je suis plein de joie et d’énergie !"
+    },
+    flame: {
+      icon: "🔥",
+      title: "TEAM FLAME",
+      text: "L’INTENSITÉ DE LA FLAMME ! Je suis chaleureux et féroce !"
+    },
+    leaf: {
+      icon: "🍃",
+      title: "TEAM LEAF",
+      text: "LA FORCE DANS CHAQUE FEUILLE ! Je suis juste et fort comme la nature !"
+    }
+  }
+},
+
+pl: {
+  eventDate: "11 CZERWCA 2026 • 15:00 WARSZAWA",
+  titleTop: "Do",
+  titleMain: "Nieważkości",
+  days: "dni",
+  hours: "godziny",
+  minutes: "minuty",
+  seconds: "sekundy",
+  credit: "Strona stworzona przez <b>PK XD PORTAL</b>",
+  telegramBtn: "Telegram",
+  youtubeBtn: "YouTube",
+  feedbackChannel: "YouTube PK XD PORTAL",
+  musicOn: "🔊 Muzyka",
+  musicOff: "🔇 Wyłącz muzykę",
+  started: "🚀 Nieważkość się rozpoczęła",
+  fanCountdown: "Fanowski licznik dla PK XD",
+  disclaimer: "To fanowski licznik. PK XD to gra od Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
+  feedbackText: "W sprawie ulepszeń strony lub dodania nowych języków napisz tutaj:",
+
+  teams: {
+    volts: {
+      icon: "⚡",
+      title: "TEAM VOLTS",
+      text: "CZYSTA ENERGIA BŁYSKAWICY! Jestem pełen radości i energii!"
+    },
+    flame: {
+      icon: "🔥",
+      title: "TEAM FLAME",
+      text: "INTENSYWNOŚĆ PŁOMIENIA! Jestem ciepły i zaciekły!"
+    },
+    leaf: {
+      icon: "🍃",
+      title: "TEAM LEAF",
+      text: "SIŁA W KAŻDYM LIŚCIU! Jestem prawy i silny jak natura!"
+    }
+  }
+},
+
   ru: {
-    eventDate: "11 ИЮНЯ 2026 • 16:00 МСК",
+    eventDate: "11 ИЮНЯ 2026 • 16:00 МОСКВА",
     titleTop: "До начала",
     titleMain: "Невесомости",
     days: "дней",
@@ -82,7 +196,7 @@ const translations = {
   },
 
   pt: {
-    eventDate: "11 JUNHO 2026 • 10:00 BRT",
+    eventDate: "11 JUNHO 2026 • 10:00 BRASÍLIA",
     titleTop: "Até",
     titleMain: "Zero Gravity",
     days: "dias",
@@ -120,7 +234,7 @@ const translations = {
   },
 
   tr: {
-    eventDate: "11 HAZİRAN 2026 • 16:00 TRT",
+    eventDate: "11 HAZİRAN 2026 • 16:00 ISTANBUL",
     titleTop: "Kalan Süre",
     titleMain: "Zero Gravity",
     days: "gün",
@@ -158,7 +272,7 @@ const translations = {
   },
 
   id: {
-    eventDate: "11 JUNI 2026 • 20:00 WIB",
+    eventDate: "11 JUNI 2026 • 20:00 JAKARTA",
     titleTop: "Menuju",
     titleMain: "Zero Gravity",
     days: "hari",
@@ -196,7 +310,7 @@ const translations = {
   },
 
   es: {
-    eventDate: "11 JUNIO 2026 • 07:00 CST",
+    eventDate: "11 JUNIO 2026 • 07:00 MEXICO CITY",
     titleTop: "Hasta",
     titleMain: "Zero Gravity",
     days: "días",
@@ -234,7 +348,7 @@ const translations = {
   },
 
   hi: {
-    eventDate: "11 जून 2026 • 18:30 IST",
+    eventDate: "11 जून 2026 • 18:30 NEW DELHI",
     titleTop: "शुरू होने तक",
     titleMain: "Zero Gravity",
     days: "दिन",
