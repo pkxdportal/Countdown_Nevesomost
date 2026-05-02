@@ -6,7 +6,7 @@
 
   <title>Until Weightlessness</title>
 
-  <link rel="stylesheet" href="style.css?v=13" />
+  <link rel="stylesheet" href="style.css?v=14" />
 </head>
 
 <body>
@@ -85,7 +85,7 @@
   <main class="scene">
     <section class="hero">
       <div class="pkxd-badge">
-        <img src="PKXD.png?v=13" alt="PK XD" />
+        <img src="PKXD.png?v=14" alt="PK XD" />
         <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
       </div>
 
@@ -168,6 +168,45 @@
         </button>
       </div>
 
+      <div id="teamEnergy" class="team-energy">
+        <div class="team-energy-head">
+          <h2 data-i18n="teamEnergyTitle">Portal Team Energy 2026</h2>
+          <p id="selectedTeamText" data-i18n="noTeamSelected">Choose your team to activate its energy.</p>
+        </div>
+
+        <div class="energy-list">
+          <div class="energy-row volts">
+            <div class="energy-row-top">
+              <span>⚡ <b>Team Volts</b></span>
+              <strong id="voltsPercent">34%</strong>
+            </div>
+            <div class="energy-track">
+              <div class="energy-fill" style="width: 34%"></div>
+            </div>
+          </div>
+
+          <div class="energy-row flame">
+            <div class="energy-row-top">
+              <span>🔥 <b>Team Flame</b></span>
+              <strong id="flamePercent">41%</strong>
+            </div>
+            <div class="energy-track">
+              <div class="energy-fill" style="width: 41%"></div>
+            </div>
+          </div>
+
+          <div class="energy-row leaf">
+            <div class="energy-row-top">
+              <span>🍃 <b>Team Leaf</b></span>
+              <strong id="leafPercent">25%</strong>
+            </div>
+            <div class="energy-track">
+              <div class="energy-fill" style="width: 25%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="portal-credit">
         <span data-i18n="credit">
           Website created by <b>PK XD PORTAL</b>
@@ -230,11 +269,17 @@
 
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
+
     <div id="popupIcon" class="popup-icon"></div>
+
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
+
+    <button type="button" id="chooseTeamBtn" class="choose-team-btn" data-i18n="chooseTeamBtn">
+      Choose Team
+    </button>
   </div>
 
-  <script src="script.js?v=13"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>
