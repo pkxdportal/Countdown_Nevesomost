@@ -665,11 +665,33 @@ h1 span {
   display: none !important;
 }
 
-.language-wrapper {
+.top-actions {
   position: fixed;
   top: 18px;
   right: 18px;
-  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 120;
+}
+
+.action-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(220,232,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.language-wrapper {
+  position: relative;
 }
 
 .lang-toggle {
@@ -755,10 +777,7 @@ h1 span {
 /* DOWNLOAD MENU */
 
 .download-wrapper {
-  position: fixed;
-  top: 74px;
-  right: 18px;
-  z-index: 99;
+  position: relative;
 }
 
 .download-toggle {
@@ -900,11 +919,6 @@ body.near-1 .hero {
   }
 }
 
-@keyframes heroPulseFast {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.015); }
-}
-
 .title-small,
 .title-main {
   display: block;
@@ -926,6 +940,16 @@ body.near-1 .hero {
     border-radius: 28px;
   }
 
+  .top-actions {
+  top: 10px;
+  right: 10px;
+  gap: 12px;
+  }
+
+  .action-label {
+  font-size: 9px;
+  }
+
   .pkxd-badge {
     position: relative;
     top: auto;
@@ -938,11 +962,6 @@ body.near-1 .hero {
   .pkxd-badge img {
     height: 22px;
   }
-
-  .download-wrapper {
-  top: 62px;
-  right: 10px;
-}
 
 .download-toggle {
   width: 44px;
@@ -1019,11 +1038,6 @@ body.near-1 .hero {
   .team-popup {
     bottom: 20px;
     padding: 28px 22px;
-  }
-
-  .language-wrapper {
-    top: 10px;
-    right: 10px;
   }
 
   .lang-toggle {
@@ -1113,3 +1127,4 @@ body.near-1 .hero {
   .portal-links a {
   font-size: 12px;
 }
+  }
