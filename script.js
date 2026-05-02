@@ -11,6 +11,21 @@ let selectedTeam = localStorage.getItem("selectedTeam") || null;
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
 
+/*
+  ВСТАВЬ СЮДА ССЫЛКИ НА GOOGLE FORM
+
+  GOOGLE_FORM_URL — обычная ссылка на форму.
+  GOOGLE_FORM_PREFILLED_URLS — лучше: отдельные pre-filled ссылки для volts / flame / leaf.
+*/
+
+const GOOGLE_FORM_URL = "";
+
+const GOOGLE_FORM_PREFILLED_URLS = {
+  volts: "",
+  flame: "",
+  leaf: ""
+};
+
 let teamEnergyData = {
   volts: 0,
   flame: 0,
@@ -48,7 +63,7 @@ const translations = {
     progressLeft: "Left",
     progressText: "Event progress",
     shareCopied: "Link copied!",
-    teamEnergyTitle: "Portal Team Energy 2026",
+    teamEnergyTitle: "ZERO GRAVITY TEAM VOTE 2026",
     noTeamSelected: "Choose your team to activate its energy.",
     chooseTeamBtn: "Choose Team",
     selectedTeamPrefix: "Your team:",
@@ -104,7 +119,7 @@ const translations = {
     progressLeft: "Осталось",
     progressText: "Прогресс до события",
     shareCopied: "Ссылка скопирована!",
-    teamEnergyTitle: "Энергия команд Портала 2026",
+    teamEnergyTitle: "НЕВЕСОМОСТЬ: ГОЛОСОВАНИЕ КОМАНД 2026",
     noTeamSelected: "Выбери команду, чтобы активировать её энергию.",
     chooseTeamBtn: "Выбрать команду",
     selectedTeamPrefix: "Твоя команда:",
@@ -160,7 +175,7 @@ const translations = {
     progressLeft: "Übrig",
     progressText: "Fortschritt bis zum Event",
     shareCopied: "Link kopiert!",
-    teamEnergyTitle: "Portal Team Energy 2026",
+    teamEnergyTitle: "ZERO GRAVITY TEAM-ABSTIMMUNG 2026",
     noTeamSelected: "Wähle dein Team, um seine Energie zu aktivieren.",
     chooseTeamBtn: "Team wählen",
     selectedTeamPrefix: "Dein Team:",
@@ -216,7 +231,7 @@ const translations = {
     progressLeft: "Restant",
     progressText: "Progression jusqu’à l’événement",
     shareCopied: "Lien copié !",
-    teamEnergyTitle: "Énergie des équipes du Portail 2026",
+    teamEnergyTitle: "VOTE DES ÉQUIPES ZÉRO GRAVITÉ 2026",
     noTeamSelected: "Choisis ton équipe pour activer son énergie.",
     chooseTeamBtn: "Choisir l’équipe",
     selectedTeamPrefix: "Ton équipe :",
@@ -272,7 +287,7 @@ const translations = {
     progressLeft: "Zostało",
     progressText: "Postęp do wydarzenia",
     shareCopied: "Link skopiowany!",
-    teamEnergyTitle: "Energia drużyn Portalu 2026",
+    teamEnergyTitle: "GŁOSOWANIE DRUŻYN ZERO GRAVITY 2026",
     noTeamSelected: "Wybierz drużynę, aby aktywować jej energię.",
     chooseTeamBtn: "Wybierz drużynę",
     selectedTeamPrefix: "Twoja drużyna:",
@@ -328,7 +343,7 @@ const translations = {
     progressLeft: "Falta",
     progressText: "Progresso até o evento",
     shareCopied: "Link copiado!",
-    teamEnergyTitle: "Energia das Equipes do Portal 2026",
+    teamEnergyTitle: "VOTAÇÃO DAS EQUIPES ZERO GRAVITY 2026",
     noTeamSelected: "Escolha sua equipe para ativar sua energia.",
     chooseTeamBtn: "Escolher equipe",
     selectedTeamPrefix: "Sua equipe:",
@@ -384,7 +399,7 @@ const translations = {
     progressLeft: "Kaldı",
     progressText: "Etkinliğe kalan ilerleme",
     shareCopied: "Bağlantı kopyalandı!",
-    teamEnergyTitle: "Portal Takım Enerjisi 2026",
+    teamEnergyTitle: "ZERO GRAVITY TAKIM OYLAMASI 2026",
     noTeamSelected: "Enerjisini etkinleştirmek için takımını seç.",
     chooseTeamBtn: "Takımı seç",
     selectedTeamPrefix: "Takımın:",
@@ -440,7 +455,7 @@ const translations = {
     progressLeft: "Tersisa",
     progressText: "Progres menuju event",
     shareCopied: "Link disalin!",
-    teamEnergyTitle: "Energi Tim Portal 2026",
+    teamEnergyTitle: "VOTE TIM ZERO GRAVITY 2026",
     noTeamSelected: "Pilih tim untuk mengaktifkan energinya.",
     chooseTeamBtn: "Pilih Tim",
     selectedTeamPrefix: "Tim kamu:",
@@ -496,7 +511,7 @@ const translations = {
     progressLeft: "Falta",
     progressText: "Progreso hasta el evento",
     shareCopied: "¡Enlace copiado!",
-    teamEnergyTitle: "Energía de Equipos del Portal 2026",
+    teamEnergyTitle: "VOTACIÓN DE EQUIPOS ZERO GRAVITY 2026",
     noTeamSelected: "Elige tu equipo para activar su energía.",
     chooseTeamBtn: "Elegir equipo",
     selectedTeamPrefix: "Tu equipo:",
@@ -552,7 +567,7 @@ const translations = {
     progressLeft: "बाकी",
     progressText: "इवेंट तक प्रगति",
     shareCopied: "लिंक कॉपी हो गया!",
-    teamEnergyTitle: "Portal Team Energy 2026",
+    teamEnergyTitle: "ZERO GRAVITY टीम वोट 2026",
     noTeamSelected: "अपनी टीम चुनें ताकि उसकी ऊर्जा सक्रिय हो सके।",
     chooseTeamBtn: "टीम चुनें",
     selectedTeamPrefix: "आपकी टीम:",
@@ -768,6 +783,12 @@ function chooseTeam(team) {
   updateTeamEnergy();
   updateChooseButton();
   closeTeamPopup();
+
+  const voteUrl = GOOGLE_FORM_PREFILLED_URLS[team] || GOOGLE_FORM_URL;
+
+  if (voteUrl) {
+    window.open(voteUrl, "_blank", "noopener,noreferrer");
+  }
 }
 
 function applySelectedTeamTheme() {
