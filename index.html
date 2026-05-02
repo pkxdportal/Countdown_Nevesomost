@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>До Невесомости</title>
+  <title>Until Weightlessness</title>
 
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
 
 <body>
@@ -16,26 +16,25 @@
   <div class="particles"></div>
 
   <div class="language-wrapper">
-  <button type="button" id="langToggle" class="lang-toggle">
-    🌐
-  </button>
+    <button type="button" id="langToggle" class="lang-toggle" aria-label="Change language">
+      🌐
+    </button>
 
-  <div id="languageMenu" class="language-menu">
-    <button class="lang-btn active" data-lang="en">🇺🇸 EN</button>
-    <button class="lang-btn" data-lang="ru">🇷🇺 RU</button>
-    <button class="lang-btn" data-lang="pt">🇧🇷 PT</button>
-    <button class="lang-btn" data-lang="tr">🇹🇷 TR</button>
-    <button class="lang-btn" data-lang="id">🇮🇩 ID</button>
-    <button class="lang-btn" data-lang="es">🇲🇽 ES</button>
-    <button class="lang-btn" data-lang="hi">🇮🇳 HI</button>
-  </div>
+    <div id="languageMenu" class="language-menu">
+      <button type="button" class="lang-btn active" data-lang="en">🇺🇸 EN</button>
+      <button type="button" class="lang-btn" data-lang="ru">🇷🇺 RU</button>
+      <button type="button" class="lang-btn" data-lang="pt">🇧🇷 PT</button>
+      <button type="button" class="lang-btn" data-lang="tr">🇹🇷 TR</button>
+      <button type="button" class="lang-btn" data-lang="id">🇮🇩 ID</button>
+      <button type="button" class="lang-btn" data-lang="es">🇲🇽 ES</button>
+      <button type="button" class="lang-btn" data-lang="hi">🇮🇳 HI</button>
+    </div>
   </div>
 
   <main class="scene">
     <section class="hero">
-
       <div class="event-date" data-i18n="eventDate">
-        11 ИЮНЯ 2026 • 16:00 МСК
+        JUNE 11, 2026 • 08:00 AM EST
       </div>
 
       <div class="signs-orbit">
@@ -49,34 +48,29 @@
       </div>
 
       <h1>
-        <span class="title-small" data-i18n="titleTop">
-          До начала
-        </span>
-
-        <span class="title-main" data-i18n="titleMain">
-          Невесомости
-        </span>
+        <span class="title-small" data-i18n="titleTop">Until</span>
+        <span class="title-main" data-i18n="titleMain">Weightlessness</span>
       </h1>
 
       <div id="timer" class="timer">
         <div class="time-card">
           <span id="days">00</span>
-          <p data-i18n="days">дней</p>
+          <p data-i18n="days">days</p>
         </div>
 
         <div class="time-card">
           <span id="hours">00</span>
-          <p data-i18n="hours">часов</p>
+          <p data-i18n="hours">hours</p>
         </div>
 
         <div class="time-card">
           <span id="minutes">00</span>
-          <p data-i18n="minutes">минут</p>
+          <p data-i18n="minutes">minutes</p>
         </div>
 
         <div class="time-card">
           <span id="seconds">00</span>
-          <p data-i18n="seconds">секунд</p>
+          <p data-i18n="seconds">seconds</p>
         </div>
       </div>
 
@@ -96,7 +90,7 @@
 
       <div class="portal-credit">
         <span data-i18n="credit">
-          Сайт создан командой <b>PK XD PORTAL</b>
+          Website created by <b>PK XD PORTAL</b>
         </span>
 
         <a
@@ -105,32 +99,29 @@
           rel="noopener noreferrer"
           data-i18n="channelBtn"
         >
-          Перейти в канал
+          Open channel
         </a>
       </div>
 
       <div class="music-player">
         <button type="button" id="musicToggle" class="music-btn" data-i18n="musicOn">
-          🔊 Музыка Невесомости
+          🔊 Weightlessness Music
         </button>
       </div>
 
       <audio id="bgMusic" loop>
         <source src="nevesomost.mp3" type="audio/mpeg" />
       </audio>
-
     </section>
   </main>
 
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
-
     <div id="popupIcon" class="popup-icon"></div>
-
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
   </div>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
