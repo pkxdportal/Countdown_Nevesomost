@@ -612,6 +612,30 @@ h1 span {
     0 0 44px rgba(238,107,243,0.18);
 }
 
+@keyframes heroPulse {
+  0%,100% {
+    box-shadow:
+      0 0 90px rgba(0,120,255,0.30),
+      0 0 120px rgba(238,107,243,0.20);
+  }
+
+  50% {
+    box-shadow:
+      0 0 140px rgba(0,120,255,0.42),
+      0 0 170px rgba(238,107,243,0.32);
+  }
+}
+
+@keyframes heroPulseFast {
+  0%,100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+}
+
 @media (max-width: 760px) {
   .scene {
     min-height: auto;
