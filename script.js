@@ -15,7 +15,7 @@ const translations = {
     seconds: "seconds",
     credit: "Website created by <b>PK XD PORTAL</b>",
     channelBtn: "Open channel",
-    musicOn: "🔊 Weightlessness Music",
+    musicOn: "🔊 Music",
     musicOff: "🔇 Turn music off",
     started: "🚀 Zero Gravity has begun",
 
@@ -48,7 +48,7 @@ const translations = {
     seconds: "секунд",
     credit: "Сайт создан командой <b>PK XD PORTAL</b>",
     channelBtn: "Перейти в канал",
-    musicOn: "🔊 Музыка Невесомости",
+    musicOn: "🔊 Музыка",
     musicOff: "🔇 Выключить музыку",
     started: "🚀 Невесомость началась",
 
