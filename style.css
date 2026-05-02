@@ -731,6 +731,96 @@ h1 span {
   background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
 }
 
+.language-menu {
+  max-height: 310px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,227,255,0.65) rgba(255,255,255,0.08);
+}
+
+.language-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.language-menu::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+}
+
+.language-menu::-webkit-scrollbar-thumb {
+  background: linear-gradient(#8be3ff, #ee6bf3);
+  border-radius: 999px;
+}
+
+/* DOWNLOAD MENU */
+
+.download-wrapper {
+  position: fixed;
+  top: 74px;
+  right: 18px;
+  z-index: 99;
+}
+
+.download-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(5, 8, 22, 0.72);
+  backdrop-filter: blur(14px);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow:
+    0 0 22px rgba(139,227,255,0.22),
+    inset 0 0 14px rgba(255,255,255,0.05);
+}
+
+.download-menu {
+  position: absolute;
+  top: 58px;
+  right: 0;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(5, 8, 22, 0.92);
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 35px rgba(139,227,255,0.18);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  pointer-events: none;
+  transition: 0.22s ease;
+}
+
+.download-menu.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.download-title {
+  color: #dce8ff;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.download-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: #06101f;
+  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
+  text-decoration: none;
+  font-weight: 900;
+  text-align: center;
+}
+
 /* ATMOSPHERE */
 
 body.near-100 .hero {
@@ -848,6 +938,22 @@ body.near-1 .hero {
   .pkxd-badge img {
     height: 22px;
   }
+
+  .download-wrapper {
+  top: 62px;
+  right: 10px;
+}
+
+.download-toggle {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+}
+
+.download-menu {
+  top: 52px;
+  width: 205px;
+}
 
   .event-date {
     font-size: 11px;
