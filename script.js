@@ -18,7 +18,7 @@ const GOOGLE_SHEET_CSV_URL =
   GOOGLE_FORM_PREFILLED_URLS — лучше: отдельные pre-filled ссылки для volts / flame / leaf.
 */
 
-const GOOGLE_FORM_URL = "";
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd59BlXBH9tvS96vOtui6jvHhJyGLsFP0gJFZdW7-F1EtN-Nw/viewform?usp=dialog";
 
 const GOOGLE_FORM_PREFILLED_URLS = {
   volts: "",
