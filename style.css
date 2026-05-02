@@ -1125,9 +1125,9 @@ body.near-1 .hero {
 
   .portal-credit a,
   .portal-links a {
-  font-size: 12px;
-}
+    font-size: 12px;
   }
+}
 
 .share-toggle {
   width: 48px;
