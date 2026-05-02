@@ -1,12 +1,91 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
 
+let currentLang = "ru";
+let lastSeconds = null;
+let isPlaying = false;
+
+const translations = {
+  ru: {
+    eventDate: "11 ИЮНЯ 2026 • 16:00 МСК",
+    titleTop: "До начала",
+    titleMain: "Невесомости",
+    days: "дней",
+    hours: "часов",
+    minutes: "минут",
+    seconds: "секунд",
+    credit: "Сайт создан командой <b>PK XD PORTAL</b>",
+    channelBtn: "Перейти в канал",
+    musicOn: "🔊 Музыка Невесомости",
+    musicOff: "🔇 Выключить музыку",
+    started: "🚀 Невесомость началась",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
+      }
+    }
+  },
+
+  en: {
+    eventDate: "JUNE 11, 2026 • 16:00 MSK",
+    titleTop: "Until",
+    titleMain: "Zero Gravity",
+    days: "days",
+    hours: "hours",
+    minutes: "minutes",
+    seconds: "seconds",
+    credit: "Website created by <b>PK XD PORTAL</b>",
+    channelBtn: "Open channel",
+    musicOn: "🔊 Zero Gravity Music",
+    musicOff: "🔇 Turn music off",
+    started: "🚀 Zero Gravity has begun",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "PURE LIGHTNING ENERGY! I am full of joy and energy!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "THE INTENSITY OF FLAME! I am warm and fierce!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "THE POWER INSIDE EVERY LEAF! I am righteous and strong, like nature!"
+      }
+    }
+  }
+};
+
 const timer = document.getElementById("timer");
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
 
-let lastSeconds = null;
+const popup = document.getElementById("teamPopup");
+const popupIcon = document.getElementById("popupIcon");
+const popupTitle = document.getElementById("popupTitle");
+const popupText = document.getElementById("popupText");
+const closePopup = document.getElementById("closePopup");
+
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
 
 function updateCountdown() {
   const now = new Date();
@@ -17,7 +96,7 @@ function updateCountdown() {
 
     timer.innerHTML = `
       <div class="started">
-        🚀 Невесомость началась
+        ${translations[currentLang].started}
       </div>
     `;
 
@@ -25,7 +104,6 @@ function updateCountdown() {
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  updateAtmosphere(days);
   const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
@@ -35,6 +113,8 @@ function updateCountdown() {
   minutesEl.textContent = String(minutes).padStart(2, "0");
   secondsEl.textContent = String(seconds).padStart(2, "0");
 
+  updateAtmosphere(days);
+
   if (lastSeconds !== seconds) {
     secondsEl.classList.remove("tick");
     void secondsEl.offsetWidth;
@@ -43,38 +123,38 @@ function updateCountdown() {
   }
 }
 
-updateCountdown();
-const countdownInterval = setInterval(updateCountdown, 1000);
+function updateAtmosphere(daysLeft) {
+  document.body.classList.remove("near-100", "near-30", "near-7", "near-1");
 
-const teamData = {
-  volts: {
-    icon: "⚡",
-    title: "TEAM VOLTS",
-    text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
-  },
+  if (daysLeft <= 100) document.body.classList.add("near-100");
+  if (daysLeft <= 30) document.body.classList.add("near-30");
+  if (daysLeft <= 7) document.body.classList.add("near-7");
+  if (daysLeft <= 1) document.body.classList.add("near-1");
+}
 
-  flame: {
-    icon: "🔥",
-    title: "TEAM FLAME",
-    text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
-  },
+function setLanguage(lang) {
+  currentLang = lang;
+  const dict = translations[lang];
 
-  leaf: {
-    icon: "🍃",
-    title: "TEAM LEAF",
-    text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
-  }
-};
+  document.documentElement.lang = lang;
 
-const popup = document.getElementById("teamPopup");
-const popupIcon = document.getElementById("popupIcon");
-const popupTitle = document.getElementById("popupTitle");
-const popupText = document.getElementById("popupText");
-const closePopup = document.getElementById("closePopup");
-const teamGlow = document.getElementById("teamGlow");
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.dataset.i18n;
+
+    if (dict[key]) {
+      element.innerHTML = dict[key];
+    }
+  });
+
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.classList.toggle("active", button.dataset.lang === lang);
+  });
+
+  musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+}
 
 function openPopup(team) {
-  const data = teamData[team];
+  const data = translations[currentLang].teams[team];
 
   if (!data) return;
 
@@ -85,18 +165,25 @@ function openPopup(team) {
   popupTitle.textContent = data.title;
   popupText.textContent = data.text;
 
-  document.body.className = "team-" + team;
+  document.body.classList.remove("team-volts", "team-flame", "team-leaf");
+  document.body.classList.add("team-" + team);
 }
 
 function closeTeamPopup() {
   popup.className = "team-popup";
   popup.setAttribute("aria-hidden", "true");
-  document.body.className = "";
+  document.body.classList.remove("team-volts", "team-flame", "team-leaf");
 }
 
 document.querySelectorAll(".team-btn").forEach((button) => {
   button.addEventListener("click", () => {
     openPopup(button.dataset.team);
+  });
+});
+
+document.querySelectorAll(".lang-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    setLanguage(button.dataset.lang);
   });
 });
 
@@ -121,57 +208,21 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// =======================
-// MUSIC PLAYER
-// =======================
-
-const music = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
-
-let isPlaying = false;
-
 musicToggle.addEventListener("click", () => {
   if (!isPlaying) {
     music.play();
     musicToggle.classList.add("active");
-    musicToggle.textContent = "🔇 Выключить музыку";
+    musicToggle.innerHTML = translations[currentLang].musicOff;
     isPlaying = true;
   } else {
     music.pause();
     musicToggle.classList.remove("active");
-    musicToggle.textContent = "🔊 Музыка Невесомости";
+    musicToggle.innerHTML = translations[currentLang].musicOn;
     isPlaying = false;
   }
 });
 
-// =======================
-// EVENT ATMOSPHERE
-// =======================
+setLanguage("ru");
+updateCountdown();
 
-function updateAtmosphere(daysLeft) {
-  const hero = document.querySelector(".hero");
-  const particles = document.querySelector(".particles");
-
-  if (!hero || !particles) return;
-
-  if (daysLeft <= 100) {
-    hero.style.boxShadow = `
-      0 0 110px rgba(0,120,255,0.30),
-      0 0 140px rgba(238,107,243,0.22),
-      inset 0 0 60px rgba(255,255,255,0.05)
-    `;
-  }
-
-  if (daysLeft <= 30) {
-    particles.style.opacity = "0.65";
-    hero.style.transform = "scale(1.005)";
-  }
-
-  if (daysLeft <= 7) {
-    hero.style.animation = "heroPulse 3s ease-in-out infinite";
-  }
-
-  if (daysLeft <= 1) {
-    hero.style.animation = "heroPulseFast 1.8s ease-in-out infinite";
-  }
-}
+const countdownInterval = setInterval(updateCountdown, 1000);
