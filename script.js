@@ -46,7 +46,7 @@ const translations = {
   de: {
   eventDate: "11. JUNI 2026 • 15:00 BERLIN",
   titleTop: "Bis",
-  titleMain: "Schwerelosigkeit",
+  titleMain: "Zero Gravity",
   days: "Tage",
   hours: "Stunden",
   minutes: "Minuten",
@@ -57,7 +57,7 @@ const translations = {
   feedbackChannel: "PK XD PORTAL YouTube",
   musicOn: "🔊 Musik",
   musicOff: "🔇 Musik ausschalten",
-  started: "🚀 Die Schwerelosigkeit hat begonnen",
+  started: "🚀 Zero Gravity hat begonnen",
   fanCountdown: "Fan-Countdown für PK XD",
   disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
   feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
