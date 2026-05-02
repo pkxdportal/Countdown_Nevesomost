@@ -26,6 +26,8 @@ const translations = {
     downloadTitle: "Download / Update PK XD",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Language",
+    downloadLabel: "Download",
 
     teams: {
       volts: {
@@ -67,6 +69,8 @@ const translations = {
   downloadTitle: "PK XD herunterladen / aktualisieren",
   googlePlayBtn: "Google Play",
   appStoreBtn: "App Store",
+  languageLabel: "Sprache",
+  downloadLabel: "Download",
 
   teams: {
     volts: {
@@ -108,6 +112,8 @@ fr: {
   downloadTitle: "Télécharger / Mettre à jour PK XD",
   googlePlayBtn: "Google Play",
   appStoreBtn: "App Store",
+  languageLabel: "Langue",
+  downloadLabel: "Télécharger",
 
   teams: {
     volts: {
@@ -149,6 +155,8 @@ pl: {
   downloadTitle: "Pobierz / Zaktualizuj PK XD",
   googlePlayBtn: "Google Play",
   appStoreBtn: "App Store",
+  languageLabel: "Język",
+  downloadLabel: "Pobierz",
 
   teams: {
     volts: {
@@ -190,6 +198,8 @@ pl: {
     downloadTitle: "Скачать / обновить PK XD",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Язык",
+    downloadLabel: "Скачать",
 
     teams: {
       volts: {
@@ -231,6 +241,8 @@ pl: {
     downloadTitle: "Baixar / Atualizar PK XD",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Idioma",
+    downloadLabel: "Baixar",
 
     teams: {
       volts: {
@@ -272,6 +284,8 @@ pl: {
     downloadTitle: "PK XD İndir / Güncelle",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Dil",
+    downloadLabel: "İndir",
 
     teams: {
       volts: {
@@ -313,6 +327,8 @@ pl: {
     downloadTitle: "Unduh / Perbarui PK XD",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Bahasa",
+    downloadLabel: "Unduh",
 
     teams: {
       volts: {
@@ -354,6 +370,8 @@ pl: {
     downloadTitle: "Descargar / Actualizar PK XD",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "Idioma",
+    downloadLabel: "Descargar",
 
     teams: {
       volts: {
@@ -395,6 +413,8 @@ pl: {
     downloadTitle: "PK XD डाउनलोड / अपडेट करें",
     googlePlayBtn: "Google Play",
     appStoreBtn: "App Store",
+    languageLabel: "भाषा",
+    downloadLabel: "डाउनलोड",
 
     teams: {
       volts: {
