@@ -782,3 +782,135 @@ h1 span {
     font-size: 12px;
   }
 }
+
+.language-switch {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 30;
+  display: flex;
+  gap: 8px;
+  padding: 7px;
+  border-radius: 999px;
+  background: rgba(5, 8, 22, 0.65);
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 26px rgba(139,227,255,0.16);
+}
+
+.lang-btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #dce8ff;
+  background: transparent;
+  font-weight: 900;
+}
+
+.lang-btn.active {
+  color: #050816;
+  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
+}
+
+.music-player {
+  margin-top: 18px;
+}
+
+.music-btn {
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  transition: 0.25s ease;
+  box-shadow: 0 0 22px rgba(139,227,255,0.12);
+}
+
+.music-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+}
+
+.music-btn.active {
+  background: linear-gradient(
+    90deg,
+    rgba(0,140,255,0.28),
+    rgba(238,107,243,0.22)
+  );
+  box-shadow:
+    0 0 28px rgba(139,227,255,0.35),
+    0 0 44px rgba(238,107,243,0.18);
+}
+
+body.near-100 .hero {
+  box-shadow:
+    0 0 110px rgba(0,120,255,0.30),
+    0 0 140px rgba(238,107,243,0.22),
+    inset 0 0 60px rgba(255,255,255,0.05);
+}
+
+body.near-30 .particles {
+  opacity: 0.65;
+}
+
+body.near-7 .hero {
+  animation: heroPulse 3s ease-in-out infinite;
+}
+
+body.near-1 .hero {
+  animation: heroPulseFast 1.8s ease-in-out infinite;
+}
+
+@keyframes heroPulse {
+  0%,100% {
+    box-shadow:
+      0 0 90px rgba(0,120,255,0.30),
+      0 0 120px rgba(238,107,243,0.20);
+  }
+
+  50% {
+    box-shadow:
+      0 0 140px rgba(0,120,255,0.42),
+      0 0 170px rgba(238,107,243,0.32);
+  }
+}
+
+@keyframes heroPulseFast {
+  0%,100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+}
+
+.title-small {
+  display: block;
+}
+
+.title-main {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .language-switch {
+    top: 10px;
+    right: 10px;
+  }
+
+  .lang-btn {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .music-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
