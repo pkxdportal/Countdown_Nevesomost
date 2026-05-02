@@ -6,7 +6,7 @@
 
   <title>Until Weightlessness</title>
 
-  <link rel="stylesheet" href="style.css?v=12" />
+  <link rel="stylesheet" href="style.css?v=13" />
 </head>
 
 <body>
@@ -15,21 +15,10 @@
   <div class="noise"></div>
   <div class="particles"></div>
 
-  <!-- TOP ACTIONS -->
-
   <div class="top-actions">
-
-    <!-- LANGUAGE -->
-
     <div class="action-block">
       <div class="language-wrapper">
-
-        <button
-          type="button"
-          id="langToggle"
-          class="lang-toggle"
-          aria-label="Change language"
-        >
+        <button type="button" id="langToggle" class="lang-toggle" aria-label="Change language">
           🌐
         </button>
 
@@ -45,30 +34,18 @@
           <button type="button" class="lang-btn" data-lang="fr">🇫🇷 FR</button>
           <button type="button" class="lang-btn" data-lang="pl">🇵🇱 PL</button>
         </div>
-
       </div>
 
-      <span class="action-label" data-i18n="languageLabel">
-        Language
-      </span>
+      <span class="action-label" data-i18n="languageLabel">Language</span>
     </div>
-
-    <!-- DOWNLOAD -->
 
     <div class="action-block">
       <div class="download-wrapper">
-
-        <button
-          type="button"
-          id="downloadToggle"
-          class="download-toggle"
-          aria-label="Download or update PK XD"
-        >
+        <button type="button" id="downloadToggle" class="download-toggle" aria-label="Download or update PK XD">
           ⬇️
         </button>
 
         <div id="downloadMenu" class="download-menu">
-
           <div class="download-title" data-i18n="downloadTitle">
             Download / Update PK XD
           </div>
@@ -90,38 +67,26 @@
           >
             App Store
           </a>
-
         </div>
-
       </div>
 
-      <span class="action-label" data-i18n="downloadLabel">
-        Download
-      </span>
+      <span class="action-label" data-i18n="downloadLabel">Download</span>
     </div>
-
-  </div>
 
     <div class="action-block">
       <button type="button" id="shareBtn" class="share-toggle" aria-label="Share website">
-    🔗
+        🔗
       </button>
 
-    <span class="action-label" data-i18n="shareLabel">
-    Share
-    </span>
+      <span class="action-label" data-i18n="shareLabel">Share</span>
+    </div>
   </div>
-
-  <!-- MAIN -->
 
   <main class="scene">
     <section class="hero">
-
       <div class="pkxd-badge">
-        <img src="PKXD.png?v=12" alt="PK XD" />
-        <span data-i18n="fanCountdown">
-          Fan countdown for PK XD
-        </span>
+        <img src="PKXD.png?v=13" alt="PK XD" />
+        <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
       </div>
 
       <div class="event-date" data-i18n="eventDate">
@@ -139,13 +104,8 @@
       </div>
 
       <h1>
-        <span class="title-small" data-i18n="titleTop">
-          Until
-        </span>
-
-        <span class="title-main" data-i18n="titleMain">
-          Weightlessness
-        </span>
+        <span class="title-small" data-i18n="titleTop">Until</span>
+        <span class="title-main" data-i18n="titleMain">Weightlessness</span>
       </h1>
 
       <div class="mode-switch">
@@ -164,20 +124,6 @@
           <p data-i18n="days">days</p>
         </div>
 
-      <div id="progressPanel" class="progress-panel">
-  <div class="progress-info">
-    <span data-i18n="progressPassed">Passed</span>
-    <span id="progressPercent">0%</span>
-    <span data-i18n="progressLeft">Left</span>
-  </div>
-
-  <div class="progress-bar">
-    <div id="progressFill" class="progress-fill"></div>
-  </div>
-
-  <p id="progressText" class="progress-text"></p>
-     </div>
-
         <div class="time-card">
           <span id="hours">00</span>
           <p data-i18n="hours">hours</p>
@@ -192,6 +138,20 @@
           <span id="seconds">00</span>
           <p data-i18n="seconds">seconds</p>
         </div>
+      </div>
+
+      <div id="progressPanel" class="progress-panel">
+        <div class="progress-info">
+          <span data-i18n="progressPassed">Passed</span>
+          <span id="progressPercent">0%</span>
+          <span data-i18n="progressLeft">Left</span>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+        <p id="progressText" class="progress-text"></p>
       </div>
 
       <div class="hashtags">
@@ -209,13 +169,11 @@
       </div>
 
       <div class="portal-credit">
-
         <span data-i18n="credit">
           Website created by <b>PK XD PORTAL</b>
         </span>
 
         <div class="portal-links">
-
           <a
             href="https://t.me/pkxdportal"
             target="_blank"
@@ -233,23 +191,16 @@
           >
             YouTube
           </a>
-
         </div>
       </div>
 
       <div class="music-player">
-        <button
-          type="button"
-          id="musicToggle"
-          class="music-btn"
-          data-i18n="musicOn"
-        >
+        <button type="button" id="musicToggle" class="music-btn" data-i18n="musicOn">
           🔊 Weightlessness Music
         </button>
       </div>
 
       <div class="site-note">
-
         <p data-i18n="disclaimer">
           This is a fan-made countdown. PK XD is a game by Afterverse.
           This site is not official and is not affiliated with Afterverse.
@@ -269,27 +220,21 @@
             PK XD PORTAL YouTube
           </a>
         </p>
-
       </div>
 
       <audio id="bgMusic" loop>
         <source src="nevesomost.mp3" type="audio/mpeg" />
       </audio>
-
     </section>
   </main>
 
-  <!-- POPUP -->
-
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
-
     <div id="popupIcon" class="popup-icon"></div>
-
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
   </div>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=13"></script>
 </body>
 </html>
