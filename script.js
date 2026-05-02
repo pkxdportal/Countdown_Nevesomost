@@ -1,8 +1,10 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
+const eventStartDate = new Date("2026-01-01T00:00:00Z");
 
 let currentLang = "en";
 let lastSeconds = null;
 let isPlaying = false;
+let countdownInterval = null;
 
 const translations = {
   en: {
@@ -128,6 +130,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Sprache",
     downloadLabel: "Download",
+    shareLabel: "Teilen",
+    countdownMode: "Countdown",
+    progressMode: "Fortschritt",
+    progressPassed: "Vergangen",
+    progressLeft: "Übrig",
+    progressText: "Fortschritt bis zum Event",
+    shareCopied: "Link kopiert!",
 
     teams: {
       volts: {
@@ -171,6 +180,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Langue",
     downloadLabel: "Télécharger",
+    shareLabel: "Partager",
+    countdownMode: "Compte à rebours",
+    progressMode: "Progression",
+    progressPassed: "Passé",
+    progressLeft: "Restant",
+    progressText: "Progression jusqu’à l’événement",
+    shareCopied: "Lien copié !",
 
     teams: {
       volts: {
@@ -214,6 +230,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Język",
     downloadLabel: "Pobierz",
+    shareLabel: "Udostępnij",
+    countdownMode: "Odliczanie",
+    progressMode: "Postęp",
+    progressPassed: "Minęło",
+    progressLeft: "Zostało",
+    progressText: "Postęp do wydarzenia",
+    shareCopied: "Link skopiowany!",
 
     teams: {
       volts: {
@@ -257,6 +280,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Idioma",
     downloadLabel: "Baixar",
+    shareLabel: "Compartilhar",
+    countdownMode: "Contagem",
+    progressMode: "Progresso",
+    progressPassed: "Passou",
+    progressLeft: "Falta",
+    progressText: "Progresso até o evento",
+    shareCopied: "Link copiado!",
 
     teams: {
       volts: {
@@ -300,6 +330,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Dil",
     downloadLabel: "İndir",
+    shareLabel: "Paylaş",
+    countdownMode: "Geri Sayım",
+    progressMode: "İlerleme",
+    progressPassed: "Geçti",
+    progressLeft: "Kaldı",
+    progressText: "Etkinliğe kalan ilerleme",
+    shareCopied: "Bağlantı kopyalandı!",
 
     teams: {
       volts: {
@@ -343,6 +380,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Bahasa",
     downloadLabel: "Unduh",
+    shareLabel: "Bagikan",
+    countdownMode: "Hitung Mundur",
+    progressMode: "Progres",
+    progressPassed: "Berlalu",
+    progressLeft: "Tersisa",
+    progressText: "Progres menuju event",
+    shareCopied: "Link disalin!",
 
     teams: {
       volts: {
@@ -386,6 +430,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Idioma",
     downloadLabel: "Descargar",
+    shareLabel: "Compartir",
+    countdownMode: "Cuenta regresiva",
+    progressMode: "Progreso",
+    progressPassed: "Pasó",
+    progressLeft: "Falta",
+    progressText: "Progreso hasta el evento",
+    shareCopied: "¡Enlace copiado!",
 
     teams: {
       volts: {
@@ -429,6 +480,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "भाषा",
     downloadLabel: "डाउनलोड",
+    shareLabel: "शेयर",
+    countdownMode: "काउंटडाउन",
+    progressMode: "प्रगति",
+    progressPassed: "बीता",
+    progressLeft: "बाकी",
+    progressText: "इवेंट तक प्रगति",
+    shareCopied: "लिंक कॉपी हो गया!",
 
     teams: {
       volts: {
@@ -485,7 +543,7 @@ function updateCountdown() {
   const distance = targetDate.getTime() - now.getTime();
 
   if (distance <= 0) {
-    clearInterval(countdownInterval);
+    if (countdownInterval) clearInterval(countdownInterval);
 
     timer.innerHTML = `
       <div class="started">
@@ -493,6 +551,7 @@ function updateCountdown() {
       </div>
     `;
 
+    updateProgress(0);
     return;
   }
 
@@ -517,6 +576,22 @@ function updateCountdown() {
   }
 }
 
+function updateProgress() {
+  const now = new Date().getTime();
+  const start = eventStartDate.getTime();
+  const end = targetDate.getTime();
+
+  const total = end - start;
+  const passed = now - start;
+
+  let percent = Math.round((passed / total) * 100);
+  percent = Math.max(0, Math.min(100, percent));
+
+  progressFill.style.width = percent + "%";
+  progressPercent.textContent = percent + "%";
+  progressText.textContent = translations[currentLang].progressText;
+}
+
 function updateAtmosphere(daysLeft) {
   document.body.classList.remove(
     "near-100",
@@ -536,11 +611,12 @@ function updateAtmosphere(daysLeft) {
 }
 
 function setLanguage(lang) {
-  currentLang = lang;
-  localStorage.setItem("selectedLang", lang);
-  const dict = translations[lang];
+  currentLang = translations[lang] ? lang : "en";
+  localStorage.setItem("selectedLang", currentLang);
 
-  document.documentElement.lang = lang;
+  const dict = translations[currentLang];
+
+  document.documentElement.lang = currentLang;
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const key = element.dataset.i18n;
@@ -551,10 +627,11 @@ function setLanguage(lang) {
   });
 
   document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
-    button.classList.toggle("active", button.dataset.lang === lang);
+    button.classList.toggle("active", button.dataset.lang === currentLang);
   });
 
   musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+  progressText.textContent = dict.progressText;
 
   languageMenu.classList.remove("open");
   downloadMenu.classList.remove("open");
@@ -653,30 +730,6 @@ musicToggle.addEventListener("click", () => {
   }
 });
 
-setLanguage("en");
-updateCountdown();
-
-const countdownInterval = setInterval(updateCountdown, 1000);
-
-const eventStartDate = new Date("2026-01-01T00:00:00Z");
-
-function updateProgress(distanceToTarget) {
-  const now = new Date().getTime();
-  const start = eventStartDate.getTime();
-  const end = targetDate.getTime();
-
-  const total = end - start;
-  const passed = now - start;
-
-  let percent = Math.round((passed / total) * 100);
-
-  percent = Math.max(0, Math.min(100, percent));
-
-  progressFill.style.width = percent + "%";
-  progressPercent.textContent = percent + "%";
-  progressText.textContent = translations[currentLang].progressText;
-}
-
 countdownModeBtn.addEventListener("click", () => {
   timer.classList.remove("hidden");
   progressPanel.classList.remove("active");
@@ -711,3 +764,10 @@ shareBtn.addEventListener("click", async () => {
     alert(translations[currentLang].shareCopied);
   }
 });
+
+const savedLang = localStorage.getItem("selectedLang") || "en";
+
+setLanguage(savedLang);
+updateCountdown();
+
+countdownInterval = setInterval(updateCountdown, 1000);
