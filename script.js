@@ -25,6 +25,7 @@ function updateCountdown() {
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  updateAtmosphere(days);
   const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
@@ -142,3 +143,35 @@ musicToggle.addEventListener("click", () => {
     isPlaying = false;
   }
 });
+
+// =======================
+// EVENT ATMOSPHERE
+// =======================
+
+function updateAtmosphere(daysLeft) {
+  const hero = document.querySelector(".hero");
+  const particles = document.querySelector(".particles");
+
+  if (!hero || !particles) return;
+
+  if (daysLeft <= 100) {
+    hero.style.boxShadow = `
+      0 0 110px rgba(0,120,255,0.30),
+      0 0 140px rgba(238,107,243,0.22),
+      inset 0 0 60px rgba(255,255,255,0.05)
+    `;
+  }
+
+  if (daysLeft <= 30) {
+    particles.style.opacity = "0.65";
+    hero.style.transform = "scale(1.005)";
+  }
+
+  if (daysLeft <= 7) {
+    hero.style.animation = "heroPulse 3s ease-in-out infinite";
+  }
+
+  if (daysLeft <= 1) {
+    hero.style.animation = "heroPulseFast 1.8s ease-in-out infinite";
+  }
+}
