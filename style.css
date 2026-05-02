@@ -914,3 +914,37 @@ body.near-1 .hero {
     padding: 10px 16px;
   }
 }
+
+@media (max-width: 760px) {
+  .language-switch {
+    top: 10px;
+    right: 10px;
+    gap: 4px;
+    padding: 6px;
+    max-width: calc(100vw - 20px);
+    overflow-x: auto;
+    border-radius: 22px;
+    transform: scale(0.82);
+    transform-origin: top right;
+  }
+
+  .lang-btn {
+    min-width: 34px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .event-date {
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 420px) {
+  .language-switch {
+    transform: scale(0.76);
+  }
+
+  .event-date {
+    margin-top: 42px;
+  }
+}
