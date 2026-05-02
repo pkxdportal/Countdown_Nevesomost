@@ -1,1721 +1,943 @@
-* {
-  box-sizing: border-box;
-}
+const targetDate = new Date("2026-06-11T13:00:00Z");
+const eventStartDate = new Date("2025-06-26T00:00:00Z");
 
-html,
-body {
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-}
+let currentLang = "en";
+let lastSeconds = null;
+let isPlaying = false;
+let countdownInterval = null;
+let currentPopupTeam = null;
+let selectedTeam = localStorage.getItem("selectedTeam") || null;
 
-body {
-  margin: 0;
-  min-height: 100svh;
-  overflow-y: auto;
-  font-family: Arial, sans-serif;
-  color: white;
-  background: #02030c;
-}
+const teamEnergyData = {
+  volts: 34,
+  flame: 41,
+  leaf: 25
+};
 
-/* =========================
-   BACKGROUND
-========================= */
+const translations = {
+  en: {
+    eventDate: "JUNE 11, 2026 • 09:00 NEW YORK",
+    titleTop: "Until",
+    titleMain: "Zero Gravity",
+    days: "days",
+    hours: "hours",
+    minutes: "minutes",
+    seconds: "seconds",
+    credit: "Website created by <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
+    musicOn: "🔊 Music",
+    musicOff: "🔇 Turn music off",
+    started: "🚀 Zero Gravity has begun",
+    fanCountdown: "Fan countdown for PK XD",
+    disclaimer: "This is a fan-made countdown. PK XD is a game by Afterverse. This site is not official and is not affiliated with Afterverse.",
+    feedbackText: "For website improvements or adding more languages, write here:",
+    downloadTitle: "Download / Update PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Language",
+    downloadLabel: "Download",
+    shareLabel: "Share",
+    countdownMode: "Countdown",
+    progressMode: "Progress",
+    progressPassed: "Passed",
+    progressLeft: "Left",
+    progressText: "Event progress",
+    shareCopied: "Link copied!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "Choose your team to activate its energy.",
+    chooseTeamBtn: "Choose Team",
+    selectedTeamPrefix: "Your team:",
+    selectedTeamSaved: "Team selected:",
+    teamAlreadySelected: "Selected",
 
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: -5;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(139, 227, 255, 0.28), transparent 22%),
-    radial-gradient(circle at 20% 70%, rgba(238, 107, 243, 0.22), transparent 28%),
-    radial-gradient(circle at 80% 65%, rgba(255, 183, 60, 0.16), transparent 25%),
-    url("bag.png") center / cover no-repeat;
-  filter: brightness(0.62) saturate(1.45);
-  transition: filter 0.5s ease;
-}
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "PURE LIGHTNING ENERGY! I am full of joy and energy!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "THE INTENSITY OF FLAME! I am warm and fierce!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "THE POWER INSIDE EVERY LEAF! I am righteous and strong, like nature!"
+      }
+    }
+  },
 
-.background::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.16), rgba(0,0,0,0.76)),
-    radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.74) 78%);
-}
+  ru: {
+    eventDate: "11 ИЮНЯ 2026 • 16:00 МОСКВА",
+    titleTop: "До начала",
+    titleMain: "Невесомости",
+    days: "дней",
+    hours: "часов",
+    minutes: "минут",
+    seconds: "секунд",
+    credit: "Сайт создан командой <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Музыка",
+    musicOff: "🔇 Выключить музыку",
+    started: "🚀 Невесомость началась",
+    fanCountdown: "Фанатский отсчёт для PK XD",
+    disclaimer: "Это фанатский отсчёт. PK XD — игра от Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
+    feedbackText: "По вопросам улучшения сайта или добавления других языков пишите сюда:",
+    downloadTitle: "Скачать / обновить PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Язык",
+    downloadLabel: "Скачать",
+    shareLabel: "Поделиться",
+    countdownMode: "Отсчёт",
+    progressMode: "Прогресс",
+    progressPassed: "Прошло",
+    progressLeft: "Осталось",
+    progressText: "Прогресс до события",
+    shareCopied: "Ссылка скопирована!",
+    teamEnergyTitle: "Энергия команд Портала 2026",
+    noTeamSelected: "Выбери команду, чтобы активировать её энергию.",
+    chooseTeamBtn: "Выбрать команду",
+    selectedTeamPrefix: "Твоя команда:",
+    selectedTeamSaved: "Команда выбрана:",
+    teamAlreadySelected: "Выбрано",
 
-.team-glow {
-  position: fixed;
-  inset: 0;
-  z-index: -4;
-  opacity: 0;
-  transition: opacity 0.45s ease, background 0.45s ease;
-  pointer-events: none;
-}
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ЧИСТАЯ ЭНЕРГИЯ МОЛНИИ! Я полон радости и энергии!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "ИНТЕНСИВНОСТЬ ПЛАМЕНИ! Я тёплый и яростный!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "СИЛА ВНУТРИ КАЖДОГО ЛИСТА! Я праведный и сильный, как природа!"
+      }
+    }
+  },
 
-body.team-volts .team-glow,
-body.selected-volts .team-glow {
-  opacity: 1;
-  background:
-    radial-gradient(circle at center, rgba(0, 135, 255, 0.34), transparent 56%),
-    radial-gradient(circle at 70% 30%, rgba(139, 227, 255, 0.18), transparent 38%);
-}
+  de: {
+    eventDate: "11. JUNI 2026 • 15:00 BERLIN",
+    titleTop: "Bis",
+    titleMain: "Zero Gravity",
+    days: "Tage",
+    hours: "Stunden",
+    minutes: "Minuten",
+    seconds: "Sekunden",
+    credit: "Website erstellt von <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
+    musicOn: "🔊 Musik",
+    musicOff: "🔇 Musik ausschalten",
+    started: "🚀 Zero Gravity hat begonnen",
+    fanCountdown: "Fan-Countdown für PK XD",
+    disclaimer: "Dies ist ein von Fans erstellter Countdown. PK XD ist ein Spiel von Afterverse. Diese Website ist nicht offiziell und steht nicht in Verbindung mit Afterverse.",
+    feedbackText: "Für Website-Verbesserungen oder weitere Sprachen schreibe hier:",
+    downloadTitle: "PK XD herunterladen / aktualisieren",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Sprache",
+    downloadLabel: "Download",
+    shareLabel: "Teilen",
+    countdownMode: "Countdown",
+    progressMode: "Fortschritt",
+    progressPassed: "Vergangen",
+    progressLeft: "Übrig",
+    progressText: "Fortschritt bis zum Event",
+    shareCopied: "Link kopiert!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "Wähle dein Team, um seine Energie zu aktivieren.",
+    chooseTeamBtn: "Team wählen",
+    selectedTeamPrefix: "Dein Team:",
+    selectedTeamSaved: "Team gewählt:",
+    teamAlreadySelected: "Gewählt",
 
-body.team-flame .team-glow,
-body.selected-flame .team-glow {
-  opacity: 1;
-  background:
-    radial-gradient(circle at center, rgba(255, 70, 30, 0.32), transparent 56%),
-    radial-gradient(circle at 70% 30%, rgba(255, 183, 60, 0.18), transparent 38%);
-}
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "REINE BLITZENERGIE! Ich bin voller Freude und Energie!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "DIE INTENSITÄT DER FLAMME! Ich bin warm und wild!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "DIE KRAFT IN JEDEM BLATT! Ich bin gerecht und stark wie die Natur!"
+      }
+    }
+  },
 
-body.team-leaf .team-glow,
-body.selected-leaf .team-glow {
-  opacity: 1;
-  background:
-    radial-gradient(circle at center, rgba(40, 255, 100, 0.28), transparent 56%),
-    radial-gradient(circle at 70% 30%, rgba(150, 255, 120, 0.16), transparent 38%);
-}
+  fr: {
+    eventDate: "11 JUIN 2026 • 15:00 PARIS",
+    titleTop: "Jusqu’à",
+    titleMain: "Zéro Gravité",
+    days: "jours",
+    hours: "heures",
+    minutes: "minutes",
+    seconds: "secondes",
+    credit: "Site créé par <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Musique",
+    musicOff: "🔇 Couper la musique",
+    started: "🚀 Zéro Gravité a commencé",
+    fanCountdown: "Compte à rebours de fan pour PK XD",
+    disclaimer: "Ceci est un compte à rebours créé par des fans. PK XD est un jeu d’Afterverse. Ce site n’est pas officiel et n’est pas affilié à Afterverse.",
+    feedbackText: "Pour améliorer le site ou ajouter d’autres langues, écris ici :",
+    downloadTitle: "Télécharger / Mettre à jour PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Langue",
+    downloadLabel: "Télécharger",
+    shareLabel: "Partager",
+    countdownMode: "Compte à rebours",
+    progressMode: "Progression",
+    progressPassed: "Passé",
+    progressLeft: "Restant",
+    progressText: "Progression jusqu’à l’événement",
+    shareCopied: "Lien copié !",
+    teamEnergyTitle: "Énergie des équipes du Portail 2026",
+    noTeamSelected: "Choisis ton équipe pour activer son énergie.",
+    chooseTeamBtn: "Choisir l’équipe",
+    selectedTeamPrefix: "Ton équipe :",
+    selectedTeamSaved: "Équipe choisie :",
+    teamAlreadySelected: "Choisie",
 
-.noise {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  opacity: 0.075;
-  pointer-events: none;
-  background-image:
-    linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(circle, black 20%, transparent 75%);
-}
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ÉNERGIE PURE DE LA FOUDRE ! Je suis plein de joie et d’énergie !"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "L’INTENSITÉ DE LA FLAMME ! Je suis chaleureux et féroce !"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "LA FORCE DANS CHAQUE FEUILLE ! Je suis juste et fort comme la nature !"
+      }
+    }
+  },
 
-.particles {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle, #ffffff 1px, transparent 1px),
-    radial-gradient(circle, #8be3ff 1px, transparent 1px),
-    radial-gradient(circle, #ee6bf3 1px, transparent 1px);
-  background-size: 90px 90px, 150px 150px, 230px 230px;
-  animation: particlesMove 22s linear infinite;
-  opacity: 0.42;
-  transition: opacity 0.5s ease;
-}
+  pl: {
+    eventDate: "11 CZERWCA 2026 • 15:00 WARSZAWA",
+    titleTop: "Do",
+    titleMain: "Nieważkości",
+    days: "dni",
+    hours: "godziny",
+    minutes: "minuty",
+    seconds: "sekundy",
+    credit: "Strona stworzona przez <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Muzyka",
+    musicOff: "🔇 Wyłącz muzykę",
+    started: "🚀 Nieważkość się rozpoczęła",
+    fanCountdown: "Fanowski licznik dla PK XD",
+    disclaimer: "To fanowski licznik. PK XD to gra od Afterverse. Ta strona nie jest oficjalna i nie jest powiązana z Afterverse.",
+    feedbackText: "W sprawie ulepszeń strony lub dodania nowych języków napisz tutaj:",
+    downloadTitle: "Pobierz / Zaktualizuj PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Język",
+    downloadLabel: "Pobierz",
+    shareLabel: "Udostępnij",
+    countdownMode: "Odliczanie",
+    progressMode: "Postęp",
+    progressPassed: "Minęło",
+    progressLeft: "Zostało",
+    progressText: "Postęp do wydarzenia",
+    shareCopied: "Link skopiowany!",
+    teamEnergyTitle: "Energia drużyn Portalu 2026",
+    noTeamSelected: "Wybierz drużynę, aby aktywować jej energię.",
+    chooseTeamBtn: "Wybierz drużynę",
+    selectedTeamPrefix: "Twoja drużyna:",
+    selectedTeamSaved: "Wybrana drużyna:",
+    teamAlreadySelected: "Wybrano",
 
-@keyframes particlesMove {
-  from {
-    transform: translateY(0);
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "CZYSTA ENERGIA BŁYSKAWICY! Jestem pełen radości i energii!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "INTENSYWNOŚĆ PŁOMIENIA! Jestem ciepły i zaciekły!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "SIŁA W KAŻDYM LIŚCIU! Jestem prawy i silny jak natura!"
+      }
+    }
+  },
+
+  pt: {
+    eventDate: "11 JUNHO 2026 • 10:00 BRASÍLIA",
+    titleTop: "Até",
+    titleMain: "Zero Gravity",
+    days: "dias",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    credit: "Site criado pela <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Música",
+    musicOff: "🔇 Desligar música",
+    started: "🚀 Zero Gravity começou",
+    fanCountdown: "Contagem regressiva feita por fãs para PK XD",
+    disclaimer: "Esta é uma contagem regressiva feita por fãs. PK XD é um jogo da Afterverse. Este site não é oficial e não possui afiliação com a Afterverse.",
+    feedbackText: "Para melhorias no site ou adição de novos idiomas, escreva aqui:",
+    downloadTitle: "Baixar / Atualizar PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Idioma",
+    downloadLabel: "Baixar",
+    shareLabel: "Compartilhar",
+    countdownMode: "Contagem",
+    progressMode: "Progresso",
+    progressPassed: "Passou",
+    progressLeft: "Falta",
+    progressText: "Progresso até o evento",
+    shareCopied: "Link copiado!",
+    teamEnergyTitle: "Energia das Equipes do Portal 2026",
+    noTeamSelected: "Escolha sua equipe para ativar sua energia.",
+    chooseTeamBtn: "Escolher equipe",
+    selectedTeamPrefix: "Sua equipe:",
+    selectedTeamSaved: "Equipe escolhida:",
+    teamAlreadySelected: "Escolhida",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ENERGIA PURA DE RAIO!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "INTENSIDADE DO FOGO!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "FORÇA DA NATUREZA!"
+      }
+    }
+  },
+
+  tr: {
+    eventDate: "11 HAZİRAN 2026 • 16:00 ISTANBUL",
+    titleTop: "Kalan Süre",
+    titleMain: "Zero Gravity",
+    days: "gün",
+    hours: "saat",
+    minutes: "dakika",
+    seconds: "saniye",
+    credit: "<b>PK XD PORTAL</b> tarafından oluşturuldu",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
+    musicOn: "🔊 Müzik",
+    musicOff: "🔇 Müziği Kapat",
+    started: "🚀 Zero Gravity başladı",
+    fanCountdown: "PK XD için hayran geri sayımı",
+    disclaimer: "Bu hayran yapımı bir geri sayımdır. PK XD, Afterverse tarafından geliştirilen bir oyundur. Bu site resmi değildir ve Afterverse ile bağlantılı değildir.",
+    feedbackText: "Site geliştirmeleri veya yeni diller eklemek için buraya yazın:",
+    downloadTitle: "PK XD İndir / Güncelle",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Dil",
+    downloadLabel: "İndir",
+    shareLabel: "Paylaş",
+    countdownMode: "Geri Sayım",
+    progressMode: "İlerleme",
+    progressPassed: "Geçti",
+    progressLeft: "Kaldı",
+    progressText: "Etkinliğe kalan ilerleme",
+    shareCopied: "Bağlantı kopyalandı!",
+    teamEnergyTitle: "Portal Takım Enerjisi 2026",
+    noTeamSelected: "Enerjisini etkinleştirmek için takımını seç.",
+    chooseTeamBtn: "Takımı seç",
+    selectedTeamPrefix: "Takımın:",
+    selectedTeamSaved: "Takım seçildi:",
+    teamAlreadySelected: "Seçildi",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "SAF YILDIRIM ENERJİSİ!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "ATEŞİN YOĞUNLUĞU!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "DOĞANIN GÜCÜ!"
+      }
+    }
+  },
+
+  id: {
+    eventDate: "11 JUNI 2026 • 20:00 JAKARTA",
+    titleTop: "Menuju",
+    titleMain: "Zero Gravity",
+    days: "hari",
+    hours: "jam",
+    minutes: "menit",
+    seconds: "detik",
+    credit: "Website dibuat oleh <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Musik",
+    musicOff: "🔇 Matikan musik",
+    started: "🚀 Zero Gravity dimulai",
+    fanCountdown: "Hitung mundur penggemar untuk PK XD",
+    disclaimer: "Ini adalah hitung mundur buatan penggemar. PK XD adalah game dari Afterverse. Situs ini bukan situs resmi dan tidak berafiliasi dengan Afterverse.",
+    feedbackText: "Untuk peningkatan situs atau penambahan bahasa baru, tulis di sini:",
+    downloadTitle: "Unduh / Perbarui PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Bahasa",
+    downloadLabel: "Unduh",
+    shareLabel: "Bagikan",
+    countdownMode: "Hitung Mundur",
+    progressMode: "Progres",
+    progressPassed: "Berlalu",
+    progressLeft: "Tersisa",
+    progressText: "Progres menuju event",
+    shareCopied: "Link disalin!",
+    teamEnergyTitle: "Energi Tim Portal 2026",
+    noTeamSelected: "Pilih tim untuk mengaktifkan energinya.",
+    chooseTeamBtn: "Pilih Tim",
+    selectedTeamPrefix: "Tim kamu:",
+    selectedTeamSaved: "Tim dipilih:",
+    teamAlreadySelected: "Dipilih",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "ENERGI PETIR MURNI!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "INTENSITAS API!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "KEKUATAN ALAM!"
+      }
+    }
+  },
+
+  es: {
+    eventDate: "11 JUNIO 2026 • 07:00 MEXICO CITY",
+    titleTop: "Hasta",
+    titleMain: "Zero Gravity",
+    days: "días",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    credit: "Sitio creado por <b>PK XD PORTAL</b>",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "YouTube PK XD PORTAL",
+    musicOn: "🔊 Música",
+    musicOff: "🔇 Apagar música",
+    started: "🚀 Zero Gravity comenzó",
+    fanCountdown: "Cuenta regresiva hecha por fans para PK XD",
+    disclaimer: "Esta es una cuenta regresiva hecha por fans. PK XD es un juego de Afterverse. Este sitio no es oficial y no está afiliado con Afterverse.",
+    feedbackText: "Para mejorar el sitio o agregar más idiomas, escribe aquí:",
+    downloadTitle: "Descargar / Actualizar PK XD",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "Idioma",
+    downloadLabel: "Descargar",
+    shareLabel: "Compartir",
+    countdownMode: "Cuenta regresiva",
+    progressMode: "Progreso",
+    progressPassed: "Pasó",
+    progressLeft: "Falta",
+    progressText: "Progreso hasta el evento",
+    shareCopied: "¡Enlace copiado!",
+    teamEnergyTitle: "Energía de Equipos del Portal 2026",
+    noTeamSelected: "Elige tu equipo para activar su energía.",
+    chooseTeamBtn: "Elegir equipo",
+    selectedTeamPrefix: "Tu equipo:",
+    selectedTeamSaved: "Equipo elegido:",
+    teamAlreadySelected: "Elegido",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "¡ENERGÍA PURA DEL RAYO!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "¡INTENSIDAD DEL FUEGO!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "¡FUERZA DE LA NATURALEZA!"
+      }
+    }
+  },
+
+  hi: {
+    eventDate: "11 जून 2026 • 18:30 NEW DELHI",
+    titleTop: "शुरू होने तक",
+    titleMain: "Zero Gravity",
+    days: "दिन",
+    hours: "घंटे",
+    minutes: "मिनट",
+    seconds: "सेकंड",
+    credit: "<b>PK XD PORTAL</b> द्वारा बनाया गया",
+    telegramBtn: "Telegram",
+    youtubeBtn: "YouTube",
+    feedbackChannel: "PK XD PORTAL YouTube",
+    musicOn: "🔊 संगीत",
+    musicOff: "🔇 संगीत बंद करें",
+    started: "🚀 Zero Gravity शुरू हो गया",
+    fanCountdown: "PK XD के लिए फैन काउंटडाउन",
+    disclaimer: "यह एक फैन द्वारा बनाया गया काउंटडाउन है। PK XD Afterverse का एक गेम है। यह वेबसाइट आधिकारिक नहीं है और Afterverse से संबद्ध नहीं है।",
+    feedbackText: "वेबसाइट सुधार या नई भाषाएँ जोड़ने के लिए यहाँ लिखें:",
+    downloadTitle: "PK XD डाउनलोड / अपडेट करें",
+    googlePlayBtn: "Google Play",
+    appStoreBtn: "App Store",
+    languageLabel: "भाषा",
+    downloadLabel: "डाउनलोड",
+    shareLabel: "शेयर",
+    countdownMode: "काउंटडाउन",
+    progressMode: "प्रगति",
+    progressPassed: "बीता",
+    progressLeft: "बाकी",
+    progressText: "इवेंट तक प्रगति",
+    shareCopied: "लिंक कॉपी हो गया!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "अपनी टीम चुनें ताकि उसकी ऊर्जा सक्रिय हो सके।",
+    chooseTeamBtn: "टीम चुनें",
+    selectedTeamPrefix: "आपकी टीम:",
+    selectedTeamSaved: "टीम चुनी गई:",
+    teamAlreadySelected: "चुनी गई",
+
+    teams: {
+      volts: {
+        icon: "⚡",
+        title: "TEAM VOLTS",
+        text: "शुद्ध बिजली ऊर्जा!"
+      },
+      flame: {
+        icon: "🔥",
+        title: "TEAM FLAME",
+        text: "आग की तीव्रता!"
+      },
+      leaf: {
+        icon: "🍃",
+        title: "TEAM LEAF",
+        text: "प्रकृति की शक्ति!"
+      }
+    }
+  }
+};
+
+const timer = document.getElementById("timer");
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
+const popup = document.getElementById("teamPopup");
+const popupIcon = document.getElementById("popupIcon");
+const popupTitle = document.getElementById("popupTitle");
+const popupText = document.getElementById("popupText");
+const closePopup = document.getElementById("closePopup");
+const chooseTeamBtn = document.getElementById("chooseTeamBtn");
+
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+const langToggle = document.getElementById("langToggle");
+const languageMenu = document.getElementById("languageMenu");
+
+const downloadToggle = document.getElementById("downloadToggle");
+const downloadMenu = document.getElementById("downloadMenu");
+
+const shareBtn = document.getElementById("shareBtn");
+
+const countdownModeBtn = document.getElementById("countdownModeBtn");
+const progressModeBtn = document.getElementById("progressModeBtn");
+const progressPanel = document.getElementById("progressPanel");
+const progressFill = document.getElementById("progressFill");
+const progressPercent = document.getElementById("progressPercent");
+const progressText = document.getElementById("progressText");
+
+const selectedTeamText = document.getElementById("selectedTeamText");
+const voltsPercent = document.getElementById("voltsPercent");
+const flamePercent = document.getElementById("flamePercent");
+const leafPercent = document.getElementById("leafPercent");
+
+function updateCountdown() {
+  const now = new Date();
+  const distance = targetDate.getTime() - now.getTime();
+
+  if (distance <= 0) {
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    timer.innerHTML = `
+      <div class="started">
+        ${translations[currentLang].started}
+      </div>
+    `;
+
+    updateProgress();
+    return;
   }
 
-  to {
-    transform: translateY(120px);
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((distance / (1000 * 60)) % 60);
+  const seconds = Math.floor((distance / 1000) % 60);
+
+  daysEl.textContent = String(days).padStart(2, "0");
+  hoursEl.textContent = String(hours).padStart(2, "0");
+  minutesEl.textContent = String(minutes).padStart(2, "0");
+  secondsEl.textContent = String(seconds).padStart(2, "0");
+
+  updateAtmosphere(days);
+  updateProgress();
+
+  if (lastSeconds !== seconds) {
+    secondsEl.classList.remove("tick");
+    void secondsEl.offsetWidth;
+    secondsEl.classList.add("tick");
+    lastSeconds = seconds;
   }
 }
 
-/* =========================
-   PAGE LAYOUT
-========================= */
+function updateProgress() {
+  const now = new Date().getTime();
+  const start = eventStartDate.getTime();
+  const end = targetDate.getTime();
 
-.scene {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
+  const total = end - start;
+  const passed = now - start;
+
+  let percent = Math.round((passed / total) * 100);
+  percent = Math.max(0, Math.min(100, percent));
+
+  progressFill.style.width = percent + "%";
+  progressPercent.textContent = percent + "%";
+  progressText.textContent = translations[currentLang].progressText;
 }
 
-.hero {
-  position: relative;
-  width: min(1320px, 92vw);
-  text-align: center;
-  padding: 72px 70px 48px;
-  border-radius: 42px;
-  background: rgba(3, 7, 22, 0.58);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 0 90px rgba(0, 80, 255, 0.26),
-    0 0 120px rgba(238, 107, 243, 0.16),
-    inset 0 0 60px rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(18px);
-  animation: heroIntro 1s ease forwards;
-  transition:
-    box-shadow 0.45s ease,
-    border-color 0.45s ease,
-    background 0.45s ease,
-    transform 0.45s ease;
-}
-
-@keyframes heroIntro {
-  from {
-    opacity: 0;
-    transform: translateY(35px) scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Selected team premium theme */
-
-body.selected-volts .hero {
-  border-color: rgba(139, 227, 255, 0.32);
-  box-shadow:
-    0 0 110px rgba(0, 130, 255, 0.38),
-    0 0 160px rgba(139, 227, 255, 0.18),
-    inset 0 0 70px rgba(139, 227, 255, 0.06);
-}
-
-body.selected-flame .hero {
-  border-color: rgba(255, 150, 80, 0.32);
-  box-shadow:
-    0 0 110px rgba(255, 70, 40, 0.36),
-    0 0 160px rgba(255, 183, 60, 0.18),
-    inset 0 0 70px rgba(255, 110, 60, 0.06);
-}
-
-body.selected-leaf .hero {
-  border-color: rgba(120, 255, 140, 0.32);
-  box-shadow:
-    0 0 110px rgba(40, 255, 100, 0.32),
-    0 0 160px rgba(160, 255, 120, 0.16),
-    inset 0 0 70px rgba(70, 255, 120, 0.055);
-}
-
-/* =========================
-   TOP ACTIONS
-========================= */
-
-.top-actions {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 120;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.action-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
-
-.action-label {
-  max-width: 72px;
-  font-size: 10px;
-  line-height: 1.15;
-  font-weight: 900;
-  color: rgba(220,232,255,0.72);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  text-align: center;
-  text-shadow: 0 0 10px rgba(0,0,0,0.55);
-}
-
-.language-wrapper,
-.download-wrapper {
-  position: relative;
-}
-
-.lang-toggle,
-.download-toggle,
-.share-toggle {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(5, 8, 22, 0.76);
-  backdrop-filter: blur(14px);
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  box-shadow:
-    0 0 22px rgba(139,227,255,0.22),
-    inset 0 0 14px rgba(255,255,255,0.05);
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    background 0.22s ease,
-    border-color 0.22s ease;
-}
-
-.lang-toggle {
-  font-size: 24px;
-}
-
-.lang-toggle:hover,
-.download-toggle:hover,
-.share-toggle:hover {
-  transform: translateY(-2px) scale(1.06);
-  background: rgba(10, 16, 40, 0.9);
-  border-color: rgba(139,227,255,0.34);
-  box-shadow:
-    0 0 28px rgba(139,227,255,0.34),
-    inset 0 0 18px rgba(255,255,255,0.07);
-}
-
-.lang-toggle:focus-visible,
-.download-toggle:focus-visible,
-.share-toggle:focus-visible,
-.team-btn:focus-visible,
-.mode-btn:focus-visible,
-.music-btn:focus-visible,
-.choose-team-btn:focus-visible {
-  outline: 2px solid rgba(139,227,255,0.9);
-  outline-offset: 4px;
-}
-
-/* Menus */
-
-.language-menu,
-.download-menu {
-  position: absolute;
-  top: 58px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  border-radius: 18px;
-  background: rgba(5, 8, 22, 0.93);
-  border: 1px solid rgba(255,255,255,0.14);
-  backdrop-filter: blur(18px);
-  box-shadow:
-    0 0 35px rgba(139,227,255,0.18),
-    inset 0 0 20px rgba(255,255,255,0.035);
-  opacity: 0;
-  transform: translateY(-8px) scale(0.96);
-  pointer-events: none;
-  transition:
-    opacity 0.22s ease,
-    transform 0.22s ease;
-}
-
-.language-menu.open,
-.download-menu.open {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-.language-menu {
-  width: 170px;
-  max-height: 310px;
-  gap: 7px;
-  padding: 10px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(139,227,255,0.65) rgba(255,255,255,0.08);
-}
-
-.language-menu::-webkit-scrollbar {
-  width: 6px;
-}
-
-.language-menu::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.08);
-  border-radius: 999px;
-}
-
-.language-menu::-webkit-scrollbar-thumb {
-  background: linear-gradient(#8be3ff, #ee6bf3);
-  border-radius: 999px;
-}
-
-.lang-btn {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  padding: 9px 12px;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 900;
-  color: white;
-  background: rgba(255,255,255,0.06);
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    color 0.2s ease;
-}
-
-.lang-btn:hover {
-  transform: translateX(-2px);
-  background: rgba(255,255,255,0.12);
-}
-
-.lang-btn.active {
-  color: #06101f;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-}
-
-.download-menu {
-  width: 220px;
-  gap: 8px;
-  padding: 12px;
-}
-
-.download-title {
-  color: #dce8ff;
-  font-size: 13px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 4px;
-}
-
-.download-menu a {
-  display: block;
-  padding: 10px 12px;
-  border-radius: 14px;
-  color: #06101f;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  text-decoration: none;
-  font-weight: 900;
-  text-align: center;
-  box-shadow: 0 0 18px rgba(139,227,255,0.18);
-  transition:
-    transform 0.22s ease,
-    filter 0.22s ease;
-}
-
-.download-menu a:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.12);
-}
-
-/* =========================
-   BADGE / HEADER
-========================= */
-
-.pkxd-badge {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: calc(100% - 48px);
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #dce8ff;
-  font-size: 13px;
-  font-weight: 800;
-  box-shadow: 0 0 24px rgba(139,227,255,0.12);
-}
-
-.pkxd-badge img {
-  height: 26px;
-  width: auto;
-  display: block;
-  flex: 0 0 auto;
-}
-
-.event-date {
-  display: inline-block;
-  margin-bottom: 28px;
-  padding: 10px 22px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #dce8ff;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow: 0 0 28px rgba(139,227,255,0.16);
-}
-
-/* =========================
-   ORBIT SIGNS
-========================= */
-
-.signs-orbit {
-  position: relative;
-  width: 560px;
-  height: 190px;
-  margin: 0 auto 18px;
-  animation: signsIntro 1.2s ease forwards;
-}
-
-@keyframes signsIntro {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.92);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.signs-orbit::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 82px;
-  width: 560px;
-  height: 110px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  border: 2px solid rgba(80, 180, 255, 0.23);
-  box-shadow:
-    0 0 25px rgba(0, 120, 255, 0.42),
-    0 0 45px rgba(255, 0, 160, 0.28),
-    0 0 55px rgba(0, 255, 90, 0.26);
-}
-
-.orbit-line {
-  position: absolute;
-  left: 50%;
-  top: 82px;
-  width: 560px;
-  height: 110px;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  opacity: 0.9;
-}
-
-.orbit-blue {
-  border-top: 3px solid rgba(0, 150, 255, 0.78);
-  animation: orbitSpin 7s linear infinite;
-}
-
-.orbit-red {
-  border-right: 3px solid rgba(255, 47, 117, 0.74);
-  animation: orbitSpin 8.5s linear infinite reverse;
-}
-
-.orbit-green {
-  border-bottom: 3px solid rgba(33, 255, 115, 0.74);
-  animation: orbitSpin 10s linear infinite;
-}
-
-@keyframes orbitSpin {
-  from {
-    transform: translateX(-50%) rotate(0deg);
-  }
-
-  to {
-    transform: translateX(-50%) rotate(360deg);
-  }
-}
-
-.sign {
-  position: absolute;
-  object-fit: contain;
-  pointer-events: none;
-  filter:
-    drop-shadow(0 0 12px rgba(255,255,255,0.62))
-    drop-shadow(0 0 26px currentColor);
-  animation: floatSign 4.8s ease-in-out infinite;
-}
-
-.sign-volt {
-  width: 140px;
-  height: 140px;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  color: #1f7cff;
-}
-
-.sign-flame {
-  width: 110px;
-  height: 110px;
-  left: 82px;
-  top: 64px;
-  color: #ff315c;
-  animation-delay: 0.8s;
-}
-
-.sign-leaf {
-  width: 110px;
-  height: 110px;
-  right: 82px;
-  top: 64px;
-  color: #42ff6d;
-  animation-delay: 1.6s;
-}
-
-@keyframes floatSign {
-  0%, 100% {
-    translate: 0 0;
-  }
-
-  50% {
-    translate: 0 -12px;
-  }
-}
-
-/* =========================
-   TITLE
-========================= */
-
-h1 {
-  margin: 0;
-  font-size: clamp(42px, 5vw, 78px);
-  line-height: 0.95;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #ffffff;
-  text-shadow:
-    0 0 12px rgba(255,255,255,0.70),
-    0 0 35px rgba(255,255,255,0.24);
-  animation: titleIntro 1.2s ease forwards;
-}
-
-@keyframes titleIntro {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.title-small,
-.title-main {
-  display: block;
-}
-
-h1 span {
-  display: block;
-  margin-top: 18px;
-  font-size: clamp(70px, 8vw, 128px);
-  letter-spacing: -2px;
-  line-height: 1;
-  white-space: nowrap;
-  background: linear-gradient(
-    90deg,
-    #00a2ff,
-    #7de8ff,
-    #ff5ec7,
-    #ffb86b,
-    #9fff75,
-    #52ffb5,
-    #00a2ff
+function updateAtmosphere(daysLeft) {
+  document.body.classList.remove(
+    "near-100",
+    "near-75",
+    "near-50",
+    "near-25",
+    "near-7",
+    "near-1"
   );
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: smoothGradient 14s linear infinite;
-  filter:
-    drop-shadow(0 0 10px rgba(0,160,255,0.76))
-    drop-shadow(0 0 26px rgba(255,90,180,0.30));
+
+  if (daysLeft <= 100) document.body.classList.add("near-100");
+  if (daysLeft <= 75) document.body.classList.add("near-75");
+  if (daysLeft <= 50) document.body.classList.add("near-50");
+  if (daysLeft <= 25) document.body.classList.add("near-25");
+  if (daysLeft <= 7) document.body.classList.add("near-7");
+  if (daysLeft <= 1) document.body.classList.add("near-1");
 }
 
-@keyframes smoothGradient {
-  0% {
-    background-position: 0% center;
+function setLanguage(lang) {
+  currentLang = translations[lang] ? lang : "en";
+  localStorage.setItem("selectedLang", currentLang);
+
+  const dict = translations[currentLang];
+
+  document.documentElement.lang = currentLang;
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.dataset.i18n;
+
+    if (dict[key]) {
+      element.innerHTML = dict[key];
+    }
+  });
+
+  document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
+    button.classList.toggle("active", button.dataset.lang === currentLang);
+  });
+
+  musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+
+  updateProgress();
+  updateTeamEnergy();
+  updateChooseButton();
+
+  languageMenu.classList.remove("open");
+  downloadMenu.classList.remove("open");
+}
+
+function openPopup(team) {
+  const data = translations[currentLang].teams[team];
+
+  if (!data) return;
+
+  currentPopupTeam = team;
+
+  popup.className = "team-popup active " + team;
+  popup.setAttribute("aria-hidden", "false");
+
+  popupIcon.textContent = data.icon;
+  popupTitle.textContent = data.title;
+  popupText.textContent = data.text;
+
+  document.body.classList.remove("team-volts", "team-flame", "team-leaf");
+  document.body.classList.add("team-" + team);
+
+  updateChooseButton();
+}
+
+function closeTeamPopup() {
+  popup.className = "team-popup";
+  popup.setAttribute("aria-hidden", "true");
+
+  document.body.classList.remove("team-volts", "team-flame", "team-leaf");
+
+  if (selectedTeam) {
+    document.body.classList.add("selected-" + selectedTeam);
   }
 
-  100% {
-    background-position: 300% center;
-  }
+  currentPopupTeam = null;
 }
 
-h1,
-h1 span {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: background-position;
+function chooseTeam(team) {
+  if (!team || !translations[currentLang].teams[team]) return;
+
+  selectedTeam = team;
+  localStorage.setItem("selectedTeam", selectedTeam);
+
+  applySelectedTeamTheme();
+  updateTeamEnergy();
+  updateChooseButton();
+  closeTeamPopup();
 }
 
-/* =========================
-   MODE SWITCH
-========================= */
-
-.mode-switch {
-  margin-top: 30px;
-  display: inline-flex;
-  gap: 8px;
-  padding: 7px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 0 24px rgba(139,227,255,0.10);
-}
-
-.mode-btn {
-  border: none;
-  cursor: pointer;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: transparent;
-  color: #dce8ff;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  transition:
-    transform 0.22s ease,
-    background 0.22s ease,
-    color 0.22s ease,
-    box-shadow 0.22s ease;
-}
-
-.mode-btn:hover {
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.08);
-}
-
-.mode-btn.active {
-  color: #050816;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  box-shadow: 0 0 22px rgba(139,227,255,0.22);
-}
-
-/* =========================
-   TIMER
-========================= */
-
-.timer {
-  margin-top: 42px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 28px;
-  animation: timerIntro 1.4s ease forwards;
-}
-
-.timer.hidden {
-  display: none;
-}
-
-@keyframes timerIntro {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.time-card {
-  position: relative;
-  overflow: hidden;
-  padding: 34px 20px 26px;
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.035));
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow:
-    0 0 34px rgba(80, 160, 255, 0.16),
-    inset 0 0 26px rgba(255,255,255,0.035);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.time-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255,255,255,0.28);
-  box-shadow:
-    0 0 42px rgba(139,227,255,0.22),
-    inset 0 0 30px rgba(255,255,255,0.045);
-}
-
-.time-card::before {
-  content: "";
-  position: absolute;
-  top: -80%;
-  left: -40%;
-  width: 80%;
-  height: 220%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.18),
-    transparent
+function applySelectedTeamTheme() {
+  document.body.classList.remove(
+    "selected-volts",
+    "selected-flame",
+    "selected-leaf"
   );
-  transform: rotate(25deg);
-  animation: shine 5.2s ease-in-out infinite;
-}
-
-@keyframes shine {
-  0%, 45% {
-    left: -90%;
-  }
-
-  75%, 100% {
-    left: 130%;
-  }
-}
-
-.time-card span {
-  position: relative;
-  display: block;
-  font-size: clamp(54px, 6vw, 92px);
-  font-weight: 900;
-  line-height: 1;
-}
 
-.time-card span.tick {
-  animation: numberTick 0.35s ease;
-}
+  document.querySelectorAll(".team-btn").forEach((button) => {
+    button.classList.remove("selected");
+  });
 
-@keyframes numberTick {
-  0% {
-    transform: scale(1);
-  }
+  if (!selectedTeam) return;
 
-  45% {
-    transform: scale(1.12);
-  }
+  document.body.classList.add("selected-" + selectedTeam);
 
-  100% {
-    transform: scale(1);
+  const selectedButton = document.querySelector(`.team-btn[data-team="${selectedTeam}"]`);
+  if (selectedButton) {
+    selectedButton.classList.add("selected");
   }
-}
-
-.time-card:nth-child(1) span {
-  color: #4fc3ff;
-  text-shadow: 0 0 18px rgba(79,195,255,0.9), 0 0 45px rgba(0,110,255,0.56);
-}
-
-.time-card:nth-child(2) span {
-  color: #ff5da8;
-  text-shadow: 0 0 18px rgba(255,93,168,0.86), 0 0 45px rgba(255,0,120,0.52);
 }
 
-.time-card:nth-child(3) span {
-  color: #ffb36b;
-  text-shadow: 0 0 18px rgba(255,179,107,0.86), 0 0 45px rgba(255,120,0,0.46);
-}
-
-.time-card:nth-child(4) span {
-  color: #7dff8a;
-  text-shadow: 0 0 18px rgba(125,255,138,0.86), 0 0 45px rgba(0,255,90,0.50);
-}
-
-.time-card p {
-  position: relative;
-  margin: 12px 0 0;
-  font-size: 15px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #cfd7ff;
-}
-
-/* =========================
-   PROGRESS / PORTAL CHARGE
-========================= */
-
-.progress-panel {
-  display: none;
-  margin: 38px auto 0;
-  max-width: 780px;
-  padding: 28px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(139,227,255,0.13), transparent 46%),
-    rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow:
-    0 0 46px rgba(139,227,255,0.18),
-    inset 0 0 30px rgba(255,255,255,0.04);
-}
+function updateChooseButton() {
+  if (!chooseTeamBtn || !currentPopupTeam) return;
 
-.progress-panel.active {
-  display: block;
-  animation: panelReveal 0.35s ease forwards;
-}
-
-@keyframes panelReveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
+  const dict = translations[currentLang];
 
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  if (selectedTeam === currentPopupTeam) {
+    chooseTeamBtn.textContent = dict.teamAlreadySelected;
+    chooseTeamBtn.disabled = true;
+  } else {
+    chooseTeamBtn.textContent = dict.chooseTeamBtn;
+    chooseTeamBtn.disabled = false;
   }
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-  color: #dce8ff;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
-
-.progress-bar {
-  position: relative;
-  height: 22px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: rgba(255,255,255,0.09);
-  box-shadow:
-    inset 0 0 18px rgba(0,0,0,0.38),
-    0 0 24px rgba(139,227,255,0.12);
-}
-
-.progress-bar::before {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.14);
-  pointer-events: none;
-}
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  box-shadow:
-    0 0 18px rgba(139,227,255,0.78),
-    0 0 34px rgba(238,107,243,0.42);
-  transition: width 0.45s ease;
-}
-
-body.selected-volts .progress-fill {
-  background: linear-gradient(90deg, #007cff, #8be3ff, #ffffff);
-}
-
-body.selected-flame .progress-fill {
-  background: linear-gradient(90deg, #ff315c, #ffb36b, #fff0a8);
-}
-
-body.selected-leaf .progress-fill {
-  background: linear-gradient(90deg, #21ff73, #b8ff6a, #ffffff);
-}
-
-.progress-text {
-  margin: 14px 0 0;
-  color: rgba(220,232,255,0.78);
-  font-size: 14px;
-  font-weight: 800;
-}
-
-/* =========================
-   TEAM BUTTONS
-========================= */
-
-.hashtags {
-  margin-top: 32px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 22px;
-}
-
-.team-btn {
-  cursor: pointer;
-  position: relative;
-  padding: 13px 26px;
-  border-radius: 999px;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.22);
-  color: white;
-  transition:
-    transform 0.24s ease,
-    box-shadow 0.24s ease,
-    border-color 0.24s ease,
-    background 0.24s ease;
-}
-
-.team-btn:hover {
-  transform: translateY(-4px) scale(1.04);
-  background: rgba(255,255,255,0.14);
-}
-
-.team-btn.selected::after {
-  content: "✓";
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 24px;
-  height: 24px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #06101f;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  box-shadow: 0 0 16px rgba(139,227,255,0.55);
-  font-size: 14px;
-}
-
-.team-btn.volts {
-  color: #5cc7ff;
-  box-shadow: 0 0 24px rgba(0, 120, 255, 0.32);
-}
-
-.team-btn.flame {
-  color: #ff7a6d;
-  box-shadow: 0 0 24px rgba(255, 60, 50, 0.32);
-}
-
-.team-btn.leaf {
-  color: #72ff87;
-  box-shadow: 0 0 24px rgba(40, 255, 100, 0.32);
-}
-
-/* =========================
-   TEAM ENERGY
-========================= */
-
-.team-energy {
-  margin: 34px auto 0;
-  max-width: 820px;
-  padding: 26px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(139,227,255,0.12), transparent 45%),
-    rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow:
-    0 0 44px rgba(139,227,255,0.14),
-    inset 0 0 26px rgba(255,255,255,0.035);
-}
-
-.team-energy-head h2 {
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(21px, 2.5vw, 30px);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 0 18px rgba(139,227,255,0.36);
-}
-
-.team-energy-head p {
-  margin: 10px 0 0;
-  color: rgba(220,232,255,0.78);
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.energy-list {
-  margin-top: 22px;
-  display: grid;
-  gap: 16px;
-}
-
-.energy-row {
-  padding: 16px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.energy-row.selected {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.25);
-}
-
-.energy-row.volts.selected {
-  box-shadow: 0 0 30px rgba(0,130,255,0.28);
-}
-
-.energy-row.flame.selected {
-  box-shadow: 0 0 30px rgba(255,80,40,0.28);
-}
-
-.energy-row.leaf.selected {
-  box-shadow: 0 0 30px rgba(40,255,100,0.25);
-}
-
-.energy-row-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-  color: #dce8ff;
-  font-size: 15px;
-}
-
-.energy-row-top strong {
-  font-size: 17px;
-}
-
-.energy-track {
-  height: 12px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.09);
-  box-shadow: inset 0 0 14px rgba(0,0,0,0.32);
-}
-
-.energy-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.45s ease;
-}
-
-.energy-row.volts .energy-fill {
-  background: linear-gradient(90deg, #007cff, #8be3ff);
-  box-shadow: 0 0 18px rgba(0,130,255,0.62);
-}
-
-.energy-row.flame .energy-fill {
-  background: linear-gradient(90deg, #ff315c, #ffb36b);
-  box-shadow: 0 0 18px rgba(255,80,40,0.60);
-}
-
-.energy-row.leaf .energy-fill {
-  background: linear-gradient(90deg, #21ff73, #b8ff6a);
-  box-shadow: 0 0 18px rgba(40,255,100,0.55);
-}
-
-/* =========================
-   PORTAL CREDIT / FOOTER
-========================= */
-
-.portal-credit {
-  margin-top: 34px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 14px 20px;
-  border-radius: 26px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow: 0 0 26px rgba(139,227,255,0.12);
-  color: #dce8ff;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.portal-credit b {
-  color: #8be3ff;
-  text-shadow: 0 0 14px rgba(139,227,255,0.72);
-}
-
-.portal-links {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.portal-credit a,
-.portal-links a {
-  display: inline-block;
-  padding: 9px 15px;
-  border-radius: 999px;
-  color: #050816;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  text-decoration: none;
-  font-weight: 900;
-  box-shadow: 0 0 24px rgba(139,227,255,0.25);
-  transition:
-    transform 0.24s ease,
-    filter 0.24s ease,
-    box-shadow 0.24s ease;
-}
-
-.portal-credit a:hover,
-.portal-links a:hover {
-  transform: translateY(-2px) scale(1.03);
-  filter: brightness(1.15);
-  box-shadow: 0 0 30px rgba(139,227,255,0.35);
-}
-
-.music-player {
-  margin-top: 18px;
-}
-
-.music-btn {
-  cursor: pointer;
-  padding: 12px 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.08);
-  color: white;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-  transition:
-    transform 0.24s ease,
-    background 0.24s ease,
-    box-shadow 0.24s ease,
-    border-color 0.24s ease;
-  box-shadow: 0 0 22px rgba(139,227,255,0.12);
-}
-
-.music-btn:hover {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(139,227,255,0.28);
-}
-
-.music-btn.active {
-  background: linear-gradient(
-    90deg,
-    rgba(0,140,255,0.28),
-    rgba(238,107,243,0.22)
-  );
-  box-shadow:
-    0 0 28px rgba(139,227,255,0.35),
-    0 0 44px rgba(238,107,243,0.18);
-}
-
-.site-note {
-  margin: 30px auto 0;
-  max-width: 880px;
-  padding: 18px 22px;
-  border-radius: 24px;
-  color: rgba(220,232,255,0.72);
-  font-size: 12px;
-  line-height: 1.5;
-  background: rgba(255,255,255,0.045);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
-}
-
-.site-note p {
-  margin: 6px 0;
-}
-
-.site-note a {
-  color: #8be3ff;
-  font-weight: 900;
-  text-decoration: none;
-}
-
-.site-note a:hover {
-  text-decoration: underline;
-}
-
-/* =========================
-   POPUP
-========================= */
-
-.team-popup {
-  position: fixed;
-  left: 50%;
-  bottom: 38px;
-  width: min(560px, calc(100% - 32px));
-  padding: 34px 30px 30px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(139,227,255,0.12), transparent 44%),
-    rgba(8, 10, 30, 0.90);
-  border: 1px solid rgba(255,255,255,0.22);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 70px rgba(139, 227, 255, 0.24);
-  transform: translate(-50%, 140%);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform 0.35s ease,
-    opacity 0.35s ease,
-    box-shadow 0.35s ease;
-  z-index: 140;
-  text-align: center;
-}
-
-.team-popup.active {
-  transform: translate(-50%, 0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.team-popup.volts {
-  box-shadow: 0 0 90px rgba(0, 120, 255, 0.50);
-}
-
-.team-popup.flame {
-  box-shadow: 0 0 90px rgba(255, 80, 45, 0.50);
 }
 
-.team-popup.leaf {
-  box-shadow: 0 0 90px rgba(40, 255, 100, 0.46);
-}
-
-.popup-icon {
-  font-size: 54px;
-  margin-bottom: 10px;
-}
-
-.team-popup h2 {
-  margin: 0 0 12px;
-  font-size: 32px;
-}
-
-.team-popup p {
-  margin: 0;
-  font-size: 20px;
-  line-height: 1.45;
-  font-weight: 800;
-}
-
-.close-popup {
-  position: absolute;
-  top: 10px;
-  right: 16px;
-  border: none;
-  background: transparent;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  opacity: 0.75;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.close-popup:hover {
-  opacity: 1;
-  transform: scale(1.08);
-}
-
-.choose-team-btn {
-  margin-top: 22px;
-  cursor: pointer;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 999px;
-  color: #06101f;
-  background: linear-gradient(90deg, #8be3ff, #ee6bf3, #72ff87);
-  font-size: 15px;
-  font-weight: 900;
-  box-shadow: 0 0 28px rgba(139,227,255,0.26);
-  transition:
-    transform 0.24s ease,
-    filter 0.24s ease,
-    opacity 0.24s ease;
-}
-
-.choose-team-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  filter: brightness(1.12);
-}
-
-.choose-team-btn:disabled {
-  cursor: default;
-  opacity: 0.65;
-  filter: grayscale(0.25);
-  transform: none;
-}
-
-/* =========================
-   EVENT ATMOSPHERE
-========================= */
-
-body.near-100 .hero {
-  box-shadow:
-    0 0 120px rgba(0,120,255,0.34),
-    0 0 150px rgba(238,107,243,0.23),
-    inset 0 0 65px rgba(255,255,255,0.055);
-}
-
-body.near-75 .background {
-  filter: brightness(0.70) saturate(1.65);
-}
-
-body.near-75 .particles {
-  opacity: 0.54;
-}
-
-body.near-50 .particles {
-  opacity: 0.68;
-  animation-duration: 15s;
-}
-
-body.near-50 .hero {
-  box-shadow:
-    0 0 140px rgba(0,120,255,0.38),
-    0 0 170px rgba(238,107,243,0.25),
-    inset 0 0 70px rgba(255,255,255,0.058);
-}
-
-body.near-25 .particles {
-  opacity: 0.82;
-  animation-duration: 12s;
-}
-
-body.near-25 .hero {
-  box-shadow:
-    0 0 170px rgba(0,120,255,0.48),
-    0 0 220px rgba(238,107,243,0.36),
-    0 0 245px rgba(33,255,115,0.18),
-    inset 0 0 82px rgba(255,255,255,0.07);
-}
+function updateTeamEnergy() {
+  const dict = translations[currentLang];
 
-body.near-7 .hero {
-  animation: heroPulse 2.8s ease-in-out infinite;
-}
+  if (voltsPercent) voltsPercent.textContent = teamEnergyData.volts + "%";
+  if (flamePercent) flamePercent.textContent = teamEnergyData.flame + "%";
+  if (leafPercent) leafPercent.textContent = teamEnergyData.leaf + "%";
 
-body.near-1 .hero {
-  animation: heroPulseFast 1.6s ease-in-out infinite;
-}
+  document.querySelector(".energy-row.volts .energy-fill").style.width = teamEnergyData.volts + "%";
+  document.querySelector(".energy-row.flame .energy-fill").style.width = teamEnergyData.flame + "%";
+  document.querySelector(".energy-row.leaf .energy-fill").style.width = teamEnergyData.leaf + "%";
 
-@keyframes heroPulse {
-  0%,100% {
-    transform: scale(1);
-    box-shadow:
-      0 0 150px rgba(0,120,255,0.40),
-      0 0 190px rgba(238,107,243,0.26);
-  }
+  document.querySelectorAll(".energy-row").forEach((row) => {
+    row.classList.remove("selected");
+  });
 
-  50% {
-    transform: scale(1.01);
-    box-shadow:
-      0 0 210px rgba(0,120,255,0.58),
-      0 0 250px rgba(238,107,243,0.44),
-      0 0 270px rgba(33,255,115,0.22);
+  if (!selectedTeam) {
+    selectedTeamText.textContent = dict.noTeamSelected;
+    return;
   }
-}
 
-@keyframes heroPulseFast {
-  0%,100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
+  const team = translations[currentLang].teams[selectedTeam];
+  selectedTeamText.textContent = `${dict.selectedTeamPrefix} ${team.icon} ${team.title}`;
 
-  50% {
-    transform: scale(1.018);
-    filter: brightness(1.14);
+  const selectedEnergyRow = document.querySelector(`.energy-row.${selectedTeam}`);
+  if (selectedEnergyRow) {
+    selectedEnergyRow.classList.add("selected");
   }
-}
-
-.started {
-  grid-column: 1 / -1;
-  padding: 30px;
-  font-size: clamp(28px, 5vw, 54px);
-  font-weight: 900;
-  color: #8be3ff;
-  text-shadow:
-    0 0 18px rgba(139, 227, 255, 1),
-    0 0 50px rgba(238, 107, 243, 0.78);
 }
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 760px) {
-  .scene {
-    min-height: auto;
-    display: block;
-    padding: 14px;
-    padding-bottom: 90px;
-  }
-
-  .hero {
-    width: 100%;
-    padding: 24px 14px 32px;
-    border-radius: 28px;
-  }
-
-  .top-actions {
-    top: 10px;
-    right: 10px;
-    gap: 10px;
-  }
-
-  .action-label {
-    display: none;
-  }
-
-  .lang-toggle,
-  .download-toggle,
-  .share-toggle {
-    width: 42px;
-    height: 42px;
-    font-size: 20px;
-  }
-
-  .lang-toggle {
-    font-size: 21px;
-  }
-
-  .language-menu {
-    top: 50px;
-    width: 155px;
-    max-height: 270px;
-  }
-
-  .download-menu {
-    top: 50px;
-    width: 205px;
-  }
-
-  .pkxd-badge {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: fit-content;
-    max-width: 100%;
-    margin: 0 auto 18px;
-    font-size: 12px;
-  }
-
-  .pkxd-badge img {
-    height: 22px;
-  }
-
-  .event-date {
-    font-size: 11px;
-    letter-spacing: 1.2px;
-    margin-bottom: 20px;
-    padding: 9px 14px;
-  }
-
-  .signs-orbit {
-    width: 300px;
-    max-width: 100%;
-    height: 140px;
-  }
-
-  .signs-orbit::before,
-  .orbit-line {
-    top: 62px;
-    width: 300px;
-    max-width: 100%;
-    height: 78px;
-  }
-
-  .sign-volt {
-    width: 92px;
-    height: 92px;
-  }
-
-  .sign-flame,
-  .sign-leaf {
-    width: 76px;
-    height: 76px;
-    top: 50px;
-  }
-
-  .sign-flame {
-    left: 36px;
-  }
-
-  .sign-leaf {
-    right: 36px;
-  }
-
-  h1 {
-    font-size: 32px;
-    line-height: 1.05;
-    letter-spacing: -1px;
-  }
-
-  h1 span {
-    font-size: 38px;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    max-width: 100%;
-    white-space: nowrap;
-    transform: scaleX(0.86);
-    transform-origin: center;
-  }
-
-  .mode-switch {
-    margin-top: 24px;
-  }
-
-  .mode-btn {
-    font-size: 12px;
-    padding: 9px 13px;
-  }
-
-  .timer {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 30px;
-  }
-
-  .time-card {
-    padding: 24px 10px 18px;
-    border-radius: 22px;
-  }
-
-  .time-card p {
-    font-size: 12px;
-    letter-spacing: 1.4px;
-  }
-
-  .progress-panel,
-  .team-energy {
-    padding: 20px 14px;
-    border-radius: 24px;
-  }
-
-  .progress-info {
-    font-size: 11px;
-    letter-spacing: 0.7px;
-  }
-
-  .hashtags {
-    gap: 12px;
-  }
-
-  .team-btn {
-    font-size: 13px;
-    padding: 10px 14px;
-  }
-
-  .team-energy-head h2 {
-    font-size: 20px;
-  }
-
-  .team-energy-head p,
-  .progress-text {
-    font-size: 12px;
-  }
 
-  .energy-row {
-    padding: 13px;
-    border-radius: 18px;
-  }
-
-  .energy-row-top {
-    font-size: 13px;
-  }
-
-  .music-btn {
-    font-size: 13px;
-    padding: 10px 16px;
-  }
-
-  .portal-credit {
-    font-size: 12px;
-    border-radius: 22px;
-  }
+document.querySelectorAll(".team-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    openPopup(button.dataset.team);
+  });
+});
 
-  .portal-credit a,
-  .portal-links a {
-    font-size: 12px;
-  }
+document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    setLanguage(button.dataset.lang);
+  });
+});
 
-  .site-note {
-    font-size: 11px;
-    padding: 15px 14px;
-  }
+closePopup.addEventListener("click", closeTeamPopup);
 
-  .team-popup {
-    bottom: 20px;
-    padding: 30px 22px 24px;
-  }
+chooseTeamBtn.addEventListener("click", () => {
+  chooseTeam(currentPopupTeam);
+});
 
-  .team-popup h2 {
-    font-size: 28px;
-  }
+langToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  languageMenu.classList.toggle("open");
+  downloadMenu.classList.remove("open");
+});
 
-  .team-popup p {
-    font-size: 16px;
-  }
-}
+downloadToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  downloadMenu.classList.toggle("open");
+  languageMenu.classList.remove("open");
+});
 
-@media (max-width: 420px) {
-  .scene {
-    padding: 10px;
-    padding-bottom: 80px;
-  }
+document.addEventListener("click", (event) => {
+  const clickedInsidePopup = popup.contains(event.target);
+  const clickedTeamButton = event.target.closest(".team-btn");
+  const clickedInsideLang = event.target.closest(".language-wrapper");
+  const clickedInsideDownload = event.target.closest(".download-wrapper");
 
-  .hero {
-    padding: 22px 12px 30px;
+  if (
+    popup.classList.contains("active") &&
+    !clickedInsidePopup &&
+    !clickedTeamButton
+  ) {
+    closeTeamPopup();
   }
 
-  .signs-orbit {
-    width: 250px;
-    height: 120px;
+  if (!clickedInsideLang) {
+    languageMenu.classList.remove("open");
   }
 
-  .signs-orbit::before,
-  .orbit-line {
-    width: 250px;
-    height: 66px;
-    top: 58px;
+  if (!clickedInsideDownload) {
+    downloadMenu.classList.remove("open");
   }
+});
 
-  .sign-volt {
-    width: 76px;
-    height: 76px;
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeTeamPopup();
+    languageMenu.classList.remove("open");
+    downloadMenu.classList.remove("open");
   }
+});
 
-  .sign-flame,
-  .sign-leaf {
-    width: 64px;
-    height: 64px;
-    top: 48px;
+musicToggle.addEventListener("click", () => {
+  if (!isPlaying) {
+    music.play();
+    musicToggle.classList.add("active");
+    musicToggle.innerHTML = translations[currentLang].musicOff;
+    isPlaying = true;
+  } else {
+    music.pause();
+    musicToggle.classList.remove("active");
+    musicToggle.innerHTML = translations[currentLang].musicOn;
+    isPlaying = false;
   }
+});
 
-  .sign-flame {
-    left: 24px;
-  }
+countdownModeBtn.addEventListener("click", () => {
+  timer.classList.remove("hidden");
+  progressPanel.classList.remove("active");
 
-  .sign-leaf {
-    right: 24px;
-  }
+  countdownModeBtn.classList.add("active");
+  progressModeBtn.classList.remove("active");
+});
 
-  h1 {
-    font-size: 30px;
-  }
+progressModeBtn.addEventListener("click", () => {
+  timer.classList.add("hidden");
+  progressPanel.classList.add("active");
 
-  h1 span {
-    font-size: 34px;
-    transform: scaleX(0.82);
-  }
+  progressModeBtn.classList.add("active");
+  countdownModeBtn.classList.remove("active");
+});
 
-  .timer {
-    gap: 10px;
-  }
+shareBtn.addEventListener("click", async () => {
+  const url = window.location.href;
 
-  .time-card {
-    padding: 20px 8px 16px;
-    border-radius: 20px;
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: document.title,
+        url: url
+      });
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert(translations[currentLang].shareCopied);
+    }
+  } catch (error) {
+    await navigator.clipboard.writeText(url);
+    alert(translations[currentLang].shareCopied);
   }
+});
 
-  .team-btn {
-    font-size: 12px;
-    padding: 9px 12px;
-  }
+const savedLang = localStorage.getItem("selectedLang") || "en";
 
-  .team-energy {
-    margin-top: 26px;
-  }
-}
+setLanguage(savedLang);
+applySelectedTeamTheme();
+updateTeamEnergy();
+updateCountdown();
 
-/* =========================
-   REDUCED MOTION
-========================= */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.001ms !important;
-  }
-}
+countdownInterval = setInterval(updateCountdown, 1000);
