@@ -28,6 +28,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Language",
     downloadLabel: "Download",
+    shareLabel: "Share",
+    countdownMode: "Countdown",
+    progressMode: "Progress",
+    progressPassed: "Passed",
+    progressLeft: "Left",
+    progressText: "Event progress",
+    shareCopied: "Link copied!",
 
     teams: {
       volts: {
@@ -71,6 +78,13 @@ const translations = {
     appStoreBtn: "App Store",
     languageLabel: "Язык",
     downloadLabel: "Скачать",
+    shareLabel: "Поделиться",
+    countdownMode: "Отсчёт",
+    progressMode: "Прогресс",
+    progressPassed: "Прошло",
+    progressLeft: "Осталось",
+    progressText: "Прогресс до события",
+    shareCopied: "Ссылка скопирована!",
 
     teams: {
       volts: {
@@ -457,6 +471,15 @@ const languageMenu = document.getElementById("languageMenu");
 const downloadToggle = document.getElementById("downloadToggle");
 const downloadMenu = document.getElementById("downloadMenu");
 
+const shareBtn = document.getElementById("shareBtn");
+
+const countdownModeBtn = document.getElementById("countdownModeBtn");
+const progressModeBtn = document.getElementById("progressModeBtn");
+const progressPanel = document.getElementById("progressPanel");
+const progressFill = document.getElementById("progressFill");
+const progressPercent = document.getElementById("progressPercent");
+const progressText = document.getElementById("progressText");
+
 function updateCountdown() {
   const now = new Date();
   const distance = targetDate.getTime() - now.getTime();
@@ -484,6 +507,7 @@ function updateCountdown() {
   secondsEl.textContent = String(seconds).padStart(2, "0");
 
   updateAtmosphere(days);
+  updateProgress(distance);
 
   if (lastSeconds !== seconds) {
     secondsEl.classList.remove("tick");
@@ -513,6 +537,7 @@ function updateAtmosphere(daysLeft) {
 
 function setLanguage(lang) {
   currentLang = lang;
+  localStorage.setItem("selectedLang", lang);
   const dict = translations[lang];
 
   document.documentElement.lang = lang;
@@ -632,3 +657,57 @@ setLanguage("en");
 updateCountdown();
 
 const countdownInterval = setInterval(updateCountdown, 1000);
+
+const eventStartDate = new Date("2026-01-01T00:00:00Z");
+
+function updateProgress(distanceToTarget) {
+  const now = new Date().getTime();
+  const start = eventStartDate.getTime();
+  const end = targetDate.getTime();
+
+  const total = end - start;
+  const passed = now - start;
+
+  let percent = Math.round((passed / total) * 100);
+
+  percent = Math.max(0, Math.min(100, percent));
+
+  progressFill.style.width = percent + "%";
+  progressPercent.textContent = percent + "%";
+  progressText.textContent = translations[currentLang].progressText;
+}
+
+countdownModeBtn.addEventListener("click", () => {
+  timer.classList.remove("hidden");
+  progressPanel.classList.remove("active");
+
+  countdownModeBtn.classList.add("active");
+  progressModeBtn.classList.remove("active");
+});
+
+progressModeBtn.addEventListener("click", () => {
+  timer.classList.add("hidden");
+  progressPanel.classList.add("active");
+
+  progressModeBtn.classList.add("active");
+  countdownModeBtn.classList.remove("active");
+});
+
+shareBtn.addEventListener("click", async () => {
+  const url = window.location.href;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: document.title,
+        url: url
+      });
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert(translations[currentLang].shareCopied);
+    }
+  } catch (error) {
+    await navigator.clipboard.writeText(url);
+    alert(translations[currentLang].shareCopied);
+  }
+});
