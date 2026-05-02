@@ -5,6 +5,14 @@ let currentLang = "en";
 let lastSeconds = null;
 let isPlaying = false;
 let countdownInterval = null;
+let currentPopupTeam = null;
+let selectedTeam = localStorage.getItem("selectedTeam") || null;
+
+const teamEnergyData = {
+  volts: 34,
+  flame: 41,
+  leaf: 25
+};
 
 const translations = {
   en: {
@@ -37,6 +45,12 @@ const translations = {
     progressLeft: "Left",
     progressText: "Event progress",
     shareCopied: "Link copied!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "Choose your team to activate its energy.",
+    chooseTeamBtn: "Choose Team",
+    selectedTeamPrefix: "Your team:",
+    selectedTeamSaved: "Team selected:",
+    teamAlreadySelected: "Selected",
 
     teams: {
       volts: {
@@ -87,6 +101,12 @@ const translations = {
     progressLeft: "Осталось",
     progressText: "Прогресс до события",
     shareCopied: "Ссылка скопирована!",
+    teamEnergyTitle: "Энергия команд Портала 2026",
+    noTeamSelected: "Выбери команду, чтобы активировать её энергию.",
+    chooseTeamBtn: "Выбрать команду",
+    selectedTeamPrefix: "Твоя команда:",
+    selectedTeamSaved: "Команда выбрана:",
+    teamAlreadySelected: "Выбрано",
 
     teams: {
       volts: {
@@ -137,6 +157,12 @@ const translations = {
     progressLeft: "Übrig",
     progressText: "Fortschritt bis zum Event",
     shareCopied: "Link kopiert!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "Wähle dein Team, um seine Energie zu aktivieren.",
+    chooseTeamBtn: "Team wählen",
+    selectedTeamPrefix: "Dein Team:",
+    selectedTeamSaved: "Team gewählt:",
+    teamAlreadySelected: "Gewählt",
 
     teams: {
       volts: {
@@ -187,6 +213,12 @@ const translations = {
     progressLeft: "Restant",
     progressText: "Progression jusqu’à l’événement",
     shareCopied: "Lien copié !",
+    teamEnergyTitle: "Énergie des équipes du Portail 2026",
+    noTeamSelected: "Choisis ton équipe pour activer son énergie.",
+    chooseTeamBtn: "Choisir l’équipe",
+    selectedTeamPrefix: "Ton équipe :",
+    selectedTeamSaved: "Équipe choisie :",
+    teamAlreadySelected: "Choisie",
 
     teams: {
       volts: {
@@ -237,6 +269,12 @@ const translations = {
     progressLeft: "Zostało",
     progressText: "Postęp do wydarzenia",
     shareCopied: "Link skopiowany!",
+    teamEnergyTitle: "Energia drużyn Portalu 2026",
+    noTeamSelected: "Wybierz drużynę, aby aktywować jej energię.",
+    chooseTeamBtn: "Wybierz drużynę",
+    selectedTeamPrefix: "Twoja drużyna:",
+    selectedTeamSaved: "Wybrana drużyna:",
+    teamAlreadySelected: "Wybrano",
 
     teams: {
       volts: {
@@ -287,6 +325,12 @@ const translations = {
     progressLeft: "Falta",
     progressText: "Progresso até o evento",
     shareCopied: "Link copiado!",
+    teamEnergyTitle: "Energia das Equipes do Portal 2026",
+    noTeamSelected: "Escolha sua equipe para ativar sua energia.",
+    chooseTeamBtn: "Escolher equipe",
+    selectedTeamPrefix: "Sua equipe:",
+    selectedTeamSaved: "Equipe escolhida:",
+    teamAlreadySelected: "Escolhida",
 
     teams: {
       volts: {
@@ -337,6 +381,12 @@ const translations = {
     progressLeft: "Kaldı",
     progressText: "Etkinliğe kalan ilerleme",
     shareCopied: "Bağlantı kopyalandı!",
+    teamEnergyTitle: "Portal Takım Enerjisi 2026",
+    noTeamSelected: "Enerjisini etkinleştirmek için takımını seç.",
+    chooseTeamBtn: "Takımı seç",
+    selectedTeamPrefix: "Takımın:",
+    selectedTeamSaved: "Takım seçildi:",
+    teamAlreadySelected: "Seçildi",
 
     teams: {
       volts: {
@@ -387,6 +437,12 @@ const translations = {
     progressLeft: "Tersisa",
     progressText: "Progres menuju event",
     shareCopied: "Link disalin!",
+    teamEnergyTitle: "Energi Tim Portal 2026",
+    noTeamSelected: "Pilih tim untuk mengaktifkan energinya.",
+    chooseTeamBtn: "Pilih Tim",
+    selectedTeamPrefix: "Tim kamu:",
+    selectedTeamSaved: "Tim dipilih:",
+    teamAlreadySelected: "Dipilih",
 
     teams: {
       volts: {
@@ -437,6 +493,12 @@ const translations = {
     progressLeft: "Falta",
     progressText: "Progreso hasta el evento",
     shareCopied: "¡Enlace copiado!",
+    teamEnergyTitle: "Energía de Equipos del Portal 2026",
+    noTeamSelected: "Elige tu equipo para activar su energía.",
+    chooseTeamBtn: "Elegir equipo",
+    selectedTeamPrefix: "Tu equipo:",
+    selectedTeamSaved: "Equipo elegido:",
+    teamAlreadySelected: "Elegido",
 
     teams: {
       volts: {
@@ -487,6 +549,12 @@ const translations = {
     progressLeft: "बाकी",
     progressText: "इवेंट तक प्रगति",
     shareCopied: "लिंक कॉपी हो गया!",
+    teamEnergyTitle: "Portal Team Energy 2026",
+    noTeamSelected: "अपनी टीम चुनें ताकि उसकी ऊर्जा सक्रिय हो सके।",
+    chooseTeamBtn: "टीम चुनें",
+    selectedTeamPrefix: "आपकी टीम:",
+    selectedTeamSaved: "टीम चुनी गई:",
+    teamAlreadySelected: "चुनी गई",
 
     teams: {
       volts: {
@@ -519,6 +587,7 @@ const popupIcon = document.getElementById("popupIcon");
 const popupTitle = document.getElementById("popupTitle");
 const popupText = document.getElementById("popupText");
 const closePopup = document.getElementById("closePopup");
+const chooseTeamBtn = document.getElementById("chooseTeamBtn");
 
 const music = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
@@ -538,6 +607,11 @@ const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const progressText = document.getElementById("progressText");
 
+const selectedTeamText = document.getElementById("selectedTeamText");
+const voltsPercent = document.getElementById("voltsPercent");
+const flamePercent = document.getElementById("flamePercent");
+const leafPercent = document.getElementById("leafPercent");
+
 function updateCountdown() {
   const now = new Date();
   const distance = targetDate.getTime() - now.getTime();
@@ -551,7 +625,7 @@ function updateCountdown() {
       </div>
     `;
 
-    updateProgress(0);
+    updateProgress();
     return;
   }
 
@@ -566,7 +640,7 @@ function updateCountdown() {
   secondsEl.textContent = String(seconds).padStart(2, "0");
 
   updateAtmosphere(days);
-  updateProgress(distance);
+  updateProgress();
 
   if (lastSeconds !== seconds) {
     secondsEl.classList.remove("tick");
@@ -631,7 +705,10 @@ function setLanguage(lang) {
   });
 
   musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
-  progressText.textContent = dict.progressText;
+
+  updateProgress();
+  updateTeamEnergy();
+  updateChooseButton();
 
   languageMenu.classList.remove("open");
   downloadMenu.classList.remove("open");
@@ -642,6 +719,8 @@ function openPopup(team) {
 
   if (!data) return;
 
+  currentPopupTeam = team;
+
   popup.className = "team-popup active " + team;
   popup.setAttribute("aria-hidden", "false");
 
@@ -651,12 +730,97 @@ function openPopup(team) {
 
   document.body.classList.remove("team-volts", "team-flame", "team-leaf");
   document.body.classList.add("team-" + team);
+
+  updateChooseButton();
 }
 
 function closeTeamPopup() {
   popup.className = "team-popup";
   popup.setAttribute("aria-hidden", "true");
+
   document.body.classList.remove("team-volts", "team-flame", "team-leaf");
+
+  if (selectedTeam) {
+    document.body.classList.add("selected-" + selectedTeam);
+  }
+
+  currentPopupTeam = null;
+}
+
+function chooseTeam(team) {
+  if (!team || !translations[currentLang].teams[team]) return;
+
+  selectedTeam = team;
+  localStorage.setItem("selectedTeam", selectedTeam);
+
+  applySelectedTeamTheme();
+  updateTeamEnergy();
+  updateChooseButton();
+  closeTeamPopup();
+}
+
+function applySelectedTeamTheme() {
+  document.body.classList.remove(
+    "selected-volts",
+    "selected-flame",
+    "selected-leaf"
+  );
+
+  document.querySelectorAll(".team-btn").forEach((button) => {
+    button.classList.remove("selected");
+  });
+
+  if (!selectedTeam) return;
+
+  document.body.classList.add("selected-" + selectedTeam);
+
+  const selectedButton = document.querySelector(`.team-btn[data-team="${selectedTeam}"]`);
+  if (selectedButton) {
+    selectedButton.classList.add("selected");
+  }
+}
+
+function updateChooseButton() {
+  if (!chooseTeamBtn || !currentPopupTeam) return;
+
+  const dict = translations[currentLang];
+
+  if (selectedTeam === currentPopupTeam) {
+    chooseTeamBtn.textContent = dict.teamAlreadySelected;
+    chooseTeamBtn.disabled = true;
+  } else {
+    chooseTeamBtn.textContent = dict.chooseTeamBtn;
+    chooseTeamBtn.disabled = false;
+  }
+}
+
+function updateTeamEnergy() {
+  const dict = translations[currentLang];
+
+  if (voltsPercent) voltsPercent.textContent = teamEnergyData.volts + "%";
+  if (flamePercent) flamePercent.textContent = teamEnergyData.flame + "%";
+  if (leafPercent) leafPercent.textContent = teamEnergyData.leaf + "%";
+
+  document.querySelector(".energy-row.volts .energy-fill").style.width = teamEnergyData.volts + "%";
+  document.querySelector(".energy-row.flame .energy-fill").style.width = teamEnergyData.flame + "%";
+  document.querySelector(".energy-row.leaf .energy-fill").style.width = teamEnergyData.leaf + "%";
+
+  document.querySelectorAll(".energy-row").forEach((row) => {
+    row.classList.remove("selected");
+  });
+
+  if (!selectedTeam) {
+    selectedTeamText.textContent = dict.noTeamSelected;
+    return;
+  }
+
+  const team = translations[currentLang].teams[selectedTeam];
+  selectedTeamText.textContent = `${dict.selectedTeamPrefix} ${team.icon} ${team.title}`;
+
+  const selectedEnergyRow = document.querySelector(`.energy-row.${selectedTeam}`);
+  if (selectedEnergyRow) {
+    selectedEnergyRow.classList.add("selected");
+  }
 }
 
 document.querySelectorAll(".team-btn").forEach((button) => {
@@ -672,6 +836,10 @@ document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
 });
 
 closePopup.addEventListener("click", closeTeamPopup);
+
+chooseTeamBtn.addEventListener("click", () => {
+  chooseTeam(currentPopupTeam);
+});
 
 langToggle.addEventListener("click", (event) => {
   event.stopPropagation();
@@ -768,6 +936,8 @@ shareBtn.addEventListener("click", async () => {
 const savedLang = localStorage.getItem("selectedLang") || "en";
 
 setLanguage(savedLang);
+applySelectedTeamTheme();
+updateTeamEnergy();
 updateCountdown();
 
 countdownInterval = setInterval(updateCountdown, 1000);
