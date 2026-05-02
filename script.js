@@ -8,10 +8,13 @@ let countdownInterval = null;
 let currentPopupTeam = null;
 let selectedTeam = localStorage.getItem("selectedTeam") || null;
 
-const teamEnergyData = {
-  volts: 34,
-  flame: 41,
-  leaf: 25
+const GOOGLE_SHEET_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWxR6NP3qLfM_-Fi_qoRjpgEA0qiUCUTze8P3XHmNea9ROrpIGMp2kKxd_5FaqZvNi3j28G1-nmlQ/pub?gid=747099020&single=true&output=csv";
+
+let teamEnergyData = {
+  volts: 0,
+  flame: 0,
+  leaf: 0
 };
 
 const translations = {
@@ -619,11 +622,13 @@ function updateCountdown() {
   if (distance <= 0) {
     if (countdownInterval) clearInterval(countdownInterval);
 
-    timer.innerHTML = `
-      <div class="started">
-        ${translations[currentLang].started}
-      </div>
-    `;
+    if (timer) {
+      timer.innerHTML = `
+        <div class="started">
+          ${translations[currentLang].started}
+        </div>
+      `;
+    }
 
     updateProgress();
     return;
@@ -634,15 +639,15 @@ function updateCountdown() {
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
 
-  daysEl.textContent = String(days).padStart(2, "0");
-  hoursEl.textContent = String(hours).padStart(2, "0");
-  minutesEl.textContent = String(minutes).padStart(2, "0");
-  secondsEl.textContent = String(seconds).padStart(2, "0");
+  if (daysEl) daysEl.textContent = String(days).padStart(2, "0");
+  if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+  if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
+  if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
 
   updateAtmosphere(days);
   updateProgress();
 
-  if (lastSeconds !== seconds) {
+  if (secondsEl && lastSeconds !== seconds) {
     secondsEl.classList.remove("tick");
     void secondsEl.offsetWidth;
     secondsEl.classList.add("tick");
@@ -651,6 +656,8 @@ function updateCountdown() {
 }
 
 function updateProgress() {
+  if (!progressFill || !progressPercent || !progressText) return;
+
   const now = new Date().getTime();
   const start = eventStartDate.getTime();
   const end = targetDate.getTime();
@@ -704,29 +711,31 @@ function setLanguage(lang) {
     button.classList.toggle("active", button.dataset.lang === currentLang);
   });
 
-  musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+  if (musicToggle) {
+    musicToggle.innerHTML = isPlaying ? dict.musicOff : dict.musicOn;
+  }
 
   updateProgress();
   updateTeamEnergy();
   updateChooseButton();
 
-  languageMenu.classList.remove("open");
-  downloadMenu.classList.remove("open");
+  if (languageMenu) languageMenu.classList.remove("open");
+  if (downloadMenu) downloadMenu.classList.remove("open");
 }
 
 function openPopup(team) {
   const data = translations[currentLang].teams[team];
 
-  if (!data) return;
+  if (!data || !popup) return;
 
   currentPopupTeam = team;
 
   popup.className = "team-popup active " + team;
   popup.setAttribute("aria-hidden", "false");
 
-  popupIcon.textContent = data.icon;
-  popupTitle.textContent = data.title;
-  popupText.textContent = data.text;
+  if (popupIcon) popupIcon.textContent = data.icon;
+  if (popupTitle) popupTitle.textContent = data.title;
+  if (popupText) popupText.textContent = data.text;
 
   document.body.classList.remove("team-volts", "team-flame", "team-leaf");
   document.body.classList.add("team-" + team);
@@ -735,6 +744,8 @@ function openPopup(team) {
 }
 
 function closeTeamPopup() {
+  if (!popup) return;
+
   popup.className = "team-popup";
   popup.setAttribute("aria-hidden", "true");
 
@@ -801,25 +812,69 @@ function updateTeamEnergy() {
   if (flamePercent) flamePercent.textContent = teamEnergyData.flame + "%";
   if (leafPercent) leafPercent.textContent = teamEnergyData.leaf + "%";
 
-  document.querySelector(".energy-row.volts .energy-fill").style.width = teamEnergyData.volts + "%";
-  document.querySelector(".energy-row.flame .energy-fill").style.width = teamEnergyData.flame + "%";
-  document.querySelector(".energy-row.leaf .energy-fill").style.width = teamEnergyData.leaf + "%";
+  const voltsFill = document.querySelector(".energy-row.volts .energy-fill");
+  const flameFill = document.querySelector(".energy-row.flame .energy-fill");
+  const leafFill = document.querySelector(".energy-row.leaf .energy-fill");
+
+  if (voltsFill) voltsFill.style.width = teamEnergyData.volts + "%";
+  if (flameFill) flameFill.style.width = teamEnergyData.flame + "%";
+  if (leafFill) leafFill.style.width = teamEnergyData.leaf + "%";
 
   document.querySelectorAll(".energy-row").forEach((row) => {
     row.classList.remove("selected");
   });
 
   if (!selectedTeam) {
-    selectedTeamText.textContent = dict.noTeamSelected;
+    if (selectedTeamText) {
+      selectedTeamText.textContent = dict.noTeamSelected;
+    }
     return;
   }
 
   const team = translations[currentLang].teams[selectedTeam];
-  selectedTeamText.textContent = `${dict.selectedTeamPrefix} ${team.icon} ${team.title}`;
+
+  if (selectedTeamText && team) {
+    selectedTeamText.textContent = `${dict.selectedTeamPrefix} ${team.icon} ${team.title}`;
+  }
 
   const selectedEnergyRow = document.querySelector(`.energy-row.${selectedTeam}`);
   if (selectedEnergyRow) {
     selectedEnergyRow.classList.add("selected");
+  }
+}
+
+async function loadTeamEnergyFromSheet() {
+  try {
+    const response = await fetch(GOOGLE_SHEET_CSV_URL + "&cache=" + Date.now());
+
+    if (!response.ok) {
+      throw new Error("Could not load team stats");
+    }
+
+    const csvText = await response.text();
+
+    const rows = csvText
+      .trim()
+      .split("\n")
+      .map((row) => row.split(","));
+
+    rows.slice(1).forEach((row) => {
+      const team = row[0]?.trim();
+      const percent = Number(row[2]?.trim());
+
+      if (
+        team &&
+        !Number.isNaN(percent) &&
+        Object.prototype.hasOwnProperty.call(teamEnergyData, team)
+      ) {
+        teamEnergyData[team] = percent;
+      }
+    });
+
+    updateTeamEnergy();
+  } catch (error) {
+    console.warn("Team stats could not be loaded. Using local fallback.", error);
+    updateTeamEnergy();
   }
 }
 
@@ -835,31 +890,40 @@ document.querySelectorAll("#languageMenu .lang-btn").forEach((button) => {
   });
 });
 
-closePopup.addEventListener("click", closeTeamPopup);
+if (closePopup) {
+  closePopup.addEventListener("click", closeTeamPopup);
+}
 
-chooseTeamBtn.addEventListener("click", () => {
-  chooseTeam(currentPopupTeam);
-});
+if (chooseTeamBtn) {
+  chooseTeamBtn.addEventListener("click", () => {
+    chooseTeam(currentPopupTeam);
+  });
+}
 
-langToggle.addEventListener("click", (event) => {
-  event.stopPropagation();
-  languageMenu.classList.toggle("open");
-  downloadMenu.classList.remove("open");
-});
+if (langToggle) {
+  langToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    languageMenu.classList.toggle("open");
+    downloadMenu.classList.remove("open");
+  });
+}
 
-downloadToggle.addEventListener("click", (event) => {
-  event.stopPropagation();
-  downloadMenu.classList.toggle("open");
-  languageMenu.classList.remove("open");
-});
+if (downloadToggle) {
+  downloadToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    downloadMenu.classList.toggle("open");
+    languageMenu.classList.remove("open");
+  });
+}
 
 document.addEventListener("click", (event) => {
-  const clickedInsidePopup = popup.contains(event.target);
+  const clickedInsidePopup = popup?.contains(event.target);
   const clickedTeamButton = event.target.closest(".team-btn");
   const clickedInsideLang = event.target.closest(".language-wrapper");
   const clickedInsideDownload = event.target.closest(".download-wrapper");
 
   if (
+    popup &&
     popup.classList.contains("active") &&
     !clickedInsidePopup &&
     !clickedTeamButton
@@ -867,11 +931,11 @@ document.addEventListener("click", (event) => {
     closeTeamPopup();
   }
 
-  if (!clickedInsideLang) {
+  if (!clickedInsideLang && languageMenu) {
     languageMenu.classList.remove("open");
   }
 
-  if (!clickedInsideDownload) {
+  if (!clickedInsideDownload && downloadMenu) {
     downloadMenu.classList.remove("open");
   }
 });
@@ -879,65 +943,74 @@ document.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeTeamPopup();
-    languageMenu.classList.remove("open");
-    downloadMenu.classList.remove("open");
+
+    if (languageMenu) languageMenu.classList.remove("open");
+    if (downloadMenu) downloadMenu.classList.remove("open");
   }
 });
 
-musicToggle.addEventListener("click", () => {
-  if (!isPlaying) {
-    music.play();
-    musicToggle.classList.add("active");
-    musicToggle.innerHTML = translations[currentLang].musicOff;
-    isPlaying = true;
-  } else {
-    music.pause();
-    musicToggle.classList.remove("active");
-    musicToggle.innerHTML = translations[currentLang].musicOn;
-    isPlaying = false;
-  }
-});
-
-countdownModeBtn.addEventListener("click", () => {
-  timer.classList.remove("hidden");
-  progressPanel.classList.remove("active");
-
-  countdownModeBtn.classList.add("active");
-  progressModeBtn.classList.remove("active");
-});
-
-progressModeBtn.addEventListener("click", () => {
-  timer.classList.add("hidden");
-  progressPanel.classList.add("active");
-
-  progressModeBtn.classList.add("active");
-  countdownModeBtn.classList.remove("active");
-});
-
-shareBtn.addEventListener("click", async () => {
-  const url = window.location.href;
-
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: document.title,
-        url: url
-      });
+if (musicToggle && music) {
+  musicToggle.addEventListener("click", () => {
+    if (!isPlaying) {
+      music.play();
+      musicToggle.classList.add("active");
+      musicToggle.innerHTML = translations[currentLang].musicOff;
+      isPlaying = true;
     } else {
+      music.pause();
+      musicToggle.classList.remove("active");
+      musicToggle.innerHTML = translations[currentLang].musicOn;
+      isPlaying = false;
+    }
+  });
+}
+
+if (countdownModeBtn && progressModeBtn && timer && progressPanel) {
+  countdownModeBtn.addEventListener("click", () => {
+    timer.classList.remove("hidden");
+    progressPanel.classList.remove("active");
+
+    countdownModeBtn.classList.add("active");
+    progressModeBtn.classList.remove("active");
+  });
+
+  progressModeBtn.addEventListener("click", () => {
+    timer.classList.add("hidden");
+    progressPanel.classList.add("active");
+
+    progressModeBtn.classList.add("active");
+    countdownModeBtn.classList.remove("active");
+  });
+}
+
+if (shareBtn) {
+  shareBtn.addEventListener("click", async () => {
+    const url = window.location.href;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: document.title,
+          url: url
+        });
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert(translations[currentLang].shareCopied);
+      }
+    } catch (error) {
       await navigator.clipboard.writeText(url);
       alert(translations[currentLang].shareCopied);
     }
-  } catch (error) {
-    await navigator.clipboard.writeText(url);
-    alert(translations[currentLang].shareCopied);
-  }
-});
+  });
+}
 
 const savedLang = localStorage.getItem("selectedLang") || "en";
 
 setLanguage(savedLang);
 applySelectedTeamTheme();
 updateTeamEnergy();
+loadTeamEnergyFromSheet();
 updateCountdown();
 
 countdownInterval = setInterval(updateCountdown, 1000);
+setInterval(loadTeamEnergyFromSheet, 60000);
