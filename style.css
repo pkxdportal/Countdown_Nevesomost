@@ -104,7 +104,7 @@ body.team-leaf .team-glow {
   position: relative;
   width: min(1320px, 92vw);
   text-align: center;
-  padding: 52px 70px 48px;
+  padding: 72px 70px 48px;
   border-radius: 42px;
   background: rgba(3, 7, 22, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -125,6 +125,29 @@ body.team-leaf .team-glow {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.pkxd-badge {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #dce8ff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 0 24px rgba(139,227,255,0.12);
+}
+
+.pkxd-badge img {
+  height: 26px;
+  width: auto;
+  display: block;
 }
 
 .event-date {
@@ -527,6 +550,28 @@ h1 span {
     0 0 44px rgba(238,107,243,0.18);
 }
 
+.site-note {
+  margin: 28px auto 0;
+  max-width: 820px;
+  color: rgba(220,232,255,0.72);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.site-note p {
+  margin: 6px 0;
+}
+
+.site-note a {
+  color: #8be3ff;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.site-note a:hover {
+  text-decoration: underline;
+}
+
 .team-popup {
   position: fixed;
   left: 50%;
@@ -733,8 +778,21 @@ body.near-1 .hero {
 
   .hero {
     width: 100%;
-    padding: 28px 14px 32px;
+    padding: 24px 14px 32px;
     border-radius: 28px;
+  }
+
+  .pkxd-badge {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: fit-content;
+    margin: 0 auto 18px;
+    font-size: 12px;
+  }
+
+  .pkxd-badge img {
+    height: 22px;
   }
 
   .event-date {
@@ -823,6 +881,11 @@ body.near-1 .hero {
     font-size: 13px;
     padding: 10px 16px;
   }
+
+  .site-note {
+    font-size: 11px;
+    padding: 0 6px;
+  }
 }
 
 @media (max-width: 420px) {
@@ -888,70 +951,5 @@ body.near-1 .hero {
 
   .portal-credit a {
     font-size: 12px;
-  }
-}
-
-.pkxd-badge {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #dce8ff;
-  font-size: 13px;
-  font-weight: 800;
-  box-shadow: 0 0 24px rgba(139,227,255,0.12);
-}
-
-.pkxd-badge img {
-  height: 26px;
-  width: auto;
-  display: block;
-}
-
-.site-note {
-  margin: 28px auto 0;
-  max-width: 820px;
-  color: rgba(220,232,255,0.72);
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-.site-note p {
-  margin: 6px 0;
-}
-
-.site-note a {
-  color: #8be3ff;
-  font-weight: 900;
-  text-decoration: none;
-}
-
-.site-note a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 760px) {
-  .pkxd-badge {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: fit-content;
-    margin: 0 auto 18px;
-    font-size: 12px;
-  }
-
-  .pkxd-badge img {
-    height: 22px;
-  }
-
-  .site-note {
-    font-size: 11px;
-    padding: 0 6px;
   }
 }
