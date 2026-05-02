@@ -18,6 +18,9 @@ const translations = {
     musicOn: "🔊 Music",
     musicOff: "🔇 Turn music off",
     started: "🚀 Zero Gravity has begun",
+    fanCountdown: "Fan countdown for PK XD",
+    disclaimer: "This is a fan-made countdown. PK XD is a game by Afterverse. This site is not official and is not affiliated with Afterverse.",
+    feedbackText: "For website improvements or adding more languages, write here:",
 
     teams: {
       volts: {
@@ -51,6 +54,9 @@ const translations = {
     musicOn: "🔊 Музыка",
     musicOff: "🔇 Выключить музыку",
     started: "🚀 Невесомость началась",
+    fanCountdown: "Фанатский отсчёт для PK XD",
+    disclaimer: "Это фанатский отсчёт. PK XD — игра от Afterverse. Этот сайт не является официальным и не связан с Afterverse.",
+    feedbackText: "По вопросам улучшения сайта или добавления других языков пишите сюда:",
 
     teams: {
       volts: {
@@ -84,6 +90,10 @@ const translations = {
     musicOn: "🔊 Música",
     musicOff: "🔇 Desligar música",
     started: "🚀 Zero Gravity começou",
+    fanCountdown: "Contagem regressiva feita por fãs para PK XD",
+    disclaimer: "Esta é uma contagem regressiva feita por fãs. PK XD é um jogo da Afterverse. Este site não é oficial e não possui afiliação com a Afterverse.",
+    feedbackText: "Para melhorias no site ou adição de novos idiomas, escreva aqui:",
+
 
     teams: {
       volts: {
@@ -117,6 +127,9 @@ const translations = {
     musicOn: "🔊 Müzik",
     musicOff: "🔇 Müziği Kapat",
     started: "🚀 Zero Gravity başladı",
+    fanCountdown: "PK XD için hayran geri sayımı",
+    disclaimer: "Bu hayran yapımı bir geri sayımdır. PK XD, Afterverse tarafından geliştirilen bir oyundur. Bu site resmi değildir ve Afterverse ile bağlantılı değildir.",
+    feedbackText: "Site geliştirmeleri veya yeni diller eklemek için buraya yazın:",
 
     teams: {
       volts: {
@@ -150,6 +163,9 @@ const translations = {
     musicOn: "🔊 Musik",
     musicOff: "🔇 Matikan musik",
     started: "🚀 Zero Gravity dimulai",
+    fanCountdown: "Hitung mundur penggemar untuk PK XD",
+    disclaimer: "Ini adalah hitung mundur buatan penggemar. PK XD adalah game dari Afterverse. Situs ini bukan situs resmi dan tidak berafiliasi dengan Afterverse.",
+    feedbackText: "Untuk peningkatan situs atau penambahan bahasa baru, tulis di sini:",
 
     teams: {
       volts: {
@@ -183,6 +199,9 @@ const translations = {
     musicOn: "🔊 Música",
     musicOff: "🔇 Apagar música",
     started: "🚀 Zero Gravity comenzó",
+    fanCountdown: "Cuenta regresiva hecha por fans para PK XD",
+    disclaimer: "Esta es una cuenta regresiva hecha por fans. PK XD es un juego de Afterverse. Este sitio no es oficial y no está afiliado con Afterverse.",
+    feedbackText: "Para mejorar el sitio o agregar más idiomas, escribe aquí:",
 
     teams: {
       volts: {
@@ -216,6 +235,9 @@ const translations = {
     musicOn: "🔊 संगीत",
     musicOff: "🔇 संगीत बंद करें",
     started: "🚀 Zero Gravity शुरू हो गया",
+    fanCountdown: "PK XD के लिए फैन काउंटडाउन",
+    disclaimer: "यह एक फैन द्वारा बनाया गया काउंटडाउन है। PK XD Afterverse का एक गेम है। यह वेबसाइट आधिकारिक नहीं है और Afterverse से संबद्ध नहीं है।",
+    feedbackText: "वेबसाइट सुधार या नई भाषाएँ जोड़ने के लिए यहाँ लिखें:",
 
     teams: {
       volts: {
