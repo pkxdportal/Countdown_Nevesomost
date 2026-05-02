@@ -1,5 +1,5 @@
 const targetDate = new Date("2026-06-11T13:00:00Z");
-const debugDays = 25;
+const debugDays = 7;
 
 let currentLang = "en";
 let lastSeconds = null;
