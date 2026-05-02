@@ -6,7 +6,7 @@
 
   <title>Until Weightlessness</title>
 
-  <link rel="stylesheet" href="style.css?v=11" />
+  <link rel="stylesheet" href="style.css?v=12" />
 </head>
 
 <body>
@@ -15,54 +15,107 @@
   <div class="noise"></div>
   <div class="particles"></div>
 
+  <!-- TOP ACTIONS -->
+
   <div class="top-actions">
 
-  <div class="action-block">
-    <div class="language-wrapper">
-      <button type="button" id="langToggle" class="lang-toggle" aria-label="Change language">
-        🌐
-      </button>
+    <!-- LANGUAGE -->
 
-      <div id="languageMenu" class="language-menu">
-        <button type="button" class="lang-btn active" data-lang="en">🇺🇸 EN</button>
-        <button type="button" class="lang-btn" data-lang="ru">🇷🇺 RU</button>
-        <button type="button" class="lang-btn" data-lang="pt">🇧🇷 PT</button>
-        <button type="button" class="lang-btn" data-lang="tr">🇹🇷 TR</button>
-        <button type="button" class="lang-btn" data-lang="id">🇮🇩 ID</button>
-        <button type="button" class="lang-btn" data-lang="es">🇲🇽 ES</button>
-        <button type="button" class="lang-btn" data-lang="hi">🇮🇳 HI</button>
-        <button type="button" class="lang-btn" data-lang="de">🇩🇪 DE</button>
-        <button type="button" class="lang-btn" data-lang="fr">🇫🇷 FR</button>
-        <button type="button" class="lang-btn" data-lang="pl">🇵🇱 PL</button>
+    <div class="action-block">
+      <div class="language-wrapper">
+
+        <button
+          type="button"
+          id="langToggle"
+          class="lang-toggle"
+          aria-label="Change language"
+        >
+          🌐
+        </button>
+
+        <div id="languageMenu" class="language-menu">
+          <button type="button" class="lang-btn active" data-lang="en">🇺🇸 EN</button>
+          <button type="button" class="lang-btn" data-lang="ru">🇷🇺 RU</button>
+          <button type="button" class="lang-btn" data-lang="pt">🇧🇷 PT</button>
+          <button type="button" class="lang-btn" data-lang="tr">🇹🇷 TR</button>
+          <button type="button" class="lang-btn" data-lang="id">🇮🇩 ID</button>
+          <button type="button" class="lang-btn" data-lang="es">🇲🇽 ES</button>
+          <button type="button" class="lang-btn" data-lang="hi">🇮🇳 HI</button>
+          <button type="button" class="lang-btn" data-lang="de">🇩🇪 DE</button>
+          <button type="button" class="lang-btn" data-lang="fr">🇫🇷 FR</button>
+          <button type="button" class="lang-btn" data-lang="pl">🇵🇱 PL</button>
+        </div>
+
       </div>
+
+      <span class="action-label" data-i18n="languageLabel">
+        Language
+      </span>
     </div>
 
-    <span class="action-label" data-i18n="languageLabel">
-      Language
-    </span>
+    <!-- DOWNLOAD -->
+
+    <div class="action-block">
+      <div class="download-wrapper">
+
+        <button
+          type="button"
+          id="downloadToggle"
+          class="download-toggle"
+          aria-label="Download or update PK XD"
+        >
+          ⬇️
+        </button>
+
+        <div id="downloadMenu" class="download-menu">
+
+          <div class="download-title" data-i18n="downloadTitle">
+            Download / Update PK XD
+          </div>
+
+          <a
+            href="https://play.google.com/store/apps/details?id=com.movile.playkids.pkxd"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="googlePlayBtn"
+          >
+            Google Play
+          </a>
+
+          <a
+            href="https://apps.apple.com/us/app/pk-xd-fun-friends-games/id1449842729"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="appStoreBtn"
+          >
+            App Store
+          </a>
+
+        </div>
+
+      </div>
+
+      <span class="action-label" data-i18n="downloadLabel">
+        Download
+      </span>
+    </div>
+
   </div>
 
-  <div class="action-block">
-    <button type="button" id="downloadToggle" class="lang-toggle">
-      ⬇️
-    </button>
-
-    <span class="action-label" data-i18n="downloadLabel">
-      Download
-    </span>
-  </div>
-
-</div>
+  <!-- MAIN -->
 
   <main class="scene">
     <section class="hero">
+
       <div class="pkxd-badge">
-        <img src="PKXD.png?v=11" alt="PK XD" />
-        <span data-i18n="fanCountdown">Fan countdown for PK XD</span>
+        <img src="PKXD.png?v=12" alt="PK XD" />
+        <span data-i18n="fanCountdown">
+          Fan countdown for PK XD
+        </span>
       </div>
 
       <div class="event-date" data-i18n="eventDate">
-        JUNE 11, 2026 • 08:00 AM EST
+        JUNE 11, 2026 • 09:00 NEW YORK
       </div>
 
       <div class="signs-orbit">
@@ -76,8 +129,13 @@
       </div>
 
       <h1>
-        <span class="title-small" data-i18n="titleTop">Until</span>
-        <span class="title-main" data-i18n="titleMain">Weightlessness</span>
+        <span class="title-small" data-i18n="titleTop">
+          Until
+        </span>
+
+        <span class="title-main" data-i18n="titleMain">
+          Weightlessness
+        </span>
       </h1>
 
       <div id="timer" class="timer">
@@ -117,11 +175,13 @@
       </div>
 
       <div class="portal-credit">
+
         <span data-i18n="credit">
           Website created by <b>PK XD PORTAL</b>
         </span>
 
         <div class="portal-links">
+
           <a
             href="https://t.me/pkxdportal"
             target="_blank"
@@ -139,18 +199,26 @@
           >
             YouTube
           </a>
+
         </div>
       </div>
 
       <div class="music-player">
-        <button type="button" id="musicToggle" class="music-btn" data-i18n="musicOn">
+        <button
+          type="button"
+          id="musicToggle"
+          class="music-btn"
+          data-i18n="musicOn"
+        >
           🔊 Weightlessness Music
         </button>
       </div>
 
       <div class="site-note">
+
         <p data-i18n="disclaimer">
-          This is a fan-made countdown. PK XD is a game by Afterverse. This site is not official and is not affiliated with Afterverse.
+          This is a fan-made countdown. PK XD is a game by Afterverse.
+          This site is not official and is not affiliated with Afterverse.
         </p>
 
         <p>
@@ -167,21 +235,27 @@
             PK XD PORTAL YouTube
           </a>
         </p>
+
       </div>
 
       <audio id="bgMusic" loop>
         <source src="nevesomost.mp3" type="audio/mpeg" />
       </audio>
+
     </section>
   </main>
 
+  <!-- POPUP -->
+
   <div id="teamPopup" class="team-popup" aria-hidden="true">
     <button type="button" id="closePopup" class="close-popup">×</button>
+
     <div id="popupIcon" class="popup-icon"></div>
+
     <h2 id="popupTitle"></h2>
     <p id="popupText"></p>
   </div>
 
-  <script src="script.js?v=11"></script>
+  <script src="script.js?v=12"></script>
 </body>
 </html>
